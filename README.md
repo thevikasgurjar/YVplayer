@@ -1,14 +1,14 @@
-# YVPlayer Demo & Documentation Portal 🌐
+# YVPlayer Demo Website (Cloudflare Pages) ⚡
 
-[![Live on GitHub Pages](https://img.shields.io/badge/GitHub_Pages-thevikasgurjar.github.io%2FYVplayer-purple.svg)](https://thevikasgurjar.github.io/YVplayer/)
 [![Live on Cloudflare Pages](https://img.shields.io/badge/Cloudflare_Pages-yvplayer.pages.dev-orange.svg)](https://yvplayer.pages.dev)
+[![Live on GitHub Pages](https://img.shields.io/badge/GitHub_Pages-thevikasgurjar.github.io%2FYVplayer-purple.svg)](https://thevikasgurjar.github.io/YVplayer/)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/thevikasgurjar/YVplayer/pulls)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
-This branch (`gh-pages`) hosts the official live showcase, documentation portal, and AI Prompt Architect for **YVPlayer**:
+This branch (`demo`) is configured for continuous deployment on **Cloudflare Pages**, hosted live at:
 
-👉 **[https://thevikasgurjar.github.io/YVplayer/](https://thevikasgurjar.github.io/YVplayer/)**  
-⚡ *Also mirrored on Cloudflare Pages via the [`demo`](https://github.com/thevikasgurjar/YVplayer/tree/demo) branch at [https://yvplayer.pages.dev](https://yvplayer.pages.dev)*
+👉 **[https://yvplayer.pages.dev](https://yvplayer.pages.dev)**  
+*(Also available via GitHub Pages on the [`gh-pages`](https://github.com/thevikasgurjar/YVplayer/tree/gh-pages) branch at [https://thevikasgurjar.github.io/YVplayer/](https://thevikasgurjar.github.io/YVplayer/))*
 
 ---
 
