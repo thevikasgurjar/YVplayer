@@ -1,0 +1,46 @@
+{
+  "name": "yvplayer",
+  "version": "1.0.0",
+  "description": "Distraction-free, responsive HTML5-style YouTube video player with zero branding, custom storyboard scrub timeline, Video.js 10 inspired themes, line-by-line captions, floating Picture-in-Picture, open-source stream proxies, and rich keyboard gestures.",
+  "main": "yvPlayer.js",
+  "style": "yvPlayer.css",
+  "scripts": {
+    "test": "node -c yvPlayer.js"
+  },
+  "keywords": [
+    "youtube",
+    "video-player",
+    "html5-player",
+    "custom-player",
+    "picture-in-picture",
+    "pip",
+    "distraction-free",
+    "videojs-inspired",
+    "subtitles",
+    "captions",
+    "storyboard-scrubbing",
+    "speed-control",
+    "sleep-timer",
+    "piped",
+    "invidious",
+    "cobalt"
+  ],
+  "author": "vikas kumar",
+  "license": "MIT",
+  "files": [
+    "yvPlayer.js",
+    "yvPlayer.css",
+    "tabler-icons.min.css",
+    "fonts",
+    "LICENSE",
+    "README.md"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thevikasgurjar/yvplayertrial.git"
+  },
+  "homepage": "https://github.com/thevikasgurjar/yvplayertrial#readme",
+  "bugs": {
+    "url": "https://github.com/thevikasgurjar/yvplayertrial/issues"
+  }
+}
