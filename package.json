@@ -37,10 +37,10 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/thevikasgurjar/yvplayertrial.git"
+    "url": "git+https://github.com/thevikasgurjar/YVplayer.git"
   },
-  "homepage": "https://github.com/thevikasgurjar/yvplayertrial#readme",
+  "homepage": "https://yvplayer.pages.dev",
   "bugs": {
-    "url": "https://github.com/thevikasgurjar/yvplayertrial/issues"
+    "url": "https://github.com/thevikasgurjar/YVplayer/issues"
   }
 }

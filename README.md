@@ -3,13 +3,20 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Vanilla JS](https://img.shields.io/badge/Vanilla-JavaScript-yellow.svg)](yvPlayer.js)
 [![CSS3](https://img.shields.io/badge/CSS3-Responsive-green.svg)](yvPlayer.css)
-[![Live Demo](https://img.shields.io/badge/Live-Demo_Showcase-purple.svg)](https://thevikasgurjar.github.io/yvplayertrial/)
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/thevikasgurjar/yvplayertrial/pulls)
+[![Cloudflare Pages](https://img.shields.io/badge/Cloudflare_Pages-yvplayer.pages.dev-orange.svg)](https://yvplayer.pages.dev)
+[![GitHub Pages](https://img.shields.io/badge/GitHub_Pages-Demo_Live-purple.svg)](https://thevikasgurjar.github.io/YVplayer/)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/thevikasgurjar/YVplayer/pulls)
 
 A modern, cinema-grade, distraction-free HTML5 video player overlay designed specifically for **YouTube**. **YVPlayer** completely masks and strips native YouTube clutter (title bars, channel watermarks, recommended videos, and end-screen cards) while delivering high-end features inspired by **Video.js 10**: interactive storyboard scrubbing, custom multi-themes, line-by-line customizable captions, connected floating Picture-in-Picture with volume control, and open-source stream proxy integration.
 
-> 🌐 **Interactive Demo & Documentation Website:** [Explore the Live Showcase](https://thevikasgurjar.github.io/yvplayertrial/)  
-> 💡 *Note: The demo website source is maintained on the [`gh-pages`](https://github.com/thevikasgurjar/yvplayertrial/tree/gh-pages) branch where community users can submit edit requests and enhancements.*
+---
+
+### 🌐 Live Interactive Demos & Documentation
+
+- ⚡ **Cloudflare Pages (`demo` branch):** [https://yvplayer.pages.dev](https://yvplayer.pages.dev)
+- 🐙 **GitHub Pages (`gh-pages` branch):** [https://thevikasgurjar.github.io/YVplayer/](https://thevikasgurjar.github.io/YVplayer/)
+
+> 💡 *Note: The `main` branch contains strictly the core standalone player library files. The interactive showcase website source is maintained on the [`demo`](https://github.com/thevikasgurjar/YVplayer/tree/demo) and [`gh-pages`](https://github.com/thevikasgurjar/YVplayer/tree/gh-pages) branches where community users can test features and submit edit requests.*
 
 ---
 
@@ -36,13 +43,13 @@ Include the stylesheet and script in your HTML:
 
 ```html
 <!-- Tabler Icons (Optional for UI icons) -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/thevikasgurjar/yvplayertrial@main/tabler-icons.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/thevikasgurjar/YVplayer@main/tabler-icons.min.css">
 
 <!-- YVPlayer CSS -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/thevikasgurjar/yvplayertrial@main/yvPlayer.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/thevikasgurjar/YVplayer@main/yvPlayer.css">
 
 <!-- YVPlayer JS -->
-<script src="https://cdn.jsdelivr.net/gh/thevikasgurjar/yvplayertrial@main/yvPlayer.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/thevikasgurjar/YVplayer@main/yvPlayer.js"></script>
 ```
 
 ### 2. Basic Initialization
@@ -90,12 +97,11 @@ YVPlayer.init("my-player", {
 
 ---
 
-## 🌐 Demo Website & Contributions
+## 🌐 Demo Websites & Community Contributions
 
-The interactive demo showcase, documentation portal, and AI prompt generator are maintained on the **[`gh-pages`](https://github.com/thevikasgurjar/yvplayertrial/tree/gh-pages)** branch:
-
-- **Live URL**: [https://thevikasgurjar.github.io/yvplayertrial/](https://thevikasgurjar.github.io/yvplayertrial/)
-- **Demo Source & Edit Requests**: To contribute changes or enhancements to the demo site, please checkout the [`gh-pages`](https://github.com/thevikasgurjar/yvplayertrial/tree/gh-pages) branch and submit a Pull Request!
+- **Cloudflare Pages (`demo` branch)**: [https://yvplayer.pages.dev](https://yvplayer.pages.dev)
+- **GitHub Pages (`gh-pages` branch)**: [https://thevikasgurjar.github.io/YVplayer/](https://thevikasgurjar.github.io/YVplayer/)
+- **Demo Source & Edit Requests**: To contribute changes or enhancements to the demo site, please checkout either the [`demo`](https://github.com/thevikasgurjar/YVplayer/tree/demo) or [`gh-pages`](https://github.com/thevikasgurjar/YVplayer/tree/gh-pages) branch and submit a Pull Request!
 
 ---
 
