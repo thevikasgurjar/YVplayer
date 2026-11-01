@@ -1,17 +1,19 @@
-# YVPlayer Demo & Documentation Website 🌐
+# YVPlayer Demo & Documentation Portal 🌐
 
-[![Live Demo](https://img.shields.io/badge/Live-Demo_Showcase-purple.svg)](https://thevikasgurjar.github.io/yvplayertrial/)
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/thevikasgurjar/yvplayertrial/pulls)
+[![Live on GitHub Pages](https://img.shields.io/badge/GitHub_Pages-thevikasgurjar.github.io%2FYVplayer-purple.svg)](https://thevikasgurjar.github.io/YVplayer/)
+[![Live on Cloudflare Pages](https://img.shields.io/badge/Cloudflare_Pages-yvplayer.pages.dev-orange.svg)](https://yvplayer.pages.dev)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/thevikasgurjar/YVplayer/pulls)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
-This branch (`gh-pages`) hosts the official live interactive showcase and documentation portal for **YVPlayer**:
+This branch (`gh-pages`) hosts the official live showcase, documentation portal, and AI Prompt Architect for **YVPlayer**:
 
-👉 **[https://thevikasgurjar.github.io/yvplayertrial/](https://thevikasgurjar.github.io/yvplayertrial/)**
+👉 **[https://thevikasgurjar.github.io/YVplayer/](https://thevikasgurjar.github.io/YVplayer/)**  
+⚡ *Also mirrored on Cloudflare Pages via the [`demo`](https://github.com/thevikasgurjar/YVplayer/tree/demo) branch at [https://yvplayer.pages.dev](https://yvplayer.pages.dev)*
 
 ---
 
 ## 📂 Demo Website Files
-- `index.html` - Interactive Showcase page with sample presets, live customizer, and AI Prompt Architect.
+- `index.html` - Interactive Showcase page with quick sample presets, live customizer, and AI Prompt Architect.
 - `app.js` - Showcase application script, quick samples handler, and Prompt Generator logic.
 - `style.css` - Showcase UI styling and layout.
 - `docs.html` - Complete documentation portal with search, architecture breakdown, and open-source stream proxy guides.
@@ -29,4 +31,4 @@ Community developers and users are welcome to submit pull requests and edit requ
 - Improve documentation guides, FAQs, and integration examples
 - Enhance UI themes, controls, or accessibility
 
-> 📦 For the pure standalone distribution library (`yvPlayer.js` & `yvPlayer.css`), visit the [**`main` branch**](https://github.com/thevikasgurjar/yvplayertrial/tree/main).
+> 📦 For the pure standalone distribution library (`yvPlayer.js` & `yvPlayer.css`), visit the [**`main` branch**](https://github.com/thevikasgurjar/YVplayer/tree/main).
