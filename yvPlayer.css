@@ -4,7 +4,7 @@
   --themeHoverBg: rgba(254, 0, 1, 0.22);
   --themeHoverBorder: rgba(254, 0, 1, 0.55);
 }
-@import url("https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css");
+/* NOTE: tabler-icons @import removed — load via <link rel="preload"> in HTML for better performance */
 
 *{
 margin: 0;
