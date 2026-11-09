@@ -1,0 +1,2856 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YVPlayer Documentation — Custom Player for YouTube Videos Without YouTube Elements</title>
+  <meta name="description" content="Complete developer documentation for YVPlayer: The custom HTML5 player for YouTube videos without YouTube elements, branding, or watermarks. Full API reference and integration guides.">
+  <meta name="keywords" content="player for youtube video without youtube elements, youtube player documentation, custom youtube player api, hide youtube elements api, clean youtube embed, distraction free youtube player">
+  <meta name="theme-color" content="#000000">
+  <link rel="canonical" href="https://thevikasgurjar.github.io/YVplayer/docs.html">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="sitemap" type="application/xml" href="sitemap.xml">
+  <link rel="alternate" type="text/markdown" href="llms.txt" title="LLM Agent Context">
+
+  <!-- Open Graph / Social -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://thevikasgurjar.github.io/YVplayer/docs.html">
+  <meta property="og:title" content="YVPlayer Documentation — Custom Player for YouTube Videos Without YouTube Elements">
+  <meta property="og:description" content="Complete developer documentation for YVPlayer: The custom HTML5 player for YouTube videos without YouTube elements, branding, or watermarks.">
+  <meta property="og:site_name" content="YVPlayer">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="YVPlayer Documentation — Custom Player for YouTube Videos Without YouTube Elements">
+  <meta name="twitter:description" content="Complete API reference and integration guide for YVPlayer: The custom player for YouTube videos without YouTube elements.">
+
+  <!-- Preconnect for performance -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://www.youtube.com" crossorigin>
+
+  <!-- Critical icon font preload -->
+  <link rel="preload" href="fonts/tabler-icons.woff2" as="font" type="font/woff2" crossorigin>
+
+  <!-- Non-render-blocking icon font: load async -->
+  <link rel="preload" href="tabler-icons.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="tabler-icons.min.css"></noscript>
+
+  <!-- Google Fonts: async load to avoid render-blocking -->
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet"></noscript>
+
+  <!-- Player and docs CSS -->
+  <link rel="stylesheet" href="yvPlayer.css">
+  <link rel="stylesheet" href="docs.css">
+
+  <!-- Theme flash prevention (must stay sync/inline) -->
+  <script>
+    (function () {
+      try {
+        var theme = localStorage.getItem("yv_site_theme") || "dark";
+        document.documentElement.setAttribute("data-theme", theme);
+      } catch (e) { }
+    })();
+  </script>
+
+  <!-- Structured data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "name": "YVPlayer Documentation",
+    "description": "Complete YVPlayer documentation: API options, PiP architecture, Cloudflare Worker setup, keyboard shortcuts, theming, captions.",
+    "url": "https://yvplayertrial.pages.dev/docs.html",
+    "author": {
+      "@type": "Person",
+      "name": "Vikas Kumar"
+    },
+    "isPartOf": {
+      "@type": "WebSite",
+      "name": "YVPlayer",
+      "url": "https://yvplayertrial.pages.dev/"
+    }
+  }
+  </script>
+</head>
+<body class="docs-body">
+  <!-- Skip to main content (accessibility) -->
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+  <!-- Ambient Studio Lighting -->
+  <div class="ambient-glow"></div>
+
+  <!-- Shared Unified Site Header -->
+  <header class="site-header">
+    <div class="site-header-inner">
+      <div class="header-left">
+        <a href="index.html" class="header-brand">
+          <div class="brand-glyph">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="5 3 19 12 5 21 5 3"></polygon>
+            </svg>
+            <span class="brand-rec-dot"></span>
+          </div>
+          <span class="brand-name">YVPLAYER</span>
+          <span class="brand-version">v1.1</span>
+        </a>
+      </div>
+
+      <button type="button" class="mobile-menu-btn" id="mobile-sidebar-toggle" aria-label="Toggle navigation menu">
+        <i class="ti ti-menu-2"></i>
+        <span>Guides</span>
+      </button>
+      <nav class="header-nav">
+        <a href="index.html" class="nav-item"><i class="ti ti-home"></i> Home</a>
+        <a href="#ai-prompt-generator" class="nav-item"><i class="ti ti-sparkles"></i> AI Prompt</a>
+        <a href="docs.html" class="nav-item is-active"><i class="ti ti-book-2"></i> Documentation</a>
+        <a href="#api-options" class="nav-item"><i class="ti ti-terminal-2"></i> API Reference</a>
+        <a href="#pip-architecture" class="nav-item"><i class="ti ti-picture-in-picture"></i> PiP Engine</a>
+        <a href="https://github.com/thevikasgurjar/YVplayer" target="_blank" rel="noopener noreferrer" class="nav-item"><i class="ti ti-brand-github"></i> GitHub</a>
+      </nav>
+
+      <div class="header-right">
+        <button type="button" class="theme-toggle-btn" id="theme-toggle" title="Toggle Light / Dark Mode" aria-label="Toggle light and dark mode">
+          <i class="ti ti-sun"></i>
+        </button>
+        <button type="button" class="btn-primary-ghost btn-open-demo" id="open-docs-demo-btn" title="Try Live Player Demo">
+          <i class="ti ti-player-play-filled"></i>
+          <span>Live Demo</span>
+        </button>
+      </div>
+    </div>
+  </header>
+  <div class="sidebar-backdrop" id="sidebar-backdrop"></div>
+
+  <!-- Docs Layout: Sidebar + Main Content -->
+  <div class="docs-container">
+    <aside class="docs-sidebar">
+      <div class="sidebar-search">
+        <i class="ti ti-search"></i>
+        <input type="text" id="docs-search-input" placeholder="Search documentation...">
+      </div>
+
+      <div class="sidebar-nav-group">
+        <div class="sidebar-group-title">Overview</div>
+        <a href="#introduction" class="sidebar-link"><i class="ti ti-info-circle"></i> Introduction</a>
+        <a href="#comparison" class="sidebar-link"><i class="ti ti-table"></i> Feature Matrix</a>
+        <a href="#architecture" class="sidebar-link"><i class="ti ti-hierarchy-2"></i> Core Architecture</a>
+      </div>
+
+      <div class="sidebar-nav-group">
+        <div class="sidebar-group-title">Getting Started</div>
+        <a href="#ai-prompt-generator" class="sidebar-link"><i class="ti ti-sparkles"></i> AI Prompt Architect</a>
+        <a href="#quick-start" class="sidebar-link"><i class="ti ti-bolt"></i> 1-Click Drop-In HTML</a>
+        <a href="#cdn-delivery" class="sidebar-link"><i class="ti ti-world-download"></i> CDN & Package Delivery</a>
+        <a href="#js-api-start" class="sidebar-link"><i class="ti ti-code"></i> JavaScript API Setup</a>
+        <a href="#react-nextjs" class="sidebar-link"><i class="ti ti-brand-react"></i> React & Next.js</a>
+        <a href="#vue-frameworks" class="sidebar-link"><i class="ti ti-brand-vue"></i> Vue & Svelte</a>
+      </div>
+
+      <div class="sidebar-nav-group">
+        <div class="sidebar-group-title">API & Configuration</div>
+        <a href="#data-attributes" class="sidebar-link"><i class="ti ti-tags"></i> HTML Data Attributes</a>
+        <a href="#api-options" class="sidebar-link"><i class="ti ti-adjustments"></i> Options Reference</a>
+        <a href="#api-methods" class="sidebar-link"><i class="ti ti-terminal-2"></i> Player Methods</a>
+        <a href="#events-callbacks" class="sidebar-link"><i class="ti ti-antenna"></i> Events & State</a>
+      </div>
+
+      <div class="sidebar-nav-group">
+        <div class="sidebar-group-title">Deep Dives</div>
+        <a href="#theming-engine" class="sidebar-link"><i class="ti ti-palette"></i> Dynamic Theme Engine</a>
+        <a href="#pip-architecture" class="sidebar-link"><i class="ti ti-picture-in-picture"></i> Triple PiP Architecture</a>
+        <a href="#storyboard-engine" class="sidebar-link"><i class="ti ti-slideshow"></i> Storyboard Scrubbing</a>
+        <a href="#caption-customizer" class="sidebar-link"><i class="ti ti-badge-cc"></i> Subtitle Styling Engine</a>
+        <a href="#keyboard-shortcuts" class="sidebar-link"><i class="ti ti-keyboard"></i> Shortcuts & Gestures</a>
+        <a href="#shorts-mode" class="sidebar-link"><i class="ti ti-brand-tiktok"></i> YouTube Shorts (9:16)</a>
+        <a href="#background-mode" class="sidebar-link"><i class="ti ti-backdrop"></i> Ambient Background Play</a>
+      </div>
+
+      <div class="sidebar-nav-group">
+        <div class="sidebar-group-title">Production & Deployment</div>
+        <a href="#opensource-proxies" class="sidebar-link"><i class="ti ti-cloud-share"></i> Open-Source Stream Proxies</a>
+        <a href="#worker-deployment" class="sidebar-link"><i class="ti ti-cloud-storm"></i> Cloudflare Worker Proxy</a>
+        <a href="#self-hosted-server" class="sidebar-link"><i class="ti ti-server"></i> Self-Hosted Python Proxy</a>
+        <a href="#security-csp" class="sidebar-link"><i class="ti ti-shield-check"></i> Security, XSS & CSP</a>
+      </div>
+    </aside>
+
+    <main class="docs-content" id="main-content">
+      <!-- Notion Help Center Hero & Search -->
+      <div class="notion-help-hero">
+        <div class="notion-help-badge">
+          <i class="ti ti-book-2"></i>
+          <span>YVPlayer Knowledge Base & Help</span>
+        </div>
+        <h1 class="notion-help-title">Documentation & Guides</h1>
+        <p class="notion-help-subtitle">
+          Everything you need to embed, customize, and deploy YVPlayer across React, Next.js, Vue, and vanilla HTML.
+        </p>
+
+        <div class="notion-search-bar-wrap">
+          <div class="notion-search-bar">
+            <i class="ti ti-search notion-search-icon"></i>
+            <input type="text" id="notion-main-search" class="notion-search-input" placeholder="Search documentation, API parameters, PiP engines, shortcuts...">
+            <div class="notion-search-actions">
+              <kbd class="notion-kbd-pill" id="search-shortcut-pill">Ctrl+K</kbd>
+            </div>
+          </div>
+          <div class="notion-search-tags">
+            <span class="notion-tag-label">Popular topics:</span>
+            <button type="button" class="notion-quick-chip" data-search="Triple PiP">Triple PiP</button>
+            <button type="button" class="notion-quick-chip" data-search="Document PiP">Document PiP</button>
+            <button type="button" class="notion-quick-chip" data-search="720p">720p Direct Stream</button>
+            <button type="button" class="notion-quick-chip" data-search="Storyboard">Storyboard Scrubbing</button>
+            <button type="button" class="notion-quick-chip" data-search="data-yv-">HTML Attributes</button>
+            <button type="button" class="notion-quick-chip" data-search="Theming">Dynamic Theming</button>
+          </div>
+        </div>
+      </div>
+      <!-- Section: Introduction -->
+      <section id="introduction" class="docs-section">
+        <div class="section-badge">Cinema-Grade HTML5 Overlay</div>
+        <h1 class="section-title">Introduction to YVPlayer</h1>
+        <p class="section-lead">
+          <strong>YVPlayer</strong> is a high-performance, distraction-free HTML5 video player overlay designed specifically for YouTube videos. It strips away 100% of YouTube's native interface clutter, including video titles, channel avatars, "More videos" recommended drawers, and end-screen cards, while elevating playback with cinema-grade features inspired by modern production players like <strong>Video.js 10</strong>.
+        </p>
+
+        <div class="callout callout-note">
+          <div class="callout-icon"><i class="ti ti-sparkles"></i></div>
+          <div class="callout-content">
+            <strong>Zero AI Slop Guarantee</strong>
+            <p>YVPlayer is handcrafted in pure vanilla ES6 JavaScript and clean modern CSS with zero heavy framework dependencies. Every animation uses GPU-accelerated cubic-bezier curves, every layout is mathematically locked to 16:9, and every theme dynamically recalculates CSS custom property tokens in real-time.</p>
+          </div>
+        </div>
+
+        <div class="callout callout-tip" style="margin-top: 20px;">
+          <div class="callout-icon"><i class="ti ti-bolt"></i></div>
+          <div class="callout-content" style="width: 100%;">
+            <strong>Quick Start: Embed in 3 Simple Steps (Under 60 Seconds)</strong>
+            <p style="margin-bottom: 8px;">No complicated setups or bundler configurations required:</p>
+            <ol style="padding-left: 20px; line-height: 1.7; color: var(--text-secondary); font-size: 0.88rem; font-weight: 500;">
+              <li><strong>Step 1:</strong> Include the CSS & JS links in your <code>&lt;head&gt;</code>.</li>
+              <li><strong>Step 2:</strong> Place <code>&lt;div data-yv-video="YOUR_VIDEO_ID" style="aspect-ratio:16/9;"&gt;&lt;/div&gt;</code> anywhere on your page.</li>
+              <li><strong>Step 3:</strong> That is it! The player automatically initializes with custom controls, themes, and scrubbing.</li>
+            </ol>
+            <div style="margin-top: 10px;">
+              <button type="button" class="btn-copy-code btn-open-demo" style="background:var(--btn-solid-bg); color:var(--btn-solid-text); border:1.5px solid var(--border-medium); padding:7px 16px; border-radius:8px; font-weight:700; cursor:pointer;">
+                <i class="ti ti-player-play-filled"></i> Try Interactive Live Demo
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid-features-cards">
+          <div class="feature-box">
+            <div class="feature-box-icon"><i class="ti ti-ban"></i></div>
+            <h4>Zero YouTube Clutter</h4>
+            <p>Masks top branding banners, avatars, share pills, and end-screen video grids for a pure theatrical playback experience.</p>
+          </div>
+          <div class="feature-box">
+            <div class="feature-box-icon"><i class="ti ti-slideshow"></i></div>
+            <h4>Interactive Storyboard</h4>
+            <p>Scrub across the timeline with high-resolution frame previews stitched on-the-fly from YouTube's storyboard sprites.</p>
+          </div>
+          <div class="feature-box">
+            <div class="feature-box-icon"><i class="ti ti-app-window"></i></div>
+            <h4>Triple-Engine PiP</h4>
+            <p>Independent Document PiP (full custom player in OS window), Native Video PiP (720p HD stream with synced controls), and In-Page Dock mini-player.</p>
+          </div>
+          <div class="feature-box">
+            <div class="feature-box-icon"><i class="ti ti-palette"></i></div>
+            <h4>Real-Time Color Theming</h4>
+            <p>Pick from 7 polished presets or feed any custom hex color. Controls, glow effects, hover states, and ripples adapt instantly.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section: Feature Comparison -->
+      <section id="comparison" class="docs-section">
+        <div class="section-badge">Benchmark</div>
+        <h2 class="section-title">Feature Comparison Matrix</h2>
+        <p>How YVPlayer compares against standard YouTube embeds and alternative web players:</p>
+
+        <div class="table-wrapper">
+          <table class="docs-table">
+            <thead>
+              <tr>
+                <th>Capability</th>
+                <th class="col-highlight">YVPlayer</th>
+                <th>Standard YouTube Embed</th>
+                <th>Video.js (YouTube Plugin)</th>
+                <th>Plyr</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Zero Branding & Overlays</strong></td>
+                <td class="col-highlight"><span class="badge-yes"><i class="ti ti-check"></i> 100% Masked</span></td>
+                <td><span class="badge-no"><i class="ti ti-x"></i> YouTube UI</span></td>
+                <td><span class="badge-partial"><i class="ti ti-alert-triangle"></i> Partial</span></td>
+                <td><span class="badge-partial"><i class="ti ti-alert-triangle"></i> Partial</span></td>
+              </tr>
+              <tr>
+                <td><strong>Storyboard Timeline Previews</strong></td>
+                <td class="col-highlight"><span class="badge-yes"><i class="ti ti-check"></i> Native Sprites</span></td>
+                <td><span class="badge-yes"><i class="ti ti-check"></i> Built-in</span></td>
+                <td><span class="badge-no"><i class="ti ti-x"></i> Requires VTT</span></td>
+                <td><span class="badge-no"><i class="ti ti-x"></i> Requires VTT</span></td>
+              </tr>
+              <tr>
+                <td><strong>True OS-Level Desktop PiP</strong></td>
+                <td class="col-highlight"><span class="badge-yes"><i class="ti ti-check"></i> 720p Native Stream</span></td>
+                <td><span class="badge-partial"><i class="ti ti-alert-triangle"></i> Context Menu Only</span></td>
+                <td><span class="badge-no"><i class="ti ti-x"></i> Blocked by iframe</span></td>
+                <td><span class="badge-no"><i class="ti ti-x"></i> In-tab only</span></td>
+              </tr>
+              <tr>
+                <td><strong>In-Page Connected Mini-Player</strong></td>
+                <td class="col-highlight"><span class="badge-yes"><i class="ti ti-check"></i> 16:9 Corner Resizing</span></td>
+                <td><span class="badge-no"><i class="ti ti-x"></i> None</span></td>
+                <td><span class="badge-no"><i class="ti ti-x"></i> None</span></td>
+                <td><span class="badge-no"><i class="ti ti-x"></i> None</span></td>
+              </tr>
+              <tr>
+                <td><strong>Custom Caption Styling</strong></td>
+                <td class="col-highlight"><span class="badge-yes"><i class="ti ti-check"></i> Box/Transparent + Alpha</span></td>
+                <td><span class="badge-no"><i class="ti ti-x"></i> Fixed</span></td>
+                <td><span class="badge-partial"><i class="ti ti-alert-triangle"></i> Limited</span></td>
+                <td><span class="badge-partial"><i class="ti ti-alert-triangle"></i> Limited</span></td>
+              </tr>
+              <tr>
+                <td><strong>Built-in Sleep Auto-Pause Timer</strong></td>
+                <td class="col-highlight"><span class="badge-yes"><i class="ti ti-check"></i> 15m - End of Video</span></td>
+                <td><span class="badge-no"><i class="ti ti-x"></i> None</span></td>
+                <td><span class="badge-no"><i class="ti ti-x"></i> None</span></td>
+                <td><span class="badge-no"><i class="ti ti-x"></i> None</span></td>
+              </tr>
+              <tr>
+                <td><strong>YouTube Live Stream &amp; DVR Support</strong></td>
+                <td class="col-highlight"><span class="badge-yes"><i class="ti ti-check"></i> Auto 🔴 LIVE Pill + DVR Edge Sync</span></td>
+                <td><span class="badge-partial"><i class="ti ti-alert-triangle"></i> Cluttered UI</span></td>
+                <td><span class="badge-no"><i class="ti ti-x"></i> HLS plugin needed</span></td>
+                <td><span class="badge-no"><i class="ti ti-x"></i> HLS plugin needed</span></td>
+              </tr>
+              <tr>
+                <td><strong>YouTube Shorts (9:16 Vertical Ratio)</strong></td>
+                <td class="col-highlight"><span class="badge-yes"><i class="ti ti-check"></i> 9:16 Vertical + Streamlined Controls</span></td>
+                <td><span class="badge-no"><i class="ti ti-x"></i> Feed overlay</span></td>
+                <td><span class="badge-partial"><i class="ti ti-alert-triangle"></i> Manual CSS override</span></td>
+                <td><span class="badge-partial"><i class="ti ti-alert-triangle"></i> Manual CSS override</span></td>
+              </tr>
+              <tr>
+                <td><strong>Background Play (Ambient Video Behind Content)</strong></td>
+                <td class="col-highlight"><span class="badge-yes"><i class="ti ti-check"></i> Muted, Looping, Zero Controls</span></td>
+                <td><span class="badge-no"><i class="ti ti-x"></i> Native branding visible</span></td>
+                <td><span class="badge-partial"><i class="ti ti-alert-triangle"></i> Complex plugin config</span></td>
+                <td><span class="badge-no"><i class="ti ti-x"></i> Not supported</span></td>
+              </tr>
+              <tr>
+                <td><strong>1-Click HTML Drop-In (Zero JS)</strong></td>
+                <td class="col-highlight"><span class="badge-yes"><i class="ti ti-check"></i> &lt;div data-yv-video&gt;</span></td>
+                <td><span class="badge-yes"><i class="ti ti-check"></i> &lt;iframe&gt;</span></td>
+                <td><span class="badge-no"><i class="ti ti-x"></i> Complex setup</span></td>
+                <td><span class="badge-no"><i class="ti ti-x"></i> Complex setup</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Section: Architecture -->
+      <section id="architecture" class="docs-section">
+        <div class="section-badge">Internals</div>
+        <h2 class="section-title">Core Architecture & Data Flow</h2>
+        <p>YVPlayer bridges YouTube's underlying streaming infrastructure with a custom HTML5 canvas and controls tree:</p>
+
+        <div class="architecture-diagram">
+          <div class="arch-box arch-client">
+            <div class="arch-tag">Frontend Client</div>
+            <div class="arch-title">YVPlayer Host Page</div>
+            <div class="arch-desc">Custom controls row, storyboard scrubber, HUD pill, theme variables, sleep timer</div>
+          </div>
+          <div class="arch-arrows">
+            <span class="arch-arrow">➔ Dual-Engine Bridge ➔</span>
+          </div>
+          <div class="arch-box arch-engines">
+            <div class="arch-subgroup">
+              <span class="arch-badge">Engine A: In-Page Playback</span>
+              <p>Masked YouTube IFrame API with custom event dispatcher & audio sync</p>
+            </div>
+            <div class="arch-subgroup">
+              <span class="arch-badge">Engine B: OS-Level PiP</span>
+              <p>Native &lt;video&gt; element connected to 720p stream proxy with 16:9 aspect lock</p>
+            </div>
+          </div>
+          <div class="arch-arrows">
+            <span class="arch-arrow">➔ Resolver Proxy ➔</span>
+          </div>
+          <div class="arch-box arch-backend">
+            <div class="arch-tag">Stream Resolver</div>
+            <div class="arch-title">Cloudflare Worker / Server</div>
+            <div class="arch-desc">Extracts format 22 (720p HD with muxed audio) & storyboard specs with byte-range caching</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section: 1-Click Drop-In HTML -->
+          <!-- Interactive LLM Prompt Generator Section -->
+    <section id="ai-prompt-generator" class="prompt-generator-section docs-section">
+      <div class="prompt-gen-header">
+        <div class="prompt-badge"><i class="ti ti-sparkles"></i> AI Prompt Architect</div>
+        <h2 class="prompt-title">Generate Production AI Prompts in 1 Click</h2>
+        <p class="prompt-subtitle">
+          Select your tech stack, PiP engine, theme palette, and open-source stream proxies. Copy and paste the generated prompt into <strong>ChatGPT, Claude, Cursor, Copilot, or Gemini</strong> to integrate YVPlayer flawlessly into your codebase.
+        </p>
+      </div>
+
+      <div class="prompt-gen-layout">
+        <!-- Left: Interactive Options -->
+        <div class="prompt-options-pane">
+          
+          <!-- Target Framework -->
+          <div class="prompt-group">
+            <label class="prompt-group-label"><i class="ti ti-layers-linked"></i> Target Framework</label>
+            <div class="prompt-pill-selector" data-group="framework">
+              <button type="button" class="prompt-pill is-active" data-val="react"><i class="ti ti-brand-react"></i> React / Next.js</button>
+              <button type="button" class="prompt-pill" data-val="html"><i class="ti ti-brand-html5"></i> HTML / Vanilla</button>
+              <button type="button" class="prompt-pill" data-val="vue"><i class="ti ti-brand-vue"></i> Vue / Nuxt</button>
+              <button type="button" class="prompt-pill" data-val="svelte"><i class="ti ti-brand-svelte"></i> Svelte</button>
+            </div>
+          </div>
+
+          <!-- Video Mode -->
+          <div class="prompt-group">
+            <label class="prompt-group-label"><i class="ti ti-device-tv"></i> Video Player Mode</label>
+            <div class="prompt-pill-selector" data-group="mode">
+              <button type="button" class="prompt-pill is-active" data-val="standard"><i class="ti ti-aspect-ratio"></i> Standard (16:9)</button>
+              <button type="button" class="prompt-pill" data-val="shorts"><i class="ti ti-device-mobile"></i> Shorts (9:16)</button>
+              <button type="button" class="prompt-pill" data-val="background"><i class="ti ti-sparkles"></i> Background Ambient</button>
+              <button type="button" class="prompt-pill" data-val="live"><i class="ti ti-broadcast"></i> Live Stream</button>
+            </div>
+          </div>
+
+          <!-- Optional Target Video Input -->
+          <div class="prompt-group">
+            <label class="prompt-group-label"><i class="ti ti-link"></i> Target YouTube Video URL or ID (Optional)</label>
+            <input type="text" class="prompt-input prompt-video-input" placeholder="e.g. paste YouTube or Shorts link (defaults to mode sample)">
+          </div>
+
+          <!-- Picture-in-Picture Engine Selection -->
+          <div class="prompt-group">
+            <label class="prompt-group-label"><i class="ti ti-picture-in-picture"></i> Picture-in-Picture Engine</label>
+            <div class="prompt-pill-selector" data-group="pipMode">
+              <button type="button" class="prompt-pill is-active" data-val="dual"><i class="ti ti-layers-intersect"></i> Dual-Engine (Auto)</button>
+              <button type="button" class="prompt-pill" data-val="document"><i class="ti ti-browser"></i> Document PiP (OS Window)</button>
+              <button type="button" class="prompt-pill" data-val="inpage"><i class="ti ti-layout-bottombar"></i> In-Page Floating Dock</button>
+              <button type="button" class="prompt-pill" data-val="none"><i class="ti ti-circle-off"></i> Disabled</button>
+            </div>
+          </div>
+
+          <!-- Captions & Subtitles Engine -->
+          <div class="prompt-group">
+            <label class="prompt-group-label"><i class="ti ti-badge-cc"></i> Subtitle &amp; Captions Engine</label>
+            <div class="prompt-pill-selector" data-group="captionMode">
+              <button type="button" class="prompt-pill is-active" data-val="custom-both"><i class="ti ti-color-filter"></i> Dual-Backdrop (Solid + Transparent)</button>
+              <button type="button" class="prompt-pill" data-val="transparent"><i class="ti ti-box-model-2"></i> Transparent Box</button>
+              <button type="button" class="prompt-pill" data-val="solid"><i class="ti ti-square-filled"></i> Solid Backdrop</button>
+              <button type="button" class="prompt-pill" data-val="none"><i class="ti ti-circle-off"></i> Disabled</button>
+            </div>
+          </div>
+
+          <!-- End-User Customization Permission -->
+          <div class="prompt-group">
+            <label class="prompt-group-label"><i class="ti ti-user-cog"></i> End-User Customizer Access</label>
+            <div class="prompt-pill-selector" data-group="userCustomization">
+              <button type="button" class="prompt-pill is-active" data-val="full"><i class="ti ti-adjustments-horizontal"></i> Viewer Customizer Enabled (Settings Drawer)</button>
+              <button type="button" class="prompt-pill" data-val="locked"><i class="ti ti-lock"></i> Locked to Dev Presets (Zero Viewer Tampering)</button>
+            </div>
+          </div>
+
+          <!-- Supported Theme Accents (Multi-Select) -->
+          <div class="prompt-group">
+            <label class="prompt-group-label"><i class="ti ti-palette"></i> Supported Theme Accents (Multi-Select)</label>
+            <div class="prompt-theme-multiselect">
+              <label class="prompt-theme-chip is-selected" data-theme="red">
+                <input type="checkbox" data-theme-val="red" checked>
+                <span class="theme-color-dot" style="background: #fe0001;"></span>
+                <span>Red</span>
+              </label>
+              <label class="prompt-theme-chip is-selected" data-theme="cyan">
+                <input type="checkbox" data-theme-val="cyan" checked>
+                <span class="theme-color-dot" style="background: #00e5ff;"></span>
+                <span>Cyan</span>
+              </label>
+              <label class="prompt-theme-chip is-selected" data-theme="purple">
+                <input type="checkbox" data-theme-val="purple" checked>
+                <span class="theme-color-dot" style="background: #a855f7;"></span>
+                <span>Purple</span>
+              </label>
+              <label class="prompt-theme-chip is-selected" data-theme="emerald">
+                <input type="checkbox" data-theme-val="emerald" checked>
+                <span class="theme-color-dot" style="background: #10b981;"></span>
+                <span>Emerald</span>
+              </label>
+              <label class="prompt-theme-chip is-selected" data-theme="amber">
+                <input type="checkbox" data-theme-val="amber" checked>
+                <span class="theme-color-dot" style="background: #f59e0b;"></span>
+                <span>Amber</span>
+              </label>
+              <label class="prompt-theme-chip is-selected" data-theme="white">
+                <input type="checkbox" data-theme-val="white" checked>
+                <span class="theme-color-dot" style="background: #ffffff;"></span>
+                <span>White</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Stream Proxy Provider Selection -->
+          <div class="prompt-group">
+            <label class="prompt-group-label"><i class="ti ti-server-2"></i> Stream Proxy Provider (For Native PiP &amp; Direct Streams)</label>
+            <div class="prompt-pill-selector" data-group="proxyProvider">
+              <button type="button" class="prompt-pill is-active" data-val="piped"><i class="ti ti-brand-youtube"></i> Piped API (Open-Source / Zero Backend)</button>
+              <button type="button" class="prompt-pill" data-val="invidious"><i class="ti ti-world"></i> Invidious API (Open-Source)</button>
+              <button type="button" class="prompt-pill" data-val="cobalt"><i class="ti ti-bolt"></i> Cobalt API (High-Speed)</button>
+              <button type="button" class="prompt-pill" data-val="local"><i class="ti ti-server"></i> Self-Hosted Python (yt-dlp)</button>
+            </div>
+          </div>
+
+          <!-- Controls Row: Default Theme & Delivery CDN -->
+          <div class="prompt-row-controls">
+            <div class="prompt-field-half">
+              <label class="prompt-group-label"><i class="ti ti-color-swatch"></i> Default Starting Theme</label>
+              <select class="prompt-select prompt-theme-select">
+                <option value="red" selected>Classic Red (#fe0001)</option>
+                <option value="cyan">City Cyan (#00e5ff)</option>
+                <option value="purple">Fantasy Purple (#a855f7)</option>
+                <option value="emerald">Forest Emerald (#10b981)</option>
+                <option value="amber">Amber Gold (#f59e0b)</option>
+                <option value="white">Minimal White (#ffffff)</option>
+              </select>
+            </div>
+            <div class="prompt-field-half">
+              <label class="prompt-group-label"><i class="ti ti-cloud-download"></i> Delivery CDN</label>
+              <select class="prompt-select prompt-cdn-select">
+                <option value="jsdelivr" selected>jsDelivr CDN (Production)</option>
+                <option value="local">Self-Hosted / Local</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- LLM Format -->
+          <div class="prompt-group">
+            <label class="prompt-group-label"><i class="ti ti-robot"></i> LLM Output Format</label>
+            <div class="prompt-pill-selector" data-group="llmFormat">
+              <button type="button" class="prompt-pill is-active" data-val="chat"><i class="ti ti-message-chatbot"></i> Chat (ChatGPT / Claude / Gemini)</button>
+              <button type="button" class="prompt-pill" data-val="cursor"><i class="ti ti-terminal"></i> Cursor Rules (.cursorrules)</button>
+              <button type="button" class="prompt-pill" data-val="task"><i class="ti ti-checklist"></i> Single Coding Task</button>
+            </div>
+          </div>
+
+          <!-- Features Grid -->
+          <div class="prompt-group">
+            <label class="prompt-group-label"><i class="ti ti-components"></i> Included Features &amp; Capabilities</label>
+            <div class="prompt-features-grid">
+              <label class="prompt-checkbox-item">
+                <input type="checkbox" data-feature="nocookie" checked>
+                <span class="prompt-checkbox-custom"></span>
+                <span class="prompt-checkbox-text">
+                  <strong>YouTube-NoCookie</strong>
+                  <small>Zero tracking cookies</small>
+                </span>
+              </label>
+
+              <label class="prompt-checkbox-item">
+                <input type="checkbox" data-feature="loop" checked>
+                <span class="prompt-checkbox-custom"></span>
+                <span class="prompt-checkbox-text">
+                  <strong>Loop Control</strong>
+                  <small>Seamless repeat toggle</small>
+                </span>
+              </label>
+
+              <label class="prompt-checkbox-item">
+                <input type="checkbox" data-feature="storyboard" checked>
+                <span class="prompt-checkbox-custom"></span>
+                <span class="prompt-checkbox-text">
+                  <strong>VTT Storyboard</strong>
+                  <small>Scrubbing frame hover previews</small>
+                </span>
+              </label>
+
+              <label class="prompt-checkbox-item">
+                <input type="checkbox" data-feature="sleeptimer" checked>
+                <span class="prompt-checkbox-custom"></span>
+                <span class="prompt-checkbox-text">
+                  <strong>Sleep Timer</strong>
+                  <small>Schedule auto-pause &amp; fade</small>
+                </span>
+              </label>
+
+              <label class="prompt-checkbox-item">
+                <input type="checkbox" data-feature="speed" checked>
+                <span class="prompt-checkbox-custom"></span>
+                <span class="prompt-checkbox-text">
+                  <strong>Speed Selector</strong>
+                  <small>0.25x – 2.0x playback rates</small>
+                </span>
+              </label>
+
+              <label class="prompt-checkbox-item">
+                <input type="checkbox" data-feature="quality" checked>
+                <span class="prompt-checkbox-custom"></span>
+                <span class="prompt-checkbox-text">
+                  <strong>Direct Quality</strong>
+                  <small>1080p, 720p, 480p, 360p</small>
+                </span>
+              </label>
+
+              <label class="prompt-checkbox-item">
+                <input type="checkbox" data-feature="hotkeys" checked>
+                <span class="prompt-checkbox-custom"></span>
+                <span class="prompt-checkbox-text">
+                  <strong>Shortcuts Modal</strong>
+                  <small>Media hotkeys (Space, J, K, L, M, F, P, ?)</small>
+                </span>
+              </label>
+
+              <label class="prompt-checkbox-item">
+                <input type="checkbox" data-feature="autoplay">
+                <span class="prompt-checkbox-custom"></span>
+                <span class="prompt-checkbox-text">
+                  <strong>Autoplay</strong>
+                  <small>Start playing on mount</small>
+                </span>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Live Generated Prompt Display -->
+        <div class="prompt-preview-pane">
+          <div class="prompt-preview-header">
+            <div class="prompt-preview-title">
+              <span class="prompt-live-dot"></span>
+              <span>Live Generated Prompt</span>
+            </div>
+            <div class="prompt-preview-actions">
+              <span class="prompt-stats-badge">~380 tokens</span>
+              <button type="button" class="prompt-copy-btn" title="Copy to clipboard">
+                <i class="ti ti-copy"></i>
+                <span>Copy Prompt</span>
+              </button>
+            </div>
+          </div>
+          <div class="prompt-code-wrap">
+            <pre><code class="prompt-code-output"></code></pre>
+          </div>
+          <div class="prompt-preview-footer">
+            <span class="prompt-tip"><i class="ti ti-info-circle"></i> Paste directly into <strong>Claude, CodeX, Cursor, or any coding agent</strong> to build in seconds.</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+      <section id="quick-start" class="docs-section">
+        <div class="section-badge">Getting Started</div>
+        <h2 class="section-title">1-Click Drop-In HTML (Zero JavaScript)</h2>
+        <p>
+          The simplest way to integrate YVPlayer into any HTML website, WordPress template, Webflow embed, or Shopify theme. You do not need to write a single line of JavaScript.
+        </p>
+
+        <div class="code-block">
+          <div class="code-block-header">
+            <span>HTML &mdash; Drop-In Embed</span>
+            <button type="button" class="btn-copy-code" data-code='<!-- 1. YVPlayer Styles & Script via jsDelivr CDN -->
+<link rel="preload" href="fonts/tabler-icons.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="tabler-icons.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/thevikasgurjar/YVplayer@main/yvPlayer.css" />
+<script src="https://cdn.jsdelivr.net/gh/thevikasgurjar/YVplayer@main/yvPlayer.js"></script>
+
+<!-- 2. Player Element: Set data-yv-video with your YouTube ID or URL -->
+<div 
+  data-yv-video="LXb3EKWsInQ" 
+  data-yv-theme="red"
+  style="max-width: 960px; aspect-ratio: 16/9; margin: 0 auto; border-radius: 12px; overflow: hidden;"
+></div>'><i class="ti ti-copy"></i> Copy</button>
+          </div>
+          <pre><code><span class="token-comment">&lt;!-- 1. YVPlayer Styles & Script via jsDelivr CDN --&gt;</span>
+&lt;<span class="token-tag">link</span> <span class="token-attr">rel</span>=<span class="token-str">"stylesheet"</span> <span class="token-attr">href</span>=<span class="token-str">"https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css"</span> /&gt;
+&lt;<span class="token-tag">link</span> <span class="token-attr">rel</span>=<span class="token-str">"stylesheet"</span> <span class="token-attr">href</span>=<span class="token-str">"https://cdn.jsdelivr.net/gh/thevikasgurjar/YVplayer@main/yvPlayer.css"</span> /&gt;
+&lt;<span class="token-tag">script</span> <span class="token-attr">src</span>=<span class="token-str">"https://cdn.jsdelivr.net/gh/thevikasgurjar/YVplayer@main/yvPlayer.js"</span>&gt;&lt;/<span class="token-tag">script</span>&gt;
+
+<span class="token-comment">&lt;!-- 2. Player Element: Set data-yv-video with your YouTube ID or URL --&gt;</span>
+&lt;<span class="token-tag">div</span> 
+  <span class="token-attr">data-yv-video</span>=<span class="token-str">"LXb3EKWsInQ"</span> 
+  <span class="token-attr">data-yv-theme</span>=<span class="token-str">"red"</span>
+  <span class="token-attr">style</span>=<span class="token-str">"max-width: 960px; aspect-ratio: 16/9; margin: 0 auto; border-radius: 12px; overflow: hidden;"</span>
+&gt;&lt;/<span class="token-tag">div</span>&gt;</code></pre>
+        </div>
+
+        <div class="callout callout-tip">
+          <div class="callout-icon"><i class="ti ti-bulb"></i></div>
+          <div class="callout-content">
+            <strong>Automatic Lifecycle Management</strong>
+            <p>When the browser parses <code>yvPlayer.js</code>, it automatically scans the DOM for elements with <code>data-yv-video</code>, loads the YouTube IFrame API in the background, parses full URLs or raw 11-char IDs, and mounts the player. No manual initialization scripts required!</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section: CDN Delivery -->
+      <section id="cdn-delivery" class="docs-section">
+        <div class="section-badge">Distribution</div>
+        <h2 class="section-title">CDN Providers & Local Assets</h2>
+        <p>YVPlayer is distributed through leading global CDNs with automatic HTTP/3 caching and Brotli compression:</p>
+
+        <div class="table-wrapper">
+          <table class="docs-table">
+            <thead>
+              <tr>
+                <th>CDN Provider</th>
+                <th>Stylesheet (CSS) URL</th>
+                <th>JavaScript (JS) URL</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>jsDelivr (Recommended)</strong></td>
+                <td><code>https://cdn.jsdelivr.net/gh/thevikasgurjar/YVplayer@main/yvPlayer.css</code></td>
+                <td><code>https://cdn.jsdelivr.net/gh/thevikasgurjar/YVplayer@main/yvPlayer.js</code></td>
+                <td><span class="status-live">Production / Fast</span></td>
+              </tr>
+              <tr>
+                <td><strong>Self-Hosted / Local</strong></td>
+                <td><code>./yvPlayer.css</code></td>
+                <td><code>./yvPlayer.js</code></td>
+                <td><span class="status-custom">Offline / Private</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Section: JavaScript API Setup -->
+      <section id="js-api-start" class="docs-section">
+        <div class="section-badge">Programmatic Control</div>
+        <h2 class="section-title">Standard JavaScript API</h2>
+        <p>When you need programmatic playback control, custom callbacks, or dynamic video switching, use the <code>YVPlayer.init()</code> Promise API:</p>
+
+        <div class="code-block">
+          <div class="code-block-header">
+            <span>JavaScript &mdash; API Initialization</span>
+            <button type="button" class="btn-copy-code" data-code='<div id="player" style="max-width: 960px; aspect-ratio: 16/9; margin: 0 auto; border-radius: 12px; overflow: hidden;"></div>
+
+<script src="https://www.youtube.com/iframe_api"></script>
+<script src="yvPlayer.js"></script>
+
+<script>
+  window.onYouTubeIframeAPIReady = function() {
+    YVPlayer.init("player", {
+      defaultId: "LXb3EKWsInQ",
+      theme: "red",
+      autoplay: true,
+      loop: false
+    }).then(function() {
+      console.log("YVPlayer initialized successfully!");
+    }).catch(function(err) {
+      console.error("Player initialization failed:", err);
+    });
+  };
+</script>'><i class="ti ti-copy"></i> Copy</button>
+          </div>
+          <pre><code>&lt;<span class="token-tag">div</span> <span class="token-attr">id</span>=<span class="token-str">"player"</span> <span class="token-attr">style</span>=<span class="token-str">"max-width: 960px; aspect-ratio: 16/9; margin: 0 auto; border-radius: 12px; overflow: hidden;"</span>&gt;&lt;/<span class="token-tag">div</span>&gt;
+
+&lt;<span class="token-tag">script</span> <span class="token-attr">src</span>=<span class="token-str">"https://www.youtube.com/iframe_api"</span>&gt;&lt;/<span class="token-tag">script</span>&gt;
+&lt;<span class="token-tag">script</span> <span class="token-attr">src</span>=<span class="token-str">"yvPlayer.js"</span>&gt;&lt;/<span class="token-tag">script</span>&gt;
+
+&lt;<span class="token-tag">script</span>&gt;
+  <span class="token-keyword">window</span>.<span class="token-func">onYouTubeIframeAPIReady</span> = <span class="token-keyword">function</span>() {
+    <span class="token-keyword">YVPlayer</span>.<span class="token-func">init</span>(<span class="token-str">"player"</span>, {
+      <span class="token-attr">defaultId</span>: <span class="token-str">"LXb3EKWsInQ"</span>,
+      <span class="token-attr">theme</span>: <span class="token-str">"red"</span>,
+      <span class="token-attr">autoplay</span>: <span class="token-keyword">true</span>,
+      <span class="token-attr">loop</span>: <span class="token-keyword">false</span>
+    }).<span class="token-func">then</span>(<span class="token-keyword">function</span>() {
+      <span class="token-keyword">console</span>.<span class="token-func">log</span>(<span class="token-str">"YVPlayer initialized successfully!"</span>);
+    });
+  };
+&lt;/<span class="token-tag">script</span>&gt;</code></pre>
+        </div>
+      </section>
+
+      <!-- Section: React & Next.js Integration -->
+      <section id="react-nextjs" class="docs-section">
+        <div class="section-badge">Framework Integration</div>
+        <h2 class="section-title">React & Next.js Component</h2>
+        <p>Integrate YVPlayer into React 18, React 19, or Next.js (App Router / Pages Router) with proper mounting, unmounting, and memory leak cleanup:</p>
+
+        <div class="code-block">
+          <div class="code-block-header">
+            <span>React / Next.js &mdash; VideoPlayer.tsx</span>
+            <button type="button" class="btn-copy-code" data-code='import React, { useEffect, useRef } from "react";
+
+interface VideoPlayerProps {
+  videoId: string;
+  theme?: "red" | "cyan" | "purple" | "emerald" | "teal" | "gold" | "white";
+  customColor?: string;
+  autoplay?: boolean;
+}
+
+export function VideoPlayer({ videoId, theme = "red", customColor, autoplay = true }: VideoPlayerProps) {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const playerIdRef = useRef<string>("yv-" + Math.random().toString(36).substring(2, 9));
+
+  useEffect(() => {
+    const id = playerIdRef.current;
+    if (typeof window === "undefined" || !window.YVPlayer) return;
+
+    window.YVPlayer.init(id, {
+      defaultId: videoId,
+      theme,
+      autoplay,
+    }).then(() => {
+      if (customColor && window.YVPlayer.setTheme) {
+        window.YVPlayer.setTheme(id, customColor, "Custom");
+      }
+    });
+
+    return () => {
+      if (window.YVPlayer && window.YVPlayer.destroy) {
+        window.YVPlayer.destroy(id);
+      }
+    };
+  }, [videoId, theme, customColor, autoplay]);
+
+  return (
+    <div
+      id={playerIdRef.current}
+      ref={containerRef}
+      style={{
+        width: "100%",
+        maxWidth: "960px",
+        aspectRatio: "16 / 9",
+        margin: "0 auto",
+        borderRadius: "14px",
+        overflow: "hidden",
+      }}
+    />
+  );
+}'><i class="ti ti-copy"></i> Copy</button>
+          </div>
+          <pre><code><span class="token-keyword">import</span> <span class="token-attr">React</span>, { <span class="token-attr">useEffect</span>, <span class="token-attr">useRef</span> } <span class="token-keyword">from</span> <span class="token-str">"react"</span>;
+
+<span class="token-keyword">export function</span> <span class="token-func">VideoPlayer</span>({ <span class="token-attr">videoId</span>, <span class="token-attr">theme</span> = <span class="token-str">"red"</span>, <span class="token-attr">customColor</span>, <span class="token-attr">autoplay</span> = <span class="token-keyword">true</span> }) {
+  <span class="token-keyword">const</span> <span class="token-attr">containerRef</span> = <span class="token-func">useRef</span>(<span class="token-keyword">null</span>);
+  <span class="token-keyword">const</span> <span class="token-attr">playerIdRef</span> = <span class="token-func">useRef</span>(<span class="token-str">"yv-"</span> + <span class="token-keyword">Math</span>.<span class="token-func">random</span>().<span class="token-func">toString</span>(36).<span class="token-func">substring</span>(2, 9));
+
+  <span class="token-func">useEffect</span>(() =&gt; {
+    <span class="token-keyword">const</span> <span class="token-attr">id</span> = <span class="token-attr">playerIdRef</span>.<span class="token-attr">current</span>;
+    <span class="token-keyword">if</span> (<span class="token-keyword">typeof window</span> === <span class="token-str">"undefined"</span> || !<span class="token-keyword">window</span>.<span class="token-attr">YVPlayer</span>) <span class="token-keyword">return</span>;
+
+    <span class="token-keyword">window</span>.<span class="token-attr">YVPlayer</span>.<span class="token-func">init</span>(<span class="token-attr">id</span>, {
+      <span class="token-attr">defaultId</span>: <span class="token-attr">videoId</span>,
+      <span class="token-attr">theme</span>,
+      <span class="token-attr">autoplay</span>
+    }).<span class="token-func">then</span>(() =&gt; {
+      <span class="token-keyword">if</span> (<span class="token-attr">customColor</span>) <span class="token-keyword">window</span>.<span class="token-attr">YVPlayer</span>.<span class="token-func">setTheme</span>(<span class="token-attr">id</span>, <span class="token-attr">customColor</span>, <span class="token-str">"Custom"</span>);
+    });
+
+    <span class="token-keyword">return</span> () =&gt; {
+      <span class="token-keyword">if</span> (<span class="token-keyword">window</span>.<span class="token-attr">YVPlayer</span>?.<span class="token-attr">destroy</span>) <span class="token-keyword">window</span>.<span class="token-attr">YVPlayer</span>.<span class="token-func">destroy</span>(<span class="token-attr">id</span>);
+    };
+  }, [<span class="token-attr">videoId</span>, <span class="token-attr">theme</span>, <span class="token-attr">customColor</span>, <span class="token-attr">autoplay</span>]);
+
+  <span class="token-keyword">return</span> (
+    &lt;<span class="token-tag">div</span>
+      <span class="token-attr">id</span>={<span class="token-attr">playerIdRef</span>.<span class="token-attr">current</span>}
+      <span class="token-attr">ref</span>={<span class="token-attr">containerRef</span>}
+      <span class="token-attr">style</span>={{ <span class="token-attr">maxWidth</span>: <span class="token-str">"960px"</span>, <span class="token-attr">aspectRatio</span>: <span class="token-str">"16/9"</span>, <span class="token-attr">borderRadius</span>: <span class="token-str">"14px"</span>, <span class="token-attr">overflow</span>: <span class="token-str">"hidden"</span> }}
+    /&gt;
+  );
+}</code></pre>
+        </div>
+      </section>
+
+      <!-- Section: Vue 3, Nuxt & Svelte -->
+      <section id="vue-frameworks" class="docs-section">
+        <div class="section-badge">Framework Integration</div>
+        <h2 class="section-title">Vue 3, Nuxt & Svelte Integration</h2>
+        <p class="section-lead">
+          Official production wrappers for Vue 3 Composition API, Nuxt 3 SSR applications, and Svelte 4/5 with reactive props, automatic player instance cleanup, and dynamic video switching.
+        </p>
+
+        <h3 class="subsection-title" style="margin-top: 28px; margin-bottom: 14px;">Vue 3 (Composition API &amp; &lt;script setup&gt;)</h3>
+        <p>
+          Drop the following reusable Single File Component (SFC) into your Vue 3 or Vite project. It automatically synchronizes video IDs, themes, and PiP modes with full reactive watchers:
+        </p>
+
+        <div class="code-block">
+          <div class="code-block-header">
+            <span>Vue 3 Component &mdash; YVPlayer.vue</span>
+            <button type="button" class="btn-copy-code" data-code='<template>
+  <div :id="playerId" class="yvPlayer" :style="{ width: &quot;100%&quot;, aspectRatio: &quot;16 / 9&quot;, borderRadius: radius, overflow: &quot;hidden&quot; }"></div>
+</template>
+
+<script setup>
+import { ref, onMounted, onBeforeUnmount, watch } from "vue";
+
+const props = defineProps({
+  videoId: { type: String, required: true },
+  theme: { type: String, default: "red" },
+  customColor: { type: String, default: null },
+  autoplay: { type: Boolean, default: true },
+  pipMode: { type: String, default: "document" },
+  radius: { type: String, default: "14px" }
+});
+
+const playerId = "yv-" + Math.random().toString(36).substring(2, 9);
+
+onMounted(() => {
+  if (typeof window === "undefined" || !window.YVPlayer) return;
+
+  window.YVPlayer.init(playerId, {
+    defaultId: props.videoId,
+    theme: props.theme,
+    customColor: props.customColor,
+    autoplay: props.autoplay,
+    pipMode: props.pipMode,
+    storyboard: true
+  });
+});
+
+watch(() => props.videoId, (newId) => {
+  if (window.YVPlayer && window.YVPlayer.changeVideo) {
+    window.YVPlayer.changeVideo(playerId, newId);
+  }
+});
+
+watch(() => props.theme, (newTheme) => {
+  if (window.YVPlayer && window.YVPlayer.setTheme) {
+    window.YVPlayer.setTheme(playerId, props.customColor || newTheme, newTheme);
+  }
+});
+
+onBeforeUnmount(() => {
+  if (window.YVPlayer && window.YVPlayer.destroy) {
+    window.YVPlayer.destroy(playerId);
+  }
+});
+</script>'>
+              <i class="ti ti-copy"></i> Copy Component
+            </button>
+          </div>
+          <pre><code><span class="token-tag">&lt;template&gt;</span>
+  &lt;<span class="token-tag">div</span>
+    :<span class="token-attr">id</span>=<span class="token-val">"playerId"</span>
+    <span class="token-attr">class</span>=<span class="token-val">"yvPlayer"</span>
+    :<span class="token-attr">style</span>=<span class="token-val">"{ width: '100%', aspectRatio: '16 / 9', borderRadius: radius, overflow: 'hidden' }"</span>
+  &gt;&lt;/<span class="token-tag">div</span>&gt;
+<span class="token-tag">&lt;/template&gt;</span>
+
+<span class="token-tag">&lt;script setup&gt;</span>
+<span class="token-keyword">import</span> { ref, onMounted, onBeforeUnmount, watch } <span class="token-keyword">from</span> <span class="token-val">"vue"</span>;
+
+<span class="token-keyword">const</span> props = <span class="token-func">defineProps</span>({
+  videoId: { type: String, required: <span class="token-keyword">true</span> },
+  theme: { type: String, default: <span class="token-val">"red"</span> },
+  customColor: { type: String, default: <span class="token-keyword">null</span> },
+  autoplay: { type: Boolean, default: <span class="token-keyword">true</span> },
+  pipMode: { type: String, default: <span class="token-val">"document"</span> },
+  radius: { type: String, default: <span class="token-val">"14px"</span> }
+});
+
+<span class="token-keyword">const</span> playerId = <span class="token-val">"yv-"</span> + Math.<span class="token-func">random</span>().<span class="token-func">toString</span>(<span class="token-val">36</span>).<span class="token-func">substring</span>(<span class="token-val">2</span>, <span class="token-val">9</span>);
+
+<span class="token-func">onMounted</span>(() =&gt; {
+  <span class="token-keyword">if</span> (<span class="token-keyword">typeof</span> window === <span class="token-val">"undefined"</span> || !window.YVPlayer) <span class="token-keyword">return</span>;
+
+  window.YVPlayer.<span class="token-func">init</span>(playerId, {
+    defaultId: props.videoId,
+    theme: props.theme,
+    customColor: props.customColor,
+    autoplay: props.autoplay,
+    pipMode: props.pipMode,
+    storyboard: <span class="token-keyword">true</span>
+  });
+});
+
+<span class="token-func">watch</span>(() =&gt; props.videoId, (newId) =&gt; {
+  <span class="token-keyword">if</span> (window.YVPlayer &amp;&amp; window.YVPlayer.changeVideo) {
+    window.YVPlayer.<span class="token-func">changeVideo</span>(playerId, newId);
+  }
+});
+
+<span class="token-func">watch</span>(() =&gt; props.theme, (newTheme) =&gt; {
+  <span class="token-keyword">if</span> (window.YVPlayer &amp;&amp; window.YVPlayer.setTheme) {
+    window.YVPlayer.<span class="token-func">setTheme</span>(playerId, props.customColor || newTheme, newTheme);
+  }
+});
+
+<span class="token-func">onBeforeUnmount</span>(() =&gt; {
+  <span class="token-keyword">if</span> (window.YVPlayer &amp;&amp; window.YVPlayer.destroy) {
+    window.YVPlayer.<span class="token-func">destroy</span>(playerId);
+  }
+});
+<span class="token-tag">&lt;/script&gt;</span></code></pre>
+        </div>
+
+        <div class="notion-callout" style="margin-top: 20px;">
+          <div class="notion-callout-icon"><i class="ti ti-info-circle"></i></div>
+          <div class="notion-callout-body">
+            <strong>Nuxt 3 SSR Note:</strong> Wrap your player component in <code>&lt;ClientOnly&gt;</code> to ensure client-side DOM evaluation since YVPlayer operates on browser window objects and the YouTube IFrame API.
+          </div>
+        </div>
+
+        <h3 class="subsection-title" style="margin-top: 36px; margin-bottom: 14px;">Svelte 4 &amp; Svelte 5 Component</h3>
+        <p>
+          In Svelte, bind the player target element with <code>bind:this</code> and control the lifecycle through <code>onMount</code> and <code>onDestroy</code>:
+        </p>
+
+        <div class="code-block">
+          <div class="code-block-header">
+            <span>Svelte Component &mdash; VideoPlayer.svelte</span>
+            <button type="button" class="btn-copy-code" data-code='<script>
+  import { onMount, onDestroy } from "svelte";
+
+  export let videoId = "LXb3EKWsInQ";
+  export let theme = "red";
+  export let customColor = null;
+  export let pipMode = "document";
+  export let autoplay = true;
+
+  let playerEl;
+  let playerId = "yv-svelte-" + Math.random().toString(36).substring(2, 8);
+  let playerReady = false;
+
+  onMount(() => {
+    if (typeof window === "undefined" || !window.YVPlayer) return;
+
+    window.YVPlayer.init(playerId, {
+      defaultId: videoId,
+      theme,
+      customColor,
+      pipMode,
+      autoplay,
+      storyboard: true
+    }).then(() => {
+      playerReady = true;
+    });
+  });
+
+  $: if (playerReady && videoId && window.YVPlayer) {
+    window.YVPlayer.changeVideo(playerId, videoId);
+  }
+
+  onDestroy(() => {
+    if (window.YVPlayer && window.YVPlayer.destroy) {
+      window.YVPlayer.destroy(playerId);
+    }
+  });
+</script>
+
+<div
+  bind:this={playerEl}
+  id={playerId}
+  class="yvPlayer"
+  style="width: 100%; aspect-ratio: 16 / 9; border-radius: 14px; overflow: hidden;"
+></div>'>
+              <i class="ti ti-copy"></i> Copy Component
+            </button>
+          </div>
+          <pre><code><span class="token-tag">&lt;script&gt;</span>
+  <span class="token-keyword">import</span> { onMount, onDestroy } <span class="token-keyword">from</span> <span class="token-val">"svelte"</span>;
+
+  <span class="token-keyword">export let</span> videoId = <span class="token-val">"LXb3EKWsInQ"</span>;
+  <span class="token-keyword">export let</span> theme = <span class="token-val">"red"</span>;
+  <span class="token-keyword">export let</span> customColor = <span class="token-keyword">null</span>;
+  <span class="token-keyword">export let</span> pipMode = <span class="token-val">"document"</span>;
+  <span class="token-keyword">export let</span> autoplay = <span class="token-keyword">true</span>;
+
+  <span class="token-keyword">let</span> playerEl;
+  <span class="token-keyword">let</span> playerId = <span class="token-val">"yv-svelte-"</span> + Math.<span class="token-func">random</span>().<span class="token-func">toString</span>(<span class="token-val">36</span>).<span class="token-func">substring</span>(<span class="token-val">2</span>, <span class="token-val">8</span>);
+  <span class="token-keyword">let</span> playerReady = <span class="token-keyword">false</span>;
+
+  <span class="token-func">onMount</span>(() =&gt; {
+    <span class="token-keyword">if</span> (<span class="token-keyword">typeof</span> window === <span class="token-val">"undefined"</span> || !window.YVPlayer) <span class="token-keyword">return</span>;
+
+    window.YVPlayer.<span class="token-func">init</span>(playerId, {
+      defaultId: videoId,
+      theme,
+      customColor,
+      pipMode,
+      autoplay,
+      storyboard: <span class="token-keyword">true</span>
+    }).<span class="token-func">then</span>(() =&gt; {
+      playerReady = <span class="token-keyword">true</span>;
+    });
+  });
+
+  $: <span class="token-keyword">if</span> (playerReady &amp;&amp; videoId &amp;&amp; window.YVPlayer) {
+    window.YVPlayer.<span class="token-func">changeVideo</span>(playerId, videoId);
+  }
+
+  <span class="token-func">onDestroy</span>(() =&gt; {
+    <span class="token-keyword">if</span> (window.YVPlayer &amp;&amp; window.YVPlayer.destroy) {
+      window.YVPlayer.<span class="token-func">destroy</span>(playerId);
+    }
+  });
+<span class="token-tag">&lt;/script&gt;</span>
+
+&lt;<span class="token-tag">div</span>
+  bind:this={<span class="token-attr">playerEl</span>}
+  <span class="token-attr">id</span>={<span class="token-attr">playerId</span>}
+  <span class="token-attr">class</span>=<span class="token-val">"yvPlayer"</span>
+  <span class="token-attr">style</span>=<span class="token-val">"width: 100%; aspect-ratio: 16 / 9; border-radius: 14px; overflow: hidden;"</span>
+&gt;&lt;/<span class="token-tag">div</span>&gt;</code></pre>
+        </div>
+      </section>
+
+
+      <!-- Section: Data Attributes Reference -->
+      <section id="data-attributes" class="docs-section">
+        <div class="section-badge">Declarative API</div>
+        <h2 class="section-title">HTML Data Attributes Reference</h2>
+        <p>All declarative properties supported by 1-Click Drop-in containers:</p>
+
+        <div class="table-wrapper">
+          <table class="docs-table">
+            <thead>
+              <tr>
+                <th>Attribute</th>
+                <th>Type</th>
+                <th>Default</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>data-yv-video</code></td>
+                <td><code>string</code></td>
+                <td><em>required</em></td>
+                <td>YouTube Video ID (11 chars) or full URL (e.g. <code>https://youtube.com/watch?v=...</code>).</td>
+              </tr>
+              <tr>
+                <td><code>data-yv-theme</code></td>
+                <td><code>string</code></td>
+                <td><code>"default"</code></td>
+                <td>Preset theme name: <code>red</code>, <code>cyan</code>, <code>purple</code>, <code>emerald</code>, <code>teal</code>, <code>gold</code>, <code>white</code>.</td>
+              </tr>
+              <tr>
+                <td><code>data-yv-color</code></td>
+                <td><code>hex string</code></td>
+                <td><code>null</code></td>
+                <td>Custom accent color (e.g. <code>#ff0055</code>). Overrides preset theme dynamically.</td>
+              </tr>
+              <tr>
+                <td><code>data-yv-autoplay</code></td>
+                <td><code>boolean</code></td>
+                <td><code>"true"</code></td>
+                <td>Whether the player should start playback immediately on mount (subject to browser policy).</td>
+              </tr>
+              <tr>
+                <td><code>data-yv-pip</code></td>
+                <td><code>"document" | "os" | "inpage"</code></td>
+                <td><code>"os"</code></td>
+                <td>Default Picture-in-Picture engine preference (Document PiP, Native Video 720p PiP, or In-Page Dock).</td>
+              </tr>
+              <tr>
+                <td><code>data-yv-storyboard</code></td>
+                <td><code>boolean</code></td>
+                <td><code>"true"</code></td>
+                <td>Whether to prefetch and display storyboard thumbnails on seekbar hover.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Section: JavaScript Options Reference -->
+      <section id="api-options" class="docs-section">
+        <div class="section-badge">Configuration</div>
+        <h2 class="section-title">JavaScript Options Reference</h2>
+        <p>Available parameters passed into <code>YVPlayer.init(elementId, options)</code>:</p>
+
+        <div class="table-wrapper">
+          <table class="docs-table">
+            <thead>
+              <tr>
+                <th>Option</th>
+                <th>Type</th>
+                <th>Default</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>defaultId</code></td>
+                <td><code>string</code></td>
+                <td><em>required</em></td>
+                <td>The 11-character YouTube video ID or full URL.</td>
+              </tr>
+              <tr>
+                <td><code>theme</code></td>
+                <td><code>string</code></td>
+                <td><code>"default"</code></td>
+                <td>Theme preset name (<code>"red"</code>, <code>"cyan"</code>, <code>"purple"</code>, <code>"emerald"</code>, etc.).</td>
+              </tr>
+              <tr>
+                <td><code>autoplay</code></td>
+                <td><code>boolean</code></td>
+                <td><code>true</code></td>
+                <td>Auto-start playback on ready.</td>
+              </tr>
+              <tr>
+                <td><code>loop</code></td>
+                <td><code>boolean</code></td>
+                <td><code>false</code></td>
+                <td>Whether to auto-replay video upon reaching the end.</td>
+              </tr>
+              <tr>
+                <td><code>thumbnail</code></td>
+                <td><code>boolean</code></td>
+                <td><code>false</code></td>
+                <td>Show YouTube thumbnail preview overlay prior to playback start.</td>
+              </tr>
+              <tr>
+                <td><code>pipMode</code></td>
+                <td><code>"os" | "inpage"</code></td>
+                <td><code>"os"</code></td>
+                <td>Picture-in-Picture mode preference (OS desktop window vs in-tab mini-player).</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Section: Player Methods -->
+      <section id="api-methods" class="docs-section">
+        <div class="section-badge">Methods</div>
+        <h2 class="section-title">Programmatic Methods</h2>
+        <p>All player methods accept the target element ID as the first argument:</p>
+
+        <div class="table-wrapper">
+          <table class="docs-table">
+            <thead>
+              <tr>
+                <th>Method Signature</th>
+                <th>Return Type</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>YVPlayer.play(targetId)</code></td>
+                <td><code>void</code></td>
+                <td>Starts or resumes video playback.</td>
+              </tr>
+              <tr>
+                <td><code>YVPlayer.pause(targetId)</code></td>
+                <td><code>void</code></td>
+                <td>Pauses current video playback.</td>
+              </tr>
+              <tr>
+                <td><code>YVPlayer.togglePlay(targetId)</code></td>
+                <td><code>void</code></td>
+                <td>Toggles between play and pause states.</td>
+              </tr>
+              <tr>
+                <td><code>YVPlayer.seekTo(targetId, seconds)</code></td>
+                <td><code>void</code></td>
+                <td>Seeks timeline directly to specified seconds.</td>
+              </tr>
+              <tr>
+                <td><code>YVPlayer.changeVideo(targetId, newVideoId)</code></td>
+                <td><code>void</code></td>
+                <td>Switches the video stream to another YouTube ID seamlessly.</td>
+              </tr>
+              <tr>
+                <td><code>YVPlayer.setTheme(targetId, hexColor, name)</code></td>
+                <td><code>void</code></td>
+                <td>Dynamically updates all theme custom properties and glows in real time.</td>
+              </tr>
+              <tr>
+                <td><code>YVPlayer.togglePiP(targetId)</code></td>
+                <td><code>void</code></td>
+                <td>Triggers Picture-in-Picture according to the active engine preference.</td>
+              </tr>
+              <tr>
+                <td><code>YVPlayer.setPipMode(targetId, mode)</code></td>
+                <td><code>void</code></td>
+                <td>Sets active PiP engine: <code>"document"</code>, <code>"os"</code>, or <code>"inpage"</code>.</td>
+              </tr>
+              <tr>
+                <td><code>YVPlayer.setVolume(targetId, 0-100)</code></td>
+                <td><code>void</code></td>
+                <td>Sets player volume percentage.</td>
+              </tr>
+              <tr>
+                <td><code>YVPlayer.mute(targetId) / unMute(targetId)</code></td>
+                <td><code>void</code></td>
+                <td>Mutes or unmutes audio.</td>
+              </tr>
+              <tr>
+                <td><code>YVPlayer.setPlaybackRate(targetId, speed)</code></td>
+                <td><code>void</code></td>
+                <td>Adjusts playback speed rate (e.g. <code>0.5</code>, <code>1.0</code>, <code>1.5</code>, <code>2.0</code>).</td>
+              </tr>
+              <tr>
+                <td><code>YVPlayer.setLoop(targetId, boolean)</code></td>
+                <td><code>void</code></td>
+                <td>Enables or disables seamless video loop repeat and syncs player settings drawer.</td>
+              </tr>
+              <tr>
+                <td><code>YVPlayer.isLooping(targetId)</code></td>
+                <td><code>boolean</code></td>
+                <td>Returns whether the video is currently configured to loop continuously upon completion.</td>
+              </tr>
+              <tr>
+                <td><code>YVPlayer.destroy(targetId)</code></td>
+                <td><code>void</code></td>
+                <td>Completely tears down DOM, removes listeners, intervals, and cleans memory.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Section: Events & State Lifecycle -->
+      <section id="events-callbacks" class="docs-section">
+        <div class="section-badge">Lifecycle &amp; Events</div>
+        <h2 class="section-title">Events, State &amp; Callbacks</h2>
+        <p class="section-lead">
+          Monitor player lifecycle transitions, real-time playback milestones, volume adjustments, and Picture-in-Picture handoffs using YVPlayer's unified event listener engine.
+        </p>
+
+        <h3 class="subsection-title" style="margin-top: 28px; margin-bottom: 14px;">Playback State Constants</h3>
+        <p>
+          YVPlayer normalizes YouTube playback states into standard string identifiers and numeric constants accessible via <code>YVPlayer.getState(videoTag)</code>:
+        </p>
+
+        <div class="api-table-wrap">
+          <table class="api-table">
+            <thead>
+              <tr>
+                <th>Code</th>
+                <th>State Constant</th>
+                <th>Lifecycle Description</th>
+                <th>Controls UI Appearance</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>-1</code></td>
+                <td><code>unstarted</code></td>
+                <td>Player initialized with video metadata; waiting for play trigger.</td>
+                <td>Large frosted center play button visible; poster thumbnail shown.</td>
+              </tr>
+              <tr>
+                <td><code>1</code></td>
+                <td><code>playing</code></td>
+                <td>Video actively decoding and playing audio/video frames.</td>
+                <td>Controls auto-fade after 3s; center pause icon on hover; seekbar glowing.</td>
+              </tr>
+              <tr>
+                <td><code>2</code></td>
+                <td><code>paused</code></td>
+                <td>Playback halted by user, sleep timer, or window blur.</td>
+                <td>Controls persistently visible; center play icon displayed.</td>
+              </tr>
+              <tr>
+                <td><code>3</code></td>
+                <td><code>buffering</code></td>
+                <td>Network fetching stream chunks or seeking to a new timestamp.</td>
+                <td>Smooth pulsating spinner displayed at the center of the video stage.</td>
+              </tr>
+              <tr>
+                <td><code>5</code></td>
+                <td><code>cued</code></td>
+                <td>New video queued via <code>changeVideo()</code> ready for instant start.</td>
+                <td>Timeline slider resets to 0:00; title badge updates.</td>
+              </tr>
+              <tr>
+                <td><code>0</code></td>
+                <td><code>ended</code></td>
+                <td>Video completed playback without looping enabled.</td>
+                <td>Replay glyph appears; end-screen recommendations completely stripped.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3 class="subsection-title" style="margin-top: 36px; margin-bottom: 14px;">Subscribing to Events</h3>
+        <p>
+          Use <code>YVPlayer.on(videoTag, eventName, handler)</code> to listen for real-time player actions. Remove listeners via <code>YVPlayer.off()</code>:
+        </p>
+
+        <div class="code-block">
+          <div class="code-block-header">
+            <span>JavaScript &mdash; Event Subscription</span>
+            <button type="button" class="btn-copy-code" data-code='// 1. Listen for playback start
+YVPlayer.on("my-player", "play", () => {
+  console.log("Playback started or resumed");
+});
+
+// 2. High-frequency timeline updates (every 250ms)
+YVPlayer.on("my-player", "timeupdate", ({ currentTime, duration, progress }) => {
+  console.log(`Current: ${currentTime.toFixed(1)}s / ${duration.toFixed(1)}s (${progress.toFixed(1)}%)`);
+});
+
+// 3. Picture-in-Picture mode activation
+YVPlayer.on("my-player", "pipenter", ({ mode }) => {
+  console.log(`Entered PiP mode: ${mode}`); // "document", "os", or "inpage"
+});
+
+// 4. Picture-in-Picture window closed
+YVPlayer.on("my-player", "pipexit", () => {
+  console.log("Returned to on-page player stage");
+});
+
+// 5. Volume or mute toggle
+YVPlayer.on("my-player", "volumechange", ({ volume, isMuted }) => {
+  console.log(`Volume: ${volume}%, Muted: ${isMuted}`);
+});
+
+// 6. Theme accent color change
+YVPlayer.on("my-player", "themechange", ({ color, theme }) => {
+  console.log(`Switched to theme ${theme} (${color})`);
+});'>
+              <i class="ti ti-copy"></i> Copy Code
+            </button>
+          </div>
+          <pre><code><span class="token-comment">// 1. Listen for playback start</span>
+<span class="token-func">YVPlayer</span>.<span class="token-func">on</span>(<span class="token-val">"my-player"</span>, <span class="token-val">"play"</span>, () =&gt; {
+  console.<span class="token-func">log</span>(<span class="token-val">"Playback started or resumed"</span>);
+});
+
+<span class="token-comment">// 2. High-frequency timeline updates (every 250ms)</span>
+<span class="token-func">YVPlayer</span>.<span class="token-func">on</span>(<span class="token-val">"my-player"</span>, <span class="token-val">"timeupdate"</span>, ({ currentTime, duration, progress }) =&gt; {
+  console.<span class="token-func">log</span>(<span class="token-val">`Current: ${currentTime.toFixed(1)}s / ${duration.toFixed(1)}s (${progress.toFixed(1)}%)`</span>);
+});
+
+<span class="token-comment">// 3. Picture-in-Picture mode activation</span>
+<span class="token-func">YVPlayer</span>.<span class="token-func">on</span>(<span class="token-val">"my-player"</span>, <span class="token-val">"pipenter"</span>, ({ mode }) =&gt; {
+  console.<span class="token-func">log</span>(<span class="token-val">`Entered PiP mode: ${mode}`</span>); <span class="token-comment">// "document", "os", or "inpage"</span>
+});
+
+<span class="token-comment">// 4. Picture-in-Picture window closed</span>
+<span class="token-func">YVPlayer</span>.<span class="token-func">on</span>(<span class="token-val">"my-player"</span>, <span class="token-val">"pipexit"</span>, () =&gt; {
+  console.<span class="token-func">log</span>(<span class="token-val">"Returned to on-page player stage"</span>);
+});
+
+<span class="token-comment">// 5. Volume or mute toggle</span>
+<span class="token-func">YVPlayer</span>.<span class="token-func">on</span>(<span class="token-val">"my-player"</span>, <span class="token-val">"volumechange"</span>, ({ volume, isMuted }) =&gt; {
+  console.<span class="token-func">log</span>(<span class="token-val">`Volume: ${volume}%, Muted: ${isMuted}`</span>);
+});
+
+<span class="token-comment">// 6. Theme accent color change</span>
+<span class="token-func">YVPlayer</span>.<span class="token-func">on</span>(<span class="token-val">"my-player"</span>, <span class="token-val">"themechange"</span>, ({ color, theme }) =&gt; {
+  console.<span class="token-func">log</span>(<span class="token-val">`Switched to theme ${theme} (${color})`</span>);
+});</code></pre>
+        </div>
+      </section>
+
+
+      <!-- Section: Triple-Engine PiP Architecture -->
+      
+
+      <!-- Section: Dynamic Theme Engine -->
+      <section id="theming-engine" class="docs-section">
+        <div class="section-badge">Deep Dive</div>
+        <h2 class="section-title">Dynamic Real-Time Theme Engine</h2>
+        <p class="section-lead">
+          YVPlayer features a GPU-accelerated CSS variable theming system. Switch branding accents, timeline gradients, glowing thumbs, and frosted overlays dynamically in real time without refreshing or reloading the video buffer.
+        </p>
+
+        <h3 class="subsection-title" style="margin-top: 28px; margin-bottom: 14px;">CSS Custom Property Design Tokens</h3>
+        <p>
+          Every visual component inherits from standard scoped CSS custom properties applied directly to the <code>.yvPlayer</code> container:
+        </p>
+
+        <div class="api-table-wrap">
+          <table class="api-table">
+            <thead>
+              <tr>
+                <th>CSS Variable Token</th>
+                <th>Default Value</th>
+                <th>Target Component &amp; Computed Effect</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>--themeAccent</code></td>
+                <td><code>#fe0001</code></td>
+                <td>Primary brand accent applied to active buttons, volume pills, and hover badges.</td>
+              </tr>
+              <tr>
+                <td><code>--sliderSeekTrackColor</code></td>
+                <td><code>var(--themeAccent)</code></td>
+                <td>High-contrast fill color for the completed portion of the scrubbing timeline.</td>
+              </tr>
+              <tr>
+                <td><code>--sliderThumbColor</code></td>
+                <td><code>var(--themeAccent)</code></td>
+                <td>Color of the glowing seek thumb handle.</td>
+              </tr>
+              <tr>
+                <td><code>--themeGlow</code></td>
+                <td><code>rgba(r, g, b, 0.45)</code></td>
+                <td>Luminescent drop-shadow filter applied to the seekbar head and primary play button.</td>
+              </tr>
+              <tr>
+                <td><code>--themeHoverBg</code></td>
+                <td><code>rgba(r, g, b, 0.22)</code></td>
+                <td>Translucent background tint applied to icon button hover rings.</td>
+              </tr>
+              <tr>
+                <td><code>--startBtnBg</code></td>
+                <td><code>var(--themeAccent)</code></td>
+                <td>Backdrop tint for the initial center frosted play button.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3 class="subsection-title" style="margin-top: 36px; margin-bottom: 14px;">Built-In Preset Color Palettes</h3>
+        <p>
+          YVPlayer ships with 6 hand-tuned production presets engineered for perfect contrast across dark and light canvases:
+        </p>
+
+        <div class="api-table-wrap">
+          <table class="api-table">
+            <thead>
+              <tr>
+                <th>Preset Name</th>
+                <th>Key</th>
+                <th>Hex Code</th>
+                <th>RGB Glow Token</th>
+                <th>Best Used For</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong style="color: #fe0001;">● Classic Cinema Red</strong></td>
+                <td><code>red</code></td>
+                <td><code>#fe0001</code></td>
+                <td><code>rgba(254, 0, 1, 0.45)</code></td>
+                <td>YouTube-native aesthetic, action cinema, bold branding.</td>
+              </tr>
+              <tr>
+                <td><strong style="color: #00e5ff;">● City Cyan</strong></td>
+                <td><code>cyan</code></td>
+                <td><code>#00e5ff</code></td>
+                <td><code>rgba(0, 229, 255, 0.45)</code></td>
+                <td>Modern SaaS applications, dark mode dashboards, fintech.</td>
+              </tr>
+              <tr>
+                <td><strong style="color: #a855f7;">● Fantasy Purple</strong></td>
+                <td><code>purple</code></td>
+                <td><code>#a855f7</code></td>
+                <td><code>rgba(168, 85, 247, 0.45)</code></td>
+                <td>AI platforms, creative portfolios, Web3 and gaming streams.</td>
+              </tr>
+              <tr>
+                <td><strong style="color: #10b981;">● Forest Emerald</strong></td>
+                <td><code>emerald</code></td>
+                <td><code>#10b981</code></td>
+                <td><code>rgba(16, 185, 129, 0.45)</code></td>
+                <td>Nature docs, educational courses, calm productivity tools.</td>
+              </tr>
+              <tr>
+                <td><strong style="color: #f59e0b;">● Amber Gold</strong></td>
+                <td><code>gold</code></td>
+                <td><code>#f59e0b</code></td>
+                <td><code>rgba(245, 158, 11, 0.45)</code></td>
+                <td>Luxury brands, podcasts, retrospectives, warm cinematics.</td>
+              </tr>
+              <tr>
+                <td><strong style="color: #e2e8f0;">● Minimal Monochrome</strong></td>
+                <td><code>white</code></td>
+                <td><code>#ffffff</code></td>
+                <td><code>rgba(255, 255, 255, 0.45)</code></td>
+                <td>Clean architectural sites, typography-first portfolios, editorial.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3 class="subsection-title" style="margin-top: 36px; margin-bottom: 14px;">Applying Themes at Runtime</h3>
+        <p>
+          Switch themes via HTML data attributes or programmatically via the JavaScript API with zero latency:
+        </p>
+
+        <div class="code-block">
+          <div class="code-block-header">
+            <span>JavaScript &amp; HTML &mdash; Dynamic Theming</span>
+            <button type="button" class="btn-copy-code" data-code='<!-- 1. Declarative HTML data attribute -->
+<div class="yvPlayer" id="player" data-yv-theme="purple"></div>
+
+<!-- 2. Arbitrary Custom Brand Hex via HTML -->
+<div class="yvPlayer" id="brand-player" data-yv-color="#8b5cf6"></div>
+
+<!-- 3. Programmatic runtime theme switch (zero video interruption) -->
+<script>
+  // Switch to preset theme
+  YVPlayer.setTheme("player", "emerald");
+
+  // Or apply any custom 6-digit hex color
+  YVPlayer.setTheme("player", "#ec4899", "Neon Pink");
+</script>'>
+              <i class="ti ti-copy"></i> Copy Code
+            </button>
+          </div>
+          <pre><code><span class="token-comment">&lt;!-- 1. Declarative HTML preset theme --&gt;</span>
+&lt;<span class="token-tag">div</span> <span class="token-attr">class</span>=<span class="token-val">"yvPlayer"</span> <span class="token-attr">id</span>=<span class="token-val">"player"</span> <span class="token-attr">data-yv-theme</span>=<span class="token-val">"purple"</span>&gt;&lt;/<span class="token-tag">div</span>&gt;
+
+<span class="token-comment">&lt;!-- 2. Arbitrary Custom Brand Hex via HTML --&gt;</span>
+&lt;<span class="token-tag">div</span> <span class="token-attr">class</span>=<span class="token-val">"yvPlayer"</span> <span class="token-attr">id</span>=<span class="token-val">"brand-player"</span> <span class="token-attr">data-yv-color</span>=<span class="token-val">"#8b5cf6"</span>&gt;&lt;/<span class="token-tag">div</span>&gt;
+
+<span class="token-comment">&lt;!-- 3. Programmatic runtime theme switch (zero video interruption) --&gt;</span>
+&lt;<span class="token-tag">script</span>&gt;
+  <span class="token-comment">// Switch to preset theme</span>
+  <span class="token-func">YVPlayer</span>.<span class="token-func">setTheme</span>(<span class="token-val">"player"</span>, <span class="token-val">"emerald"</span>);
+
+  <span class="token-comment">// Or apply any custom 6-digit hex color</span>
+  <span class="token-func">YVPlayer</span>.<span class="token-func">setTheme</span>(<span class="token-val">"player"</span>, <span class="token-val">"#ec4899"</span>, <span class="token-val">"Neon Pink"</span>);
+&lt;/<span class="token-tag">script</span>&gt;</code></pre>
+        </div>
+      </section>
+
+
+      <!-- Section: Triple-Engine PiP Architecture -->
+      <section id="pip-architecture" class="docs-section">
+        <div class="section-badge">Deep Dive</div>
+        <h2 class="section-title">Triple-Engine Picture-in-Picture (PiP) Architecture</h2>
+        <p class="section-lead">
+          Unlike ordinary video players that restrict users to basic OS video windows without controls, YVPlayer provides three distinct, independent Picture-in-Picture architectures engineered for every browser capability, operating system, and deployment workflow.
+        </p>
+
+        <div class="notion-callout" style="margin: 20px 0;">
+          <div class="notion-callout-icon"><i class="ti ti-sparkles"></i></div>
+          <div class="notion-callout-body">
+            <strong>Architecture Highlights:</strong> <strong>Document PiP</strong> pops out the complete interactive HTML DOM (with scrubbing thumbnails and themes) into an OS desktop window; <strong>Native Video PiP</strong> provides hardware-accelerated 720p streaming with live subtitles and OS media keys; and <strong>In-Page Dock</strong> delivers 100% universal compatibility with 4-corner aspect-locked resizing.
+          </div>
+        </div>
+
+        <!-- ENGINE A: Document PiP Full Showcase Card -->
+        <div class="pip-engine-card-showcase" style="margin-top: 32px;">
+          <div class="pip-showcase-header">
+            <div class="pip-showcase-title-wrap">
+              <span class="pip-engine-pill">ENGINE A &mdash; MODERN W3C STANDARD</span>
+              <h3 class="pip-showcase-title"><i class="ti ti-app-window"></i> Document Picture-in-Picture (Full Desktop OS Window)</h3>
+            </div>
+            <div class="pip-showcase-meta">
+              <span class="badge-compat"><i class="ti ti-brand-chrome"></i> Chrome 116+ &mdash; Edge 116+ &mdash; Opera</span>
+              <span class="badge-attr">data-yv-pip="document"</span>
+            </div>
+          </div>
+          <div class="pip-showcase-body">
+            <p class="pip-showcase-desc">
+              Pops out the <strong>entire rich YVPlayer DOM</strong> into an independent, always-on-top desktop operating system window using <code>window.documentPictureInPicture.requestWindow()</code>. All custom controls, storyboard scrubbing, audio sliders, and theme accents continue running smoothly outside the browser tab.
+            </p>
+            <div class="pip-features-grid">
+              <div class="pip-feature-item">
+                <i class="ti ti-palette"></i>
+                <div>
+                  <strong>100% Custom UI &amp; Theming Preserved</strong>
+                  <span>Custom seekbar track, glowing thumbs, volume pills, sleep countdown badge, and storyboard preview tooltips render natively inside the floating window.</span>
+                </div>
+              </div>
+              <div class="pip-feature-item">
+                <i class="ti ti-aspect-ratio"></i>
+                <div>
+                  <strong>Zero-Crop Letterboxing & Aspect Guard</strong>
+                  <span>Preserves 100% of the video canvas with zero cropping. When resized to non-16:9 aspect ratios, cinema-grade letterboxing and pillarboxing with pure black borders automatically adapt to any window dimensions.</span>
+                </div>
+              </div>
+              <div class="pip-feature-item">
+                <i class="ti ti-arrows-exchange"></i>
+                <div>
+                  <strong>State Handoff &amp; Zero-Frame Snap Return</strong>
+                  <span>The host webpage displays an elegant frosted "Playing in OS Window" placeholder with a single-click return button. Closing the OS window instantly snaps video playback back into the webpage with zero dropped frames.</span>
+                </div>
+              </div>
+              <div class="pip-feature-item">
+                <i class="ti ti-server-off"></i>
+                <div>
+                  <strong>Zero Proxy Requirement</strong>
+                  <span>Document PiP operates directly on the client DOM without requiring a backend stream proxy or serverless workers.</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="code-block" style="margin-top: 18px;">
+              <div class="code-block-header">
+                <span>JavaScript &amp; HTML &mdash; Document PiP Integration</span>
+                <button type="button" class="btn-copy-code" data-code='<!-- HTML: Declare Document PiP preferred mode -->
+<div class="yvPlayer" id="my-player" data-yv-pip="document"></div>
+
+<!-- JavaScript: Set mode & open Document PiP -->
+<script>
+  // Configure preferred engine
+  YVPlayer.setPipMode("my-player", "document");
+
+  // Programmatically trigger pop-out
+  YVPlayer.enterPiP("my-player");
+</script>'>
+                  <i class="ti ti-copy"></i> Copy Code
+                </button>
+              </div>
+              <pre><code><span class="token-comment">&lt;!-- HTML: Set Document PiP as preferred mode --&gt;</span>
+&lt;<span class="token-tag">div</span> <span class="token-attr">class</span>=<span class="token-val">"yvPlayer"</span> <span class="token-attr">id</span>=<span class="token-val">"my-player"</span> <span class="token-attr">data-yv-pip</span>=<span class="token-val">"document"</span>&gt;&lt;/<span class="token-tag">div</span>&gt;
+
+<span class="token-comment">&lt;!-- JavaScript: Programmatically trigger Document PiP --&gt;</span>
+&lt;<span class="token-tag">script</span>&gt;
+  <span class="token-func">YVPlayer</span>.<span class="token-func">setPipMode</span>(<span class="token-val">"my-player"</span>, <span class="token-val">"document"</span>);
+  <span class="token-func">YVPlayer</span>.<span class="token-func">enterPiP</span>(<span class="token-val">"my-player"</span>);
+&lt;/<span class="token-tag">script</span>&gt;</code></pre>
+            </div>
+          </div>
+        </div>
+
+        <!-- ENGINE B: Native Hardware Video PiP Full Showcase Card -->
+        <div class="pip-engine-card-showcase" style="margin-top: 28px;">
+          <div class="pip-showcase-header">
+            <div class="pip-showcase-title-wrap">
+              <span class="pip-engine-pill">ENGINE B &mdash; 720P DIRECT STREAM</span>
+              <h3 class="pip-showcase-title"><i class="ti ti-device-tv"></i> Native Hardware Video PiP (Hardware OS Streaming)</h3>
+            </div>
+            <div class="pip-showcase-meta">
+              <span class="badge-compat"><i class="ti ti-device-desktop"></i> Universal Desktop OS &mdash; Chrome, Edge, Safari, Firefox</span>
+              <span class="badge-attr">data-yv-pip="os"</span>
+            </div>
+          </div>
+          <div class="pip-showcase-body">
+            <p class="pip-showcase-desc">
+              Leverages the W3C standard <code>HTMLVideoElement.requestPictureInPicture()</code> specification by streaming clean, direct 720p HD MP4 (YouTube Format 22) through the Cloudflare Worker or Python edge proxy. Delivers full OS-level hardware-accelerated playback with native operating system controls.
+            </p>
+            <div class="pip-features-grid">
+              <div class="pip-feature-item">
+                <i class="ti ti-badge-cc"></i>
+                <div>
+                  <strong>Live WebVTT Subtitle Shipping</strong>
+                  <span>Dynamically injects timed <code>VTTCue</code> objects into the native video element's <code>TextTrack</code>. Captions render crisp, clean subtitles directly inside the floating OS Picture-in-Picture window.</span>
+                </div>
+              </div>
+              <div class="pip-feature-item">
+                <i class="ti ti-adjustments-horizontal"></i>
+                <div>
+                  <strong>Synchronized Host Stage Control Bar</strong>
+                  <span>While playing in the floating OS window, the main on-page player remains fully synchronized with an interactive scrubber bar, time counter, volume slider, and "Exit picture-in-picture" pill.</span>
+                </div>
+              </div>
+              <div class="pip-feature-item">
+                <i class="ti ti-volume"></i>
+                <div>
+                  <strong>Unmuted Volume &amp; OS Media Keys</strong>
+                  <span>Audio streams unmuted by default with smooth OS volume slider integration, keyboard shortcuts (<kbd>↑</kbd>, <kbd>↓</kbd>, <kbd>M</kbd>), and hardware media play/pause keys.</span>
+                </div>
+              </div>
+              <div class="pip-feature-item">
+                <i class="ti ti-cloud-storm"></i>
+                <div>
+                  <strong>Edge Stream Proxy Integration</strong>
+                  <span>Connects seamlessly with the bundled serverless Cloudflare Worker or self-hosted Python proxy with automatic format resolution and in-memory URL caching.</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="code-block" style="margin-top: 18px;">
+              <div class="code-block-header">
+                <span>JavaScript &amp; HTML &mdash; Native Video PiP Integration</span>
+                <button type="button" class="btn-copy-code" data-code='<!-- HTML: Declare Native Video PiP mode -->
+<div class="yvPlayer" id="my-player" data-yv-pip="os" data-yv-proxy="https://my-worker.workers.dev"></div>
+
+<!-- JavaScript: Toggle Native PiP -->
+<script>
+  YVPlayer.setPipMode("my-player", "os");
+  YVPlayer.togglePiP("my-player");
+</script>'>
+                  <i class="ti ti-copy"></i> Copy Code
+                </button>
+              </div>
+              <pre><code><span class="token-comment">&lt;!-- HTML: Configure Native Video PiP with proxy URL --&gt;</span>
+&lt;<span class="token-tag">div</span> <span class="token-attr">class</span>=<span class="token-val">"yvPlayer"</span> <span class="token-attr">id</span>=<span class="token-val">"my-player"</span> <span class="token-attr">data-yv-pip</span>=<span class="token-val">"os"</span> <span class="token-attr">data-yv-proxy</span>=<span class="token-val">"https://my-worker.workers.dev"</span>&gt;&lt;/<span class="token-tag">div</span>&gt;
+
+<span class="token-comment">&lt;!-- JavaScript: Toggle Native Hardware PiP --&gt;</span>
+&lt;<span class="token-tag">script</span>&gt;
+  <span class="token-func">YVPlayer</span>.<span class="token-func">setPipMode</span>(<span class="token-val">"my-player"</span>, <span class="token-val">"os"</span>);
+  <span class="token-func">YVPlayer</span>.<span class="token-func">togglePiP</span>(<span class="token-val">"my-player"</span>);
+&lt;/<span class="token-tag">script</span>&gt;</code></pre>
+            </div>
+          </div>
+        </div>
+
+        <!-- ENGINE C: In-Page Dock Mini-Player Full Showcase Card -->
+        <div class="pip-engine-card-showcase" style="margin-top: 28px;">
+          <div class="pip-showcase-header">
+            <div class="pip-showcase-title-wrap">
+              <span class="pip-engine-pill">ENGINE C &mdash; UNIVERSAL CLIENT OVERLAY</span>
+              <h3 class="pip-showcase-title"><i class="ti ti-dock"></i> In-Page Dock Mini-Player (Corner Resizable)</h3>
+            </div>
+            <div class="pip-showcase-meta">
+              <span class="badge-compat"><i class="ti ti-check"></i> 100% All Modern Browsers &amp; Mobile</span>
+              <span class="badge-attr">data-yv-pip="inpage"</span>
+            </div>
+          </div>
+          <div class="pip-showcase-body">
+            <p class="pip-showcase-desc">
+              A fluid, corner-docked viewport overlay confined within the active browser tab with physical spring animations. Operates purely on client DOM with zero proxy or external network requirements.
+            </p>
+            <div class="pip-features-grid">
+              <div class="pip-feature-item">
+                <i class="ti ti-arrows-maximize"></i>
+                <div>
+                  <strong>Connected 4-Corner Interactive Resize</strong>
+                  <span>Grab any corner handle (<kbd>TL</kbd>, <kbd>TR</kbd>, <kbd>BL</kbd>, <kbd>BR</kbd>) to resize smoothly. Mathematical aspect locking enforces exact 16:9 widescreen geometry continuously during resize gestures.</span>
+                </div>
+              </div>
+              <div class="pip-feature-item">
+                <i class="ti ti-drag-drop"></i>
+                <div>
+                  <strong>Quadrant Drag &amp; Snap Animations</strong>
+                  <span>Drag the mini-player across the page. Upon release, physics-based springs snap the player into the nearest corner quadrant (Top-Left, Top-Right, Bottom-Left, Bottom-Right).</span>
+                </div>
+              </div>
+              <div class="pip-feature-item">
+                <i class="ti ti-server-off"></i>
+                <div>
+                  <strong>Zero Proxy or Server Dependencies</strong>
+                  <span>Operates directly on the embedded iframe and custom DOM overlay. Works in strict corporate intranets, air-gapped systems, and mobile web views.</span>
+                </div>
+              </div>
+              <div class="pip-feature-item">
+                <i class="ti ti-devices"></i>
+                <div>
+                  <strong>Universal Cross-Browser Fallback</strong>
+                  <span>Automatically serves as the graceful fallback when Document PiP or native video streaming is unavailable in older browser builds.</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="code-block" style="margin-top: 18px;">
+              <div class="code-block-header">
+                <span>JavaScript &amp; HTML &mdash; In-Page Dock Integration</span>
+                <button type="button" class="btn-copy-code" data-code='<!-- HTML: Declare In-Page Dock mode -->
+<div class="yvPlayer" id="my-player" data-yv-pip="inpage"></div>
+
+<!-- JavaScript: Activate In-Page Dock -->
+<script>
+  YVPlayer.setPipMode("my-player", "inpage");
+  YVPlayer.togglePiP("my-player");
+</script>'>
+                  <i class="ti ti-copy"></i> Copy Code
+                </button>
+              </div>
+              <pre><code><span class="token-comment">&lt;!-- HTML: Configure In-Page Dock mode --&gt;</span>
+&lt;<span class="token-tag">div</span> <span class="token-attr">class</span>=<span class="token-val">"yvPlayer"</span> <span class="token-attr">id</span>=<span class="token-val">"my-player"</span> <span class="token-attr">data-yv-pip</span>=<span class="token-val">"inpage"</span>&gt;&lt;/<span class="token-tag">div</span>&gt;
+
+<span class="token-comment">&lt;!-- JavaScript: Activate In-Page Dock Mini-Player --&gt;</span>
+&lt;<span class="token-tag">script</span>&gt;
+  <span class="token-func">YVPlayer</span>.<span class="token-func">setPipMode</span>(<span class="token-val">"my-player"</span>, <span class="token-val">"inpage"</span>);
+  <span class="token-func">YVPlayer</span>.<span class="token-func">togglePiP</span>(<span class="token-val">"my-player"</span>);
+&lt;/<span class="token-tag">script</span>&gt;</code></pre>
+            </div>
+          </div>
+        </div>
+
+        <!-- Comprehensive Engine Comparison Matrix -->
+        <h3 class="subsection-title" style="margin-top: 40px; margin-bottom: 16px;">Comprehensive PiP Engine Comparison</h3>
+        <div class="api-table-wrap">
+          <table class="api-table">
+            <thead>
+              <tr>
+                <th>Feature / Capability</th>
+                <th>Engine A &mdash; Document PiP</th>
+                <th>Engine B &mdash; Native Video PiP</th>
+                <th>Engine C &mdash; In-Page Dock</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Operating System Floating Window</strong></td>
+                <td><span class="badge-yes"><i class="ti ti-check"></i> Yes (Independent OS Window)</span></td>
+                <td><span class="badge-yes"><i class="ti ti-check"></i> Yes (Hardware OS Surface)</span></td>
+                <td><span class="badge-no"><i class="ti ti-x"></i> Tab Viewport Dock Only</span></td>
+              </tr>
+              <tr>
+                <td><strong>Full Custom UI &amp; Theming Preserved</strong></td>
+                <td><span class="badge-yes"><i class="ti ti-check"></i> Complete DOM Preserved</span></td>
+                <td><span class="badge-partial"><i class="ti ti-info-circle"></i> On-Page Stage Synced</span></td>
+                <td><span class="badge-yes"><i class="ti ti-check"></i> Complete DOM Preserved</span></td>
+              </tr>
+              <tr>
+                <td><strong>Live Subtitles in Floating Window</strong></td>
+                <td><span class="badge-yes"><i class="ti ti-check"></i> Styled HTML Subtitles</span></td>
+                <td><span class="badge-yes"><i class="ti ti-check"></i> Native WebVTT Cues Injected</span></td>
+                <td><span class="badge-yes"><i class="ti ti-check"></i> Styled HTML Subtitles</span></td>
+              </tr>
+              <tr>
+                <td><strong>16:9 Aspect Ratio Enforcement</strong></td>
+                <td><span class="badge-yes"><i class="ti ti-check"></i> Dynamic JS Guard</span></td>
+                <td><span class="badge-yes"><i class="ti ti-check"></i> Native OS Surface Lock</span></td>
+                <td><span class="badge-yes"><i class="ti ti-check"></i> 4-Corner Math Calculation</span></td>
+              </tr>
+              <tr>
+                <td><strong>Scrubbing &amp; Timeline Preview</strong></td>
+                <td><span class="badge-yes"><i class="ti ti-check"></i> Storyboard Tooltip Inside Window</span></td>
+                <td><span class="badge-partial"><i class="ti ti-info-circle"></i> Scrubber on Main Stage</span></td>
+                <td><span class="badge-yes"><i class="ti ti-check"></i> Storyboard Tooltip on Hover</span></td>
+              </tr>
+              <tr>
+                <td><strong>Backend Stream Proxy Required</strong></td>
+                <td><span class="badge-yes"><i class="ti ti-check"></i> No (Direct DOM)</span></td>
+                <td><span class="badge-partial"><i class="ti ti-server"></i> Yes (Cloudflare or Python)</span></td>
+                <td><span class="badge-yes"><i class="ti ti-check"></i> No (Direct DOM)</span></td>
+              </tr>
+              <tr>
+                <td><strong>Browser &amp; Device Compatibility</strong></td>
+                <td>Chrome 116+, Edge 116+, Opera</td>
+                <td>Universal Desktop OS (Safari, Firefox, Chrome, Edge)</td>
+                <td>100% All Modern Browsers, Tablets &amp; Mobile</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+
+      <!-- Section: Storyboard Scrubbing Engine -->
+      <section id="storyboard-engine" class="docs-section">
+        <div class="section-badge">Deep Dive</div>
+        <h2 class="section-title">Frame-Accurate Storyboard Scrubbing</h2>
+        <p class="section-lead">
+          YVPlayer extracts YouTube timeline mosaic sheets to deliver instant, zero-latency visual thumbnail previews on hover without downloading video frames or consuming heavy streaming bandwidth.
+        </p>
+
+        <h3 class="subsection-title" style="margin-top: 28px; margin-bottom: 14px;">How YouTube Storyboards Work</h3>
+        <p>
+          YouTube encodes video previews into compressed JPEG mosaic sheets (e.g. 5x5 or 10x10 grids of frames captured at strict intervals like every 2 or 5 seconds). YVPlayer parses the video's <code>storyboard_spec</code>, computes the precise row and column coordinate for any cursor position along the timeline, and positions the preview via CSS background offsets:
+        </p>
+
+        <div class="api-table-wrap">
+          <table class="api-table">
+            <thead>
+              <tr>
+                <th>Mosaic Variable</th>
+                <th>Standard Value</th>
+                <th>Mathematical Role in Sprite Calculations</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>cols</code> ($N_{\text{cols}}$)</td>
+                <td><code>5</code> (or <code>10</code>)</td>
+                <td>Number of horizontal frame tiles across a single JPEG sheet.</td>
+              </tr>
+              <tr>
+                <td><code>rows</code> ($N_{\text{rows}}$)</td>
+                <td><code>5</code> (or <code>10</code>)</td>
+                <td>Number of vertical frame tiles down a single JPEG sheet.</td>
+              </tr>
+              <tr>
+                <td><code>width</code> ($W$)</td>
+                <td><code>160px</code></td>
+                <td>Exact pixel width of each individual 16:9 thumbnail frame tile.</td>
+              </tr>
+              <tr>
+                <td><code>height</code> ($H$)</td>
+                <td><code>90px</code></td>
+                <td>Exact pixel height of each individual 16:9 thumbnail frame tile.</td>
+              </tr>
+              <tr>
+                <td><code>interval</code> ($\Delta t$)</td>
+                <td><code>2.0s</code> (or <code>5.0s</code>)</td>
+                <td>Seconds of video playback represented between consecutive thumbnail frames.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3 class="subsection-title" style="margin-top: 36px; margin-bottom: 14px;">Sprite Coordinate Math &amp; Offset Formula</h3>
+        <p>
+          Given total duration $D$, cursor hover ratio $R \in [0, 1]$, and hover timestamp $T = R \times D$:
+        </p>
+
+        <div class="code-block">
+          <div class="code-block-header">
+            <span>Mathematical Algorithm &mdash; Background Position Offset</span>
+            <button type="button" class="btn-copy-code" data-code='// 1. Calculate tile index
+const tileIndex = Math.floor(hoverTime / interval);
+const tilesPerSheet = cols * rows;
+
+// 2. Determine target sheet number
+const sheetIndex = Math.floor(tileIndex / tilesPerSheet);
+
+// 3. Determine column and row coordinates on sheet
+const indexInSheet = tileIndex % tilesPerSheet;
+const col = indexInSheet % cols;
+const row = Math.floor(indexInSheet / cols);
+
+// 4. Apply background offset
+tooltipImg.style.backgroundImage = `url(${sheetUrlPattern.replace("$M", sheetIndex)})`;
+tooltipImg.style.backgroundPosition = `-${col * tileWidth}px -${row * tileHeight}px`;'>
+              <i class="ti ti-copy"></i> Copy Code
+            </button>
+          </div>
+          <pre><code><span class="token-comment">// 1. Calculate overall tile index</span>
+<span class="token-keyword">const</span> tileIndex = Math.<span class="token-func">floor</span>(hoverTime / interval);
+<span class="token-keyword">const</span> tilesPerSheet = cols * rows;
+
+<span class="token-comment">// 2. Determine target mosaic sheet number</span>
+<span class="token-keyword">const</span> sheetIndex = Math.<span class="token-func">floor</span>(tileIndex / tilesPerSheet);
+
+<span class="token-comment">// 3. Determine exact column and row coordinates</span>
+<span class="token-keyword">const</span> indexInSheet = tileIndex % tilesPerSheet;
+<span class="token-keyword">const</span> col = indexInSheet % cols;
+<span class="token-keyword">const</span> row = Math.<span class="token-func">floor</span>(indexInSheet / cols);
+
+<span class="token-comment">// 4. Apply CSS background position offset</span>
+tooltipImg.style.backgroundImage = <span class="token-val">`url(${sheetUrl.replace("$M", sheetIndex)})`</span>;
+tooltipImg.style.backgroundPosition = <span class="token-val">`-${col * tileWidth}px -${row * tileHeight}px`</span>;</code></pre>
+        </div>
+
+        <h3 class="subsection-title" style="margin-top: 36px; margin-bottom: 14px;">Boundary Edge Clamping</h3>
+        <p>
+          To prevent the hover tooltip from clipping past the left or right edge of the video stage, YVPlayer implements sub-pixel boundary clamping:
+        </p>
+        <div class="code-block-wrapper" style="margin: 14px 0;">
+          <div class="code-block-header">
+            <span class="code-block-lang"><i class="ti ti-math-function"></i> Boundary Clamping Algorithm</span>
+          </div>
+          <pre class="code-block-body"><code><span class="token-comment">// Keep tooltip center point strictly within [halfTooltip, stageWidth - halfTooltip]</span>
+<span class="token-keyword">const</span> halfTooltip = tooltipWidth / <span class="token-val">2</span>;
+<span class="token-keyword">const</span> clampedX = Math.<span class="token-func">max</span>(halfTooltip, Math.<span class="token-func">min</span>(cursorX, stageWidth - halfTooltip));</code></pre>
+        </div>
+      </section>
+
+
+      <!-- Section: Subtitle Styling Engine -->
+      <section id="caption-customizer" class="docs-section">
+        <div class="section-badge">Deep Dive</div>
+        <h2 class="section-title">Subtitle Styling &amp; WebVTT Engine</h2>
+        <p class="section-lead">
+          Extract, style, and ship YouTube captions into both the HTML5 stage overlay and native OS Picture-in-Picture windows with full control over typography, backing modes, opacity, and languages.
+        </p>
+
+        <h3 class="subsection-title" style="margin-top: 28px; margin-bottom: 14px;">Subtitle Display Modes</h3>
+        <p>
+          Configure caption rendering through the player's built-in Settings Drawer (<i class="ti ti-settings"></i>) or programmatically:
+        </p>
+
+        <div class="api-table-wrap">
+          <table class="api-table">
+            <thead>
+              <tr>
+                <th>Backing Mode</th>
+                <th>CSS Implementation</th>
+                <th>Visual Result</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Frosted Box (Default)</strong></td>
+                <td><code>background: rgba(0,0,0,0.75); backdrop-filter: blur(8px); border-radius: 6px;</code></td>
+                <td>Modern cinema aesthetic with high contrast across busy backgrounds.</td>
+              </tr>
+              <tr>
+                <td><strong>Solid Opaque Box</strong></td>
+                <td><code>background: #000000; color: #ffffff; border-radius: 4px; padding: 4px 10px;</code></td>
+                <td>Maximum legibility and strict accessibility compliance.</td>
+              </tr>
+              <tr>
+                <td><strong>Drop-Shadow Outline (No Box)</strong></td>
+                <td><code>text-shadow: 0 2px 4px rgba(0,0,0,0.9), 0 0 2px #000000;</code></td>
+                <td>Clean broadcast styling without any obstructive background card.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3 class="subsection-title" style="margin-top: 36px; margin-bottom: 14px;">Shipping Subtitles into OS Picture-in-Picture</h3>
+        <p>
+          Standard browser Picture-in-Picture windows do not render HTML DOM elements. To display subtitles inside the floating OS window during Native Video PiP playback, YVPlayer bridges HTML captions to native <code>VTTCue</code> objects:
+        </p>
+
+        <div class="code-block">
+          <div class="code-block-header">
+            <span>JavaScript &mdash; Dynamic WebVTT Cue Shipping</span>
+            <button type="button" class="btn-copy-code" data-code='// 1. Create or get native text track
+const textTrack = nativeVideo.addTextTrack("subtitles", "English", "en");
+textTrack.mode = "showing";
+
+// 2. Parse YouTube timed text and inject VTTCue objects
+captionsArray.forEach(cap => {
+  const cue = new VTTCue(cap.start, cap.end, cap.text);
+  cue.line = -2; // Position near bottom
+  cue.size = 80;
+  textTrack.addCue(cue);
+});'>
+              <i class="ti ti-copy"></i> Copy Code
+            </button>
+          </div>
+          <pre><code><span class="token-comment">// 1. Create native text track on hidden video element</span>
+<span class="token-keyword">const</span> textTrack = nativeVideo.<span class="token-func">addTextTrack</span>(<span class="token-val">"subtitles"</span>, <span class="token-val">"English"</span>, <span class="token-val">"en"</span>);
+textTrack.mode = <span class="token-val">"showing"</span>;
+
+<span class="token-comment">// 2. Parse YouTube timed text and inject VTTCue objects</span>
+captionsArray.<span class="token-func">forEach</span>(cap =&gt; {
+  <span class="token-keyword">const</span> cue = <span class="token-keyword">new</span> <span class="token-func">VTTCue</span>(cap.start, cap.end, cap.text);
+  cue.line = -<span class="token-val">2</span>; <span class="token-comment">// Clean placement near the bottom</span>
+  cue.size = <span class="token-val">80</span>;
+  textTrack.<span class="token-func">addCue</span>(cue);
+});</code></pre>
+        </div>
+      </section>
+
+
+      <!-- Section: Shortcuts & Gestures -->
+      <section id="keyboard-shortcuts" class="docs-section">
+        <div class="section-badge">Deep Dive</div>
+        <h2 class="section-title">Tactile Gestures &amp; Keyboard Hotkeys</h2>
+        <p class="section-lead">
+          YVPlayer provides a complete set of desktop keyboard shortcuts and mobile touch gestures engineered for muscle memory and rapid media scrubbing.
+        </p>
+
+        <h3 class="subsection-title" style="margin-top: 28px; margin-bottom: 14px;">Complete Desktop Hotkey Reference</h3>
+        <div class="api-table-wrap">
+          <table class="api-table">
+            <thead>
+              <tr>
+                <th>Key / Shortcut</th>
+                <th>Action Description</th>
+                <th>HUD Feedback Pill</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><kbd>Space</kbd> or <kbd>K</kbd></td>
+                <td>Toggle Play / Pause playback.</td>
+                <td>Center circle morphs with micro-animation.</td>
+              </tr>
+              <tr>
+                <td><kbd>J</kbd> / <kbd>L</kbd></td>
+                <td>Instant 10-Second Rewind (<kbd>J</kbd>) or Fast-Forward (<kbd>L</kbd>).</td>
+                <td>Curved tactile ripple badge with &plusmn;10s indicator.</td>
+              </tr>
+              <tr>
+                <td><kbd>←</kbd> / <kbd>→</kbd></td>
+                <td>Precise 5-Second Seek Backward / Forward.</td>
+                <td>Seekbar thumb glowing jump animation.</td>
+              </tr>
+              <tr>
+                <td><kbd>↑</kbd> / <kbd>↓</kbd></td>
+                <td>Volume Increase / Decrease by 5%.</td>
+                <td>Volume percentage HUD pill floats near top-right.</td>
+              </tr>
+              <tr>
+                <td><kbd>M</kbd></td>
+                <td>Toggle Mute / Unmute audio.</td>
+                <td>Volume icon toggles between muted and active.</td>
+              </tr>
+              <tr>
+                <td><kbd>F</kbd></td>
+                <td>Toggle Fullscreen Mode.</td>
+                <td>Canvas expands to fill 100% monitor resolution.</td>
+              </tr>
+              <tr>
+                <td><kbd>P</kbd></td>
+                <td>Toggle Picture-in-Picture (active engine).</td>
+                <td>Pops out into OS window or In-Page dock.</td>
+              </tr>
+              <tr>
+                <td><kbd>C</kbd></td>
+                <td>Toggle Captions / Subtitles.</td>
+                <td>Subtitle line fades in/out with smooth opacity.</td>
+              </tr>
+              <tr>
+                <td><kbd>0</kbd> – <kbd>9</kbd></td>
+                <td>Direct Jump to 0% through 90% of duration.</td>
+                <td>Instant timeline seek.</td>
+              </tr>
+              <tr>
+                <td><kbd>&lt;</kbd> / <kbd>&gt;</kbd></td>
+                <td>Decrease / Increase playback speed (0.25x – 2.0x).</td>
+                <td>Speed badge indicator (e.g. 1.25x, 1.5x, 2x).</td>
+              </tr>
+              <tr>
+                <td><kbd>Cmd</kbd>+<kbd>E</kbd> / <kbd>Ctrl</kbd>+<kbd>E</kbd></td>
+                <td>Open Quick Embed Code Customizer Modal.</td>
+                <td>Modal backdrop fades in smoothly.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3 class="subsection-title" style="margin-top: 36px; margin-bottom: 14px;">Mobile &amp; Touch Ripple Gestures</h3>
+        <p>
+          On touch devices or laptops, double-tapping the left half of the player triggers a 10s rewind ripple; double-tapping the right half triggers a 10s fast-forward ripple. Both gestures feature GPU-accelerated spring animations.
+        </p>
+      </section>
+
+
+      <!-- Section: YouTube Shorts (9:16 Vertical Video) -->
+      <section id="shorts-mode" class="docs-section">
+        <div class="section-badge">Deep Dive</div>
+        <h2 class="section-title">YouTube Shorts Mode (9:16 Vertical Aspect Ratio)</h2>
+        <p>
+          Standard embedded YouTube videos force a 16:9 widescreen letterbox even when playing vertical shorts. 
+          YVPlayer provides native <strong>9:16 mobile-first vertical aspect ratio support</strong>. 
+          It automatically crops YouTube's horizontal letterboxing, optimizes the layout for vertical viewing, 
+          and strips away UI clutter while preserving essential controls.
+        </p>
+
+        <h3 class="subsection-title" style="margin-top: 28px; margin-bottom: 12px;">Streamlined Shorts Controls Architecture</h3>
+        <p>
+          In Shorts mode, the player hides redundant horizontal desktop chrome and keeps only the controls essential for short-form video:
+        </p>
+        <ul style="margin: 12px 0 20px 24px; line-height: 1.8; color: var(--text-secondary);">
+          <li><strong>Timeline Scrubber:</strong> Ultra-responsive seekbar at the bottom for instant scrubbing across the short.</li>
+          <li><strong>Volume &amp; Mute Pill:</strong> Quick toggle and volume slider without opening menus.</li>
+          <li><strong>Picture-in-Picture (PiP):</strong> Send the vertical Short into OS-level floating PiP or in-page mini player.</li>
+          <li><strong>Full Screen:</strong> Maximize to immersive full-device vertical display.</li>
+          <li><strong>Settings Button:</strong> Opens the full settings drawer with Playback Speed (0.25x - 2x), Subtitle Styles, Theme Accents, and Sleep Timer.</li>
+        </ul>
+
+        <div class="code-block">
+          <div class="code-block-header">
+            <span class="code-lang">HTML Drop-In</span>
+            <button class="btn-copy" onclick="navigator.clipboard.writeText(this.closest('.code-block').querySelector('pre').innerText)"><i class="ti ti-copy"></i> Copy</button>
+          </div>
+          <pre><code>&lt;!-- Drop-in vertical YouTube Short with 9:16 aspect ratio --&gt;
+&lt;div
+  data-yv-video="https://www.youtube.com/shorts/YlyI2jmHEYc"
+  data-yv-shorts="true"
+  data-yv-theme="red"
+  style="width: 100%; max-width: 400px; aspect-ratio: 9 / 16; margin: 0 auto; border-radius: 20px; overflow: hidden;"
+&gt;&lt;/div&gt;</code></pre>
+        </div>
+
+        <div class="code-block" style="margin-top: 16px;">
+          <div class="code-block-header">
+            <span class="code-lang">JavaScript API</span>
+            <button class="btn-copy" onclick="navigator.clipboard.writeText(this.closest('.code-block').querySelector('pre').innerText)"><i class="ti ti-copy"></i> Copy</button>
+          </div>
+          <pre><code>YVPlayer.init("shorts-player", {
+  defaultId: "YlyI2jmHEYc", // YouTube Short Video ID
+  shorts: true,             // Enables 9:16 vertical ratio & streamlined controls
+  theme: "red",
+  autoplay: true
+});
+
+// Runtime toggle
+YVPlayer.setShortsMode("shorts-player", true);</code></pre>
+        </div>
+      </section>
+
+      <!-- Section: Ambient Background Play ("Muted, looping video behind your content") -->
+      <section id="background-mode" class="docs-section">
+        <div class="section-badge">Deep Dive</div>
+        <h2 class="section-title">Ambient Background Play ("Muted, Looping Video Behind Your Content")</h2>
+        <p>
+          Similar to Video.js's ambient background video engine, YVPlayer allows you to transform any YouTube video into 
+          a <strong>muted, looping decorative background</strong> that plays seamlessly behind hero sections, banners, 
+          headers, or landing page content.
+        </p>
+
+        <h3 class="subsection-title" style="margin-top: 28px; margin-bottom: 12px;">Zero-Interference Background Architecture</h3>
+        <p>
+          When background mode is enabled, YVPlayer automatically configures:
+        </p>
+        <ul style="margin: 12px 0 20px 24px; line-height: 1.8; color: var(--text-secondary);">
+          <li><strong>Permanently Muted:</strong> Unconditionally mutes audio (<code>muted: true</code>) to guarantee instant, unrestricted browser autoplay on mobile and desktop without user gestures.</li>
+          <li><strong>Infinite Seamless Loop:</strong> Continuously restarts the video prior to reaching the final 0.2 seconds, preventing YouTube's native end-screen cards, channel suggestions, and replay overlays from ever displaying.</li>
+          <li><strong>100% Zero Controls:</strong> Strips away the play button, progress bar, volume pill, HUD notices, keyboard shortcut listeners, and right-click menus.</li>
+          <li><strong>Full Pointer-Events Pass-Through:</strong> Sets <code>pointer-events: none</code> so user clicks, text selection, and touch gestures effortlessly pass straight through to your foreground buttons, forms, and cards.</li>
+        </ul>
+
+        <div class="code-block">
+          <div class="code-block-header">
+            <span class="code-lang">HTML &amp; CSS Layering Pattern</span>
+            <button class="btn-copy" onclick="navigator.clipboard.writeText(this.closest('.code-block').querySelector('pre').innerText)"><i class="ti ti-copy"></i> Copy</button>
+          </div>
+          <pre><code>&lt;!-- Hero Section with Ambient Video Background --&gt;
+&lt;div class="hero-container" style="position: relative; overflow: hidden; min-height: 480px;"&gt;
+  
+  &lt;!-- 1. Ambient Video Layer (Zero controls, automated loop) --&gt;
+  &lt;div 
+    data-yv-video="aqz-KE-bpKQ" 
+    data-yv-background="true"
+    style="position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; opacity: 0.65;"
+  &gt;&lt;/div&gt;
+
+  &lt;!-- 2. Optional Tint / Scrim Layer --&gt;
+  &lt;div style="position: absolute; inset: 0; background: rgba(0,0,0,0.45); z-index: 2;"&gt;&lt;/div&gt;
+
+  &lt;!-- 3. Your Foreground Content (Interactive buttons, headings, text) --&gt;
+  &lt;div class="hero-content" style="position: relative; z-index: 3; padding: 60px 24px; text-align: center;"&gt;
+    &lt;h1&gt;Welcome to Next-Gen Web Video&lt;/h1&gt;
+    &lt;p&gt;High-performance HTML5 video player built for modern developer workflows.&lt;/p&gt;
+    &lt;button class="btn-primary"&gt;Get Started Now&lt;/button&gt;
+  &lt;/div&gt;
+
+&lt;/div&gt;</code></pre>
+        </div>
+
+        <div class="code-block" style="margin-top: 16px;">
+          <div class="code-block-header">
+            <span class="code-lang">JavaScript API</span>
+            <button class="btn-copy" onclick="navigator.clipboard.writeText(this.closest('.code-block').querySelector('pre').innerText)"><i class="ti ti-copy"></i> Copy</button>
+          </div>
+          <pre><code>YVPlayer.init("hero-bg-player", {
+  defaultId: "aqz-KE-bpKQ",
+  background: true, // Enables muted, looping, zero controls ambient mode
+  autoplay: true
+});
+
+// Runtime toggle
+YVPlayer.setBackgroundMode("hero-bg-player", true); // Enable ambient background
+YVPlayer.setBackgroundMode("hero-bg-player", false); // Restore interactive controls</code></pre>
+        </div>
+      </section>
+
+      <!-- Section: Cloudflare Worker Proxy Deployment -->
+      <section id="worker-deployment" class="docs-section">
+        <div class="section-badge">Deployment</div>
+        <h2 class="section-title">Cloudflare Worker Proxy (Serverless)</h2>
+        <p>
+          Deploy your stream resolver on Cloudflare Workers for global edge delivery with $0 server maintenance costs and ultra-low latency. Below is the complete production script:
+        </p>
+
+        <div class="code-block">
+          <div class="code-block-header">
+            <span>JavaScript &mdash; worker.js (Cloudflare Workers)</span>
+            <button type="button" class="btn-copy-code" data-code='// ============================================================
+// Cloudflare Worker: YouTube Stream & Storyboard Edge Proxy
+// ============================================================
+export default {
+  async fetch(request, env, ctx) {
+    const url = new URL(request.url);
+
+    // Handle CORS preflight
+    if (request.method === "OPTIONS") {
+      return new Response(null, {
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods": "GET, HEAD, OPTIONS",
+          "Access-Control-Allow-Headers": "Range, Content-Type",
+          "Access-Control-Max-Age": "86400",
+        },
+      });
+    }
+
+    const videoId = url.searchParams.get("id");
+    if (!videoId || !/^[a-zA-Z0-9_-]{11}$/.test(videoId)) {
+      return new Response(JSON.stringify({ success: false, error: "Invalid video ID" }), {
+        status: 400,
+        headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" },
+      });
+    }
+
+    // Proxy Range requests to raw YouTube streams
+    if (url.pathname === "/api/stream") {
+      const streamUrl = await resolveStreamFromKV(videoId, env);
+      if (!streamUrl) {
+        return new Response("Could not resolve stream", { status: 502 });
+      }
+
+      const clientRange = request.headers.get("Range");
+      const headers = new Headers({
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/147.0.0.0 Safari/537.36",
+      });
+      if (clientRange) headers.set("Range", clientRange);
+
+      const upstream = await fetch(streamUrl, { headers });
+      const respHeaders = new Headers(upstream.headers);
+      respHeaders.set("Access-Control-Allow-Origin", "*");
+      return new Response(upstream.body, { status: upstream.status, headers: respHeaders });
+    }
+
+    return new Response("Not found", { status: 404 });
+  },
+};'><i class="ti ti-copy"></i> Copy</button>
+          </div>
+          <pre><code><span class="token-comment">// ============================================================</span>
+<span class="token-comment">// Cloudflare Worker: YouTube Stream & Storyboard Edge Proxy</span>
+<span class="token-comment">// ============================================================</span>
+<span class="token-keyword">export default</span> {
+  <span class="token-keyword">async</span> <span class="token-func">fetch</span>(<span class="token-attr">request</span>, <span class="token-attr">env</span>, <span class="token-attr">ctx</span>) {
+    <span class="token-keyword">const</span> <span class="token-attr">url</span> = <span class="token-keyword">new</span> <span class="token-func">URL</span>(<span class="token-attr">request</span>.<span class="token-attr">url</span>);
+
+    <span class="token-comment">// Handle CORS preflight</span>
+    <span class="token-keyword">if</span> (<span class="token-attr">request</span>.<span class="token-attr">method</span> === <span class="token-str">"OPTIONS"</span>) {
+      <span class="token-keyword">return new</span> <span class="token-func">Response</span>(<span class="token-keyword">null</span>, {
+        <span class="token-attr">headers</span>: {
+          <span class="token-str">"Access-Control-Allow-Origin"</span>: <span class="token-str">"*"</span>,
+          <span class="token-str">"Access-Control-Allow-Methods"</span>: <span class="token-str">"GET, HEAD, OPTIONS"</span>,
+          <span class="token-str">"Access-Control-Allow-Headers"</span>: <span class="token-str">"Range, Content-Type"</span>,
+          <span class="token-str">"Access-Control-Max-Age"</span>: <span class="token-str">"86400"</span>
+        }
+      });
+    }
+
+    <span class="token-keyword">const</span> <span class="token-attr">videoId</span> = <span class="token-attr">url</span>.<span class="token-attr">searchParams</span>.<span class="token-func">get</span>(<span class="token-str">"id"</span>);
+    <span class="token-keyword">if</span> (!<span class="token-attr">videoId</span> || !<span class="token-str">/^[a-zA-Z0-9_-]{11}$/</span>.<span class="token-func">test</span>(<span class="token-attr">videoId</span>)) {
+      <span class="token-keyword">return new</span> <span class="token-func">Response</span>(<span class="token-keyword">JSON</span>.<span class="token-func">stringify</span>({ <span class="token-attr">success</span>: <span class="token-keyword">false</span>, <span class="token-attr">error</span>: <span class="token-str">"Invalid video ID"</span> }), {
+        <span class="token-attr">status</span>: 400,
+        <span class="token-attr">headers</span>: { <span class="token-str">"Content-Type"</span>: <span class="token-str">"application/json"</span>, <span class="token-str">"Access-Control-Allow-Origin"</span>: <span class="token-str">"*"</span> }
+      });
+    }
+
+    <span class="token-comment">// Proxy Range requests to raw YouTube streams</span>
+    <span class="token-keyword">if</span> (<span class="token-attr">url</span>.<span class="token-attr">pathname</span> === <span class="token-str">"/api/stream"</span>) {
+      <span class="token-keyword">const</span> <span class="token-attr">clientRange</span> = <span class="token-attr">request</span>.<span class="token-attr">headers</span>.<span class="token-func">get</span>(<span class="token-str">"Range"</span>);
+      <span class="token-keyword">const</span> <span class="token-attr">headers</span> = <span class="token-keyword">new</span> <span class="token-func">Headers</span>({
+        <span class="token-str">"User-Agent"</span>: <span class="token-str">"Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/147.0.0.0 Safari/537.36"</span>
+      });
+      <span class="token-keyword">if</span> (<span class="token-attr">clientRange</span>) <span class="token-attr">headers</span>.<span class="token-func">set</span>(<span class="token-str">"Range"</span>, <span class="token-attr">clientRange</span>);
+
+      <span class="token-keyword">const</span> <span class="token-attr">upstream</span> = <span class="token-keyword">await</span> <span class="token-func">fetch</span>(<span class="token-attr">streamUrl</span>, { <span class="token-attr">headers</span> });
+      <span class="token-keyword">const</span> <span class="token-attr">respHeaders</span> = <span class="token-keyword">new</span> <span class="token-func">Headers</span>(<span class="token-attr">upstream</span>.<span class="token-attr">headers</span>);
+      <span class="token-attr">respHeaders</span>.<span class="token-func">set</span>(<span class="token-str">"Access-Control-Allow-Origin"</span>, <span class="token-str">"*"</span>);
+      <span class="token-keyword">return new</span> <span class="token-func">Response</span>(<span class="token-attr">upstream</span>.<span class="token-attr">body</span>, { <span class="token-attr">status</span>: <span class="token-attr">upstream</span>.<span class="token-attr">status</span>, <span class="token-attr">headers</span>: <span class="token-attr">respHeaders</span> });
+    }
+  }
+};</code></pre>
+        </div>
+      </section>
+
+      <!-- Section: Open-Source Stream Proxies (Piped, Invidious, Cobalt) -->
+      <section id="opensource-proxies" class="docs-section">
+        <div class="section-badge">Streaming Infrastructure</div>
+        <h2 class="section-title">Open-Source Stream Proxies (Zero Backend Required)</h2>
+        <p class="section-lead">
+          When integrating YVPlayer into static Jamstack apps, client-only SPAs, or serverless projects where running a dedicated Python <code>yt-dlp</code> backend is undesirable, you can configure <strong>open-source community stream proxy networks</strong>.
+        </p>
+
+        <div class="pip-features-grid" style="margin: 24px 0;">
+          <div class="pip-feature-item">
+            <i class="ti ti-world-download"></i>
+            <div>
+              <strong>100% Free &amp; Decentralized</strong>
+              <span>Leverage globally distributed, community-hosted proxy instances with zero cloud hosting bills or VPS management.</span>
+            </div>
+          </div>
+          <div class="pip-feature-item">
+            <i class="ti ti-shield-check"></i>
+            <div>
+              <strong>No Tracking &amp; No Cookies</strong>
+              <span>Direct requests to Google CDN (<code>googlevideo.com</code>) without telemetry, tracking cookies, or user profile linkage.</span>
+            </div>
+          </div>
+          <div class="pip-feature-item">
+            <i class="ti ti-plug-connected"></i>
+            <div>
+              <strong>Automatic Failover</strong>
+              <span>YVPlayer automatically cycles through healthy secondary community instances if the primary instance encounters rate limits.</span>
+            </div>
+          </div>
+        </div>
+
+        <h3 class="subsection-title" style="margin-top: 36px; margin-bottom: 14px;">1. Piped API Network (Recommended)</h3>
+        <p>
+          <a href="https://github.com/TeamPiped/Piped" target="_blank" rel="noopener noreferrer"><strong>Piped</strong></a> is an open-source privacy frontend for YouTube. Its public API clusters decrypt YouTube video ciphers on the fly and return clean JSON payloads containing direct Google CDN streaming URLs.
+        </p>
+        <ul class="docs-list" style="margin-bottom: 16px;">
+          <li><strong>Endpoint Format:</strong> <code>GET https://&lt;instance&gt;/streams/{VIDEO_ID}</code></li>
+          <li><strong>Live Instance Discovery:</strong> <a href="https://piped-instances.kavin.rocks/" target="_blank" rel="noopener noreferrer">piped-instances.kavin.rocks</a> (Real-time uptime tracker)</li>
+          <li><strong>Default Public Node:</strong> <code>https://pipedapi.kavin.rocks</code></li>
+          <li><strong>Fallback Public Node:</strong> <code>https://api.piped.privacy.com.de</code></li>
+        </ul>
+
+        <div class="code-block">
+          <div class="code-block-header">
+            <span>JavaScript &mdash; Initializing with Piped Stream Proxy</span>
+            <button type="button" class="btn-copy-code" data-code='YVPlayer.init("video-stage", {
+  defaultId: "LXb3EKWsInQ",
+  proxyProvider: "piped",
+  pipedInstance: "https://pipedapi.kavin.rocks", // Optional custom instance
+  pipMode: "dual"
+});'>
+              <i class="ti ti-copy"></i> Copy
+            </button>
+          </div>
+          <pre><code><span class="token-func">YVPlayer</span>.<span class="token-func">init</span>(<span class="token-str">"video-stage"</span>, {
+  <span class="token-attr">defaultId</span>: <span class="token-str">"LXb3EKWsInQ"</span>,
+  <span class="token-attr">proxyProvider</span>: <span class="token-str">"piped"</span>,
+  <span class="token-attr">pipedInstance</span>: <span class="token-str">"https://pipedapi.kavin.rocks"</span>, <span class="token-comment">// Optional custom instance</span>
+  <span class="token-attr">pipMode</span>: <span class="token-str">"dual"</span>
+});</code></pre>
+        </div>
+
+        <h3 class="subsection-title" style="margin-top: 36px; margin-bottom: 14px;">2. Invidious API Network</h3>
+        <p>
+          <a href="https://invidious.io" target="_blank" rel="noopener noreferrer"><strong>Invidious</strong></a> is a Crystal-based open-source YouTube alternative. Its API exposes pre-muxed combined MP4 video+audio streams via the <code>formatStreams</code> array.
+        </p>
+        <ul class="docs-list" style="margin-bottom: 16px;">
+          <li><strong>Endpoint Format:</strong> <code>GET https://&lt;instance&gt;/api/v1/videos/{VIDEO_ID}</code></li>
+          <li><strong>Official Instances List:</strong> <a href="https://instances.invidious.io/" target="_blank" rel="noopener noreferrer">instances.invidious.io</a></li>
+          <li><strong>Default Public Node:</strong> <code>https://inv.tux.pizza</code></li>
+          <li><strong>Fallback Public Node:</strong> <code>https://vid.puffyan.us</code></li>
+        </ul>
+
+        <div class="code-block">
+          <div class="code-block-header">
+            <span>JavaScript &mdash; Initializing with Invidious Stream Proxy</span>
+            <button type="button" class="btn-copy-code" data-code='YVPlayer.init("video-stage", {
+  defaultId: "LXb3EKWsInQ",
+  proxyProvider: "invidious",
+  invidiousInstance: "https://inv.tux.pizza"
+});'>
+              <i class="ti ti-copy"></i> Copy
+            </button>
+          </div>
+          <pre><code><span class="token-func">YVPlayer</span>.<span class="token-func">init</span>(<span class="token-str">"video-stage"</span>, {
+  <span class="token-attr">defaultId</span>: <span class="token-str">"LXb3EKWsInQ"</span>,
+  <span class="token-attr">proxyProvider</span>: <span class="token-str">"invidious"</span>,
+  <span class="token-attr">invidiousInstance</span>: <span class="token-str">"https://inv.tux.pizza"</span>
+});</code></pre>
+        </div>
+
+        <h3 class="subsection-title" style="margin-top: 36px; margin-bottom: 14px;">3. Cobalt API</h3>
+        <p>
+          <a href="https://cobalt.tools" target="_blank" rel="noopener noreferrer"><strong>Cobalt</strong></a> is a high-speed media processing engine built specifically to return single, direct streaming links without third-party adverts or tracking cookies.
+        </p>
+        <ul class="docs-list" style="margin-bottom: 16px;">
+          <li><strong>Endpoint Format:</strong> <code>POST https://api.cobalt.tools/</code> (Body: <code>{"url": "...", "videoQuality": "720"}</code>)</li>
+          <li><strong>Official Endpoint:</strong> <code>https://api.cobalt.tools</code></li>
+        </ul>
+
+        <div class="code-block">
+          <div class="code-block-header">
+            <span>JavaScript &mdash; Initializing with Cobalt Stream API</span>
+            <button type="button" class="btn-copy-code" data-code='YVPlayer.init("video-stage", {
+  defaultId: "LXb3EKWsInQ",
+  proxyProvider: "cobalt",
+  cobaltInstance: "https://api.cobalt.tools"
+});'>
+              <i class="ti ti-copy"></i> Copy
+            </button>
+          </div>
+          <pre><code><span class="token-func">YVPlayer</span>.<span class="token-func">init</span>(<span class="token-str">"video-stage"</span>, {
+  <span class="token-attr">defaultId</span>: <span class="token-str">"LXb3EKWsInQ"</span>,
+  <span class="token-attr">proxyProvider</span>: <span class="token-str">"cobalt"</span>,
+  <span class="token-attr">cobaltInstance</span>: <span class="token-str">"https://api.cobalt.tools"</span>
+});</code></pre>
+        </div>
+
+        <h3 class="subsection-title" style="margin-top: 36px; margin-bottom: 14px;">Architecture Comparison Matrix</h3>
+        <div class="table-wrapper">
+          <table class="docs-table">
+            <thead>
+              <tr>
+                <th>Proxy Option</th>
+                <th>Backend Required</th>
+                <th>Resolution Speed</th>
+                <th>Direct Stream Format</th>
+                <th>Monthly Cost</th>
+                <th>Best Suited For</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Piped API</strong></td>
+                <td>Zero (Community CDN)</td>
+                <td>Fast (~180ms)</td>
+                <td>720p / 1080p MP4</td>
+                <td>$0</td>
+                <td>Production SPAs, Next.js, and static websites.</td>
+              </tr>
+              <tr>
+                <td><strong>Invidious API</strong></td>
+                <td>Zero (Community CDN)</td>
+                <td>Moderate (~280ms)</td>
+                <td>720p / 360p Pre-Muxed MP4</td>
+                <td>$0</td>
+                <td>Decentralized and privacy-strict web apps.</td>
+              </tr>
+              <tr>
+                <td><strong>Cobalt API</strong></td>
+                <td>Zero (Community CDN)</td>
+                <td>Ultra-Fast (~120ms)</td>
+                <td>720p HD Direct MP4</td>
+                <td>$0</td>
+                <td>Clean single-link video playback and embeds.</td>
+              </tr>
+              <tr>
+                <td><strong>Self-Hosted yt-dlp</strong></td>
+                <td>Python 3.10+ (demo/server.py)</td>
+                <td>Near-Instant (Cached)</td>
+                <td>Adaptive 1080p / 720p</td>
+                <td>$0 (Local) / VPS</td>
+                <td>Enterprise intranets and full custom backend control.</td>
+              </tr>
+              <tr>
+                <td><strong>Cloudflare Worker</strong></td>
+                <td>Serverless Edge (worker.js)</td>
+                <td>Edge Cached (~40ms)</td>
+                <td>Direct 206 Byte Ranges</td>
+                <td>$0 (100k req/day free)</td>
+                <td>High-scale global edge architectures.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Section: Self-Hosted Python Proxy Server -->
+      <section id="self-hosted-server" class="docs-section">
+        <div class="section-badge">Deployment</div>
+        <h2 class="section-title">Self-Hosted Python Stream Proxy</h2>
+        <p class="section-lead">
+          Deploy your own lightweight, zero-maintenance HTTP stream proxy on Linux, macOS, or Windows using Python and <code>yt-dlp</code> with built-in in-memory caching and HTTP 206 Partial Content range support.
+        </p>
+
+        <h3 class="subsection-title" style="margin-top: 28px; margin-bottom: 14px;">Architecture &amp; Features</h3>
+        <p>
+          The included <code>demo/server.py</code> is a hardened, multi-threaded HTTP server engineered specifically for direct 720p stream resolution and instant seeking:
+        </p>
+
+        <div class="pip-features-grid" style="margin: 20px 0;">
+          <div class="pip-feature-item">
+            <i class="ti ti-server"></i>
+            <div>
+              <strong>Multi-Threaded HTTP Server</strong>
+              <span>Built on Python's <code>ThreadingHTTPServer</code> to serve concurrent video streams and static assets without request blocking.</span>
+            </div>
+          </div>
+          <div class="pip-feature-item">
+            <i class="ti ti-arrows-split"></i>
+            <div>
+              <strong>HTTP 206 Partial Content Range Support</strong>
+              <span>Proxies byte ranges (<code>bytes=start-end</code>) directly to upstream CDNs, enabling smooth timeline scrub seeking in Native Video PiP.</span>
+            </div>
+          </div>
+          <div class="pip-feature-item">
+            <i class="ti ti-clock"></i>
+            <div>
+              <strong>In-Memory URL Cache with TTL</strong>
+              <span>Caches direct CDN stream URLs with automatic expiration, eliminating redundant <code>yt-dlp</code> extraction calls for frequently requested videos.</span>
+            </div>
+          </div>
+          <div class="pip-feature-item">
+            <i class="ti ti-shield-lock"></i>
+            <div>
+              <strong>Regex Validation &amp; Injection Protection</strong>
+              <span>Strictly validates video IDs against <code>^[a-zA-Z0-9_-]{11}$</code> to prevent command injection and SSRF exploits.</span>
+            </div>
+          </div>
+        </div>
+
+        <h3 class="subsection-title" style="margin-top: 36px; margin-bottom: 14px;">Running Locally or in Production</h3>
+        <p>
+          Start the server with Python 3.10+ and <code>yt-dlp</code> installed:
+        </p>
+
+        <div class="code-block">
+          <div class="code-block-header">
+            <span>Terminal &mdash; Running the Proxy</span>
+            <button type="button" class="btn-copy-code" data-code="# 1. Install dependencies
+pip install yt-dlp
+
+# 2. Start the hardened stream server on port 3000
+python demo/server.py">
+              <i class="ti ti-copy"></i> Copy Command
+            </button>
+          </div>
+          <pre><code><span class="token-comment"># 1. Install yt-dlp dependency</span>
+pip install yt-dlp
+
+<span class="token-comment"># 2. Launch the multi-threaded proxy server</span>
+python demo/server.py</code></pre>
+        </div>
+
+        <h3 class="subsection-title" style="margin-top: 36px; margin-bottom: 14px;">Production Systemd Service</h3>
+        <p>
+          For permanent 24/7 deployment on Ubuntu or Debian servers, create a systemd service file at <code>/etc/systemd/system/yvplayer.service</code>:
+        </p>
+
+        <div class="code-block">
+          <div class="code-block-header">
+            <span>Systemd Service &mdash; /etc/systemd/system/yvplayer.service</span>
+            <button type="button" class="btn-copy-code" data-code="[Unit]
+Description=YVPlayer Stream Proxy & Demo Server
+After=network.target
+
+[Service]
+Type=simple
+User=www-data
+WorkingDirectory=/var/www/yvplayer
+ExecStart=/usr/bin/python3 demo/server.py
+Restart=always
+RestartSec=3
+Environment=PORT=3000
+
+[Install]
+WantedBy=multi-user.target">
+              <i class="ti ti-copy"></i> Copy Service
+            </button>
+          </div>
+          <pre><code><span class="token-keyword">[Unit]</span>
+Description=YVPlayer Stream Proxy &amp; Demo Server
+After=network.target
+
+<span class="token-keyword">[Service]</span>
+Type=simple
+User=www-data
+WorkingDirectory=/var/www/yvplayer
+ExecStart=/usr/bin/python3 demo/server.py
+Restart=always
+RestartSec=3
+Environment=PORT=3000
+
+<span class="token-keyword">[Install]</span>
+WantedBy=multi-user.target</code></pre>
+        </div>
+      </section>
+
+
+      <!-- Section: Keyboard Shortcuts & Touch Gestures -->
+      
+
+      <!-- Section: Security & CSP -->
+      <section id="security-csp" class="docs-section">
+        <div class="section-badge">Security</div>
+        <h2 class="section-title">Security, XSS Defense & CSP Guidelines</h2>
+        <p>
+          YVPlayer follows strict defensive design patterns to guarantee safety when embedding in multi-tenant or enterprise environments:
+        </p>
+
+        <div class="security-checklist">
+          <div class="check-item">
+            <i class="ti ti-shield-check"></i>
+            <div>
+              <strong>Strict Video ID Validation:</strong> All entry points validate IDs against <code>^[a-zA-Z0-9_-]{11}$</code> to prevent command flag injection, path traversal, or SSRF attacks.
+            </div>
+          </div>
+          <div class="check-item">
+            <i class="ti ti-shield-check"></i>
+            <div>
+              <strong>XSS-Proof Caption Rendering:</strong> Captions are injected via <code>.textContent</code> rather than <code>innerHTML</code>, ensuring external WebVTT/SRT text cannot execute arbitrary script payloads.
+            </div>
+          </div>
+          <div class="check-item">
+            <i class="ti ti-shield-check"></i>
+            <div>
+              <strong>Strict postMessage Target Origin:</strong> All communication to YouTube iframes specifies <code>"https://www.youtube.com"</code> as the target origin rather than wildcard <code>"*"</code>.
+            </div>
+          </div>
+          <div class="check-item">
+            <i class="ti ti-shield-check"></i>
+            <div>
+              <strong>Recommended Content Security Policy (CSP):</strong>
+              <div class="code-inline">default-src 'self'; script-src 'self' https://www.youtube.com https://cdn.jsdelivr.net; frame-src https://www.youtube.com; media-src 'self' blob:; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://fonts.googleapis.com; font-src https://cdn.jsdelivr.net https://fonts.gstatic.com;</div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+
+      <!-- Shared Unified Footer -->
+      <footer class="site-footer">
+        <div class="site-footer-inner">
+          <div class="footer-left">
+            <span class="footer-brand">YVPLAYER</span>
+            <span class="footer-copy">© 2026 Open Source Project. Released under the MIT License.</span>
+          </div>
+          <div class="footer-links">
+            <a href="index.html">Home</a>
+            <a href="docs.html">Documentation</a>
+            <a href="#api-options">API Reference</a>
+            <a href="#worker-deployment">Cloudflare Worker</a>
+            <a href="https://github.com/thevikasgurjar/YVplayer" target="_blank" rel="noopener noreferrer">GitHub</a>
+          </div>
+        </div>
+      </footer>
+
+    <!-- Interactive Live Demo Modal for Docs -->
+  <div id="docs-demo-modal" class="docs-demo-modal" style="display: none;">
+    <div class="docs-demo-backdrop"></div>
+    <div class="docs-demo-dialog">
+      <div class="docs-demo-header">
+        <div class="docs-demo-title-group">
+          <div class="brand-glyph">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="5 3 19 12 5 21 5 3"></polygon>
+            </svg>
+            <span class="brand-rec-dot"></span>
+          </div>
+          <div>
+            <h3>Interactive Player Sandbox</h3>
+            <p>Test playback, 720p HD stream, PiP, and themes live in documentation</p>
+          </div>
+        </div>
+        <div class="docs-demo-header-actions">
+          <a href="index.html" class="docs-demo-popout-btn" target="_blank" title="Open full showcase page in new tab">
+            <i class="ti ti-external-link"></i> Full Page
+          </a>
+          <button type="button" id="close-docs-demo-btn" class="docs-demo-close-btn" title="Close (Esc)">
+            <i class="ti ti-x"></i>
+          </button>
+        </div>
+      </div>
+
+      <div class="docs-demo-body">
+        <!-- Omnibar inside popup -->
+        <div class="docs-modal-omnibar">
+          <i class="ti ti-link"></i>
+          <input type="text" id="docs-modal-input" placeholder="Paste YouTube link or choose sample..." value="https://www.youtube.com/watch?v=LXb3EKWsInQ">
+          <button id="docs-modal-load-btn" class="docs-modal-submit"><i class="ti ti-player-play-filled"></i> Play</button>
+        </div>
+
+        <!-- Quick sample chips -->
+        <div class="docs-modal-chips">
+          <span class="modal-chips-label">Samples:</span>
+          <button type="button" class="docs-sample-chip is-active" data-id="LXb3EKWsInQ" title="Blender Foundation Sci-Fi Short">
+            <span class="chip-tag chip-tag-resolution">1080p</span>
+            <span class="chip-title">Tears of Steel</span>
+          </button>
+          <button type="button" class="docs-sample-chip" data-id="aqz-KE-bpKQ" title="Big Buck Bunny 4K 60fps">
+            <span class="chip-tag chip-tag-4k">4K</span>
+            <span class="chip-title">Big Buck Bunny</span>
+          </button>
+          <button type="button" class="docs-sample-chip" data-id="4xDzrJKXOOY" title="Synthwave Retrowave Radio">
+            <span class="chip-tag chip-tag-music">Music</span>
+            <span class="chip-title">Synthwave Chill</span>
+          </button>
+          <button type="button" class="docs-sample-chip" data-id="0sfDth4lMLc" data-live="true" title="Lofi Girl 24/7 Beats - Live Stream">
+            <span class="chip-tag chip-tag-live">🔴 LIVE</span>
+            <span class="chip-title">Lofi Girl</span>
+          </button>
+          <button type="button" class="docs-sample-chip" data-id="YlyI2jmHEYc" data-shorts="true" title="YouTube Shorts (9:16 Vertical Video)">
+            <span class="chip-tag chip-tag-shorts">📱 Shorts</span>
+            <span class="chip-title">Clay Waffle</span>
+          </button>
+          <button type="button" class="docs-sample-chip" data-id="aqz-KE-bpKQ" data-background="true" title="Background Play Mode (Muted &amp; Looping Behind Content - Zero Controls)">
+            <span class="chip-tag chip-tag-ambient">Ambient</span>
+            <span class="chip-title">Background Mode</span>
+          </button>
+        </div>
+
+        <!-- Player Stage in Modal -->
+        <div class="docs-modal-player-wrap">
+          <div id="docs-player-stage"></div>
+        </div>
+
+        <!-- Theme Toolbar in Modal -->
+        <div class="docs-modal-theme-bar">
+          <span class="modal-theme-label"><i class="ti ti-palette"></i> Live Accent Theme:</span>
+          <div class="modal-theme-swatches">
+            <button type="button" class="modal-theme-btn is-active" data-color="#fe0001" data-theme="red"><span style="background:#fe0001;"></span> Classic Red</button>
+            <button type="button" class="modal-theme-btn" data-color="#00e5ff" data-theme="cyan"><span style="background:#00e5ff;"></span> City Cyan</button>
+            <button type="button" class="modal-theme-btn" data-color="#a855f7" data-theme="purple"><span style="background:#a855f7;"></span> Purple</button>
+            <button type="button" class="modal-theme-btn" data-color="#10b981" data-theme="emerald"><span style="background:#10b981;"></span> Emerald</button>
+            <button type="button" class="modal-theme-btn" data-color="#f59e0b" data-theme="amber"><span style="background:#f59e0b;"></span> Amber</button>
+            <button type="button" class="modal-theme-btn" data-color="#ffffff" data-theme="monochrome"><span style="background:#ffffff;"></span> Monochrome</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- YouTube IFrame API loaded async (non-blocking) -->
+  <script src="https://www.youtube.com/iframe_api" async></script>
+  <script src="yvPlayer.js?v=3.8" defer></script>
+  <script src="docs.js?v=1.4" defer></script>
+</body>
+</html>

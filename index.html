@@ -1,0 +1,890 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <title>YVPlayer · Custom Player for YouTube Videos Without YouTube Elements &amp; Branding</title>
+  <meta name="description" content="The custom HTML5 player for YouTube videos without YouTube elements, branding, watermarks, or suggested videos. Cinema-grade 1080p playback, frame scrubbing, native Picture-in-Picture, custom CSS themes, and zero corporate distractions.">
+  <meta name="keywords" content="player for youtube video without youtube elements, youtube player without branding, custom player for youtube videos, clean youtube embed, hide youtube elements, distraction free youtube player, custom html5 youtube player, embed youtube video without logo, youtube video player no branding, custom video player for youtube, youtube embed no watermark">
+  <meta name="theme-color" content="#000000">
+  <link rel="canonical" href="https://thevikasgurjar.github.io/YVplayer/">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="sitemap" type="application/xml" href="sitemap.xml">
+  <link rel="alternate" type="text/markdown" href="llms.txt" title="LLM Agent Context">
+
+  <!-- Open Graph / Social -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://thevikasgurjar.github.io/YVplayer/">
+  <meta property="og:title" content="YVPlayer · Custom Player for YouTube Videos Without YouTube Elements &amp; Branding">
+  <meta property="og:description" content="The custom HTML5 player for YouTube videos without YouTube elements, branding, watermarks, or suggested videos. 1080p playback with zero distractions.">
+  <meta property="og:site_name" content="YVPlayer">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="YVPlayer · Custom Player for YouTube Videos Without YouTube Elements">
+  <meta name="twitter:description" content="Custom HTML5 player for YouTube videos without YouTube elements, logos, or watermarks. Frame scrubbing, 1080p playback, and native PiP.">
+
+  <!-- Preconnect for performance -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://www.youtube.com" crossorigin>
+  <link rel="dns-prefetch" href="https://i.ytimg.com">
+
+  <!-- Critical font preload -->
+  <link rel="preload" href="fonts/tabler-icons.woff2" as="font" type="font/woff2" crossorigin>
+
+  <!-- Non-render-blocking icon font: load async -->
+  <link rel="preload" href="tabler-icons.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="tabler-icons.min.css"></noscript>
+
+  <!-- Player CSS (required for layout) -->
+  <link rel="stylesheet" href="yvPlayer.css">
+
+  <!-- Google Fonts: async to avoid render-blocking -->
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet"></noscript>
+
+  <!-- Site CSS -->
+  <link rel="stylesheet" href="style.css?v=3.8">
+
+  <!-- Theme flash prevention (must stay sync/inline) -->
+  <script>
+    (function () {
+      try {
+        var theme = localStorage.getItem("yv_site_theme") || "dark";
+        document.documentElement.setAttribute("data-theme", theme);
+      } catch (e) { }
+    })();
+  </script>
+
+    <!-- Structured data -->
+  <script type="application/ld+json">
+  [
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "YVPlayer",
+      "applicationCategory": "MultimediaApplication",
+      "operatingSystem": "Web",
+      "url": "https://thevikasgurjar.github.io/YVplayer/",
+      "description": "Custom HTML5 player for YouTube videos without YouTube elements, branding, logos, or watermark overlays.",
+      "license": "https://opensource.org/licenses/MIT",
+      "author": {
+        "@type": "Person",
+        "name": "Vikas Kumar"
+      },
+      "featureList": [
+        "Play YouTube videos without YouTube elements or branding",
+        "Strips YouTube logos, channel watermarks, and related video end-screens",
+        "Frame-accurate VTT storyboard hover scrubbing",
+        "Dual-engine 720p HD Picture-in-Picture with volume control",
+        "Custom CSS variable themes and Hex color picker",
+        "Zero tracking cookies, zero backend, zero dependencies"
+      ],
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Can I use this player for YouTube videos without YouTube elements and branding?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes! YVPlayer is engineered specifically as a distraction-free HTML5 video player wrapper for YouTube videos. It masks all native YouTube UI elements, corporate watermarks, channel titles, subscribe popups, and watch-next recommendation grids, giving your viewers a clean cinema playback experience."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I embed a YouTube video without the YouTube logo, watermark, and suggested videos?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Simply drop a single HTML tag into your website: <div data-yv-video=\"LXb3EKWsInQ\" data-yv-theme=\"red\"></div> with the YVPlayer CSS and JS files. The player automatically initializes, removes YouTube elements, and provides modern frame-accurate thumbnail hover scrubbing."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does YVPlayer support 1080p, 4K, and 60fps YouTube videos?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. YVPlayer supports all YouTube resolutions including 4K, 1440p, 1080p60, 720p, 480p, 360p, and adaptive streaming with manual quality locks."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does YVPlayer require any backend servers or YouTube API keys?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No backend servers or API keys are required. YVPlayer is a 100% client-side, zero-dependency library under the MIT open-source license."
+          }
+        }
+      ]
+    }
+  ]
+  </script>
+</head>
+<body>
+  <!-- Skip to main content (accessibility) -->
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <!-- Ambient Studio Lighting -->
+  <div class="ambient-glow"></div>
+
+  <!-- Shared Unified Site Header -->
+  <header class="site-header">
+    <div class="site-header-inner">
+      <div class="header-left">
+        <a href="index.html" class="header-brand">
+          <div class="brand-glyph">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="5 3 19 12 5 21 5 3"></polygon>
+            </svg>
+            <span class="brand-rec-dot"></span>
+          </div>
+          <span class="brand-name">YVPLAYER</span>
+          <span class="brand-version">v1.1</span>
+        </a>
+      </div>
+
+      <nav class="header-nav">
+        <a href="index.html" class="nav-item is-active"><i class="ti ti-home"></i> Home</a>
+        <a href="#prompt-generator" class="nav-item"><i class="ti ti-sparkles"></i> AI Prompt</a>
+        <a href="docs.html" class="nav-item"><i class="ti ti-book-2"></i> Documentation</a>
+        <a href="docs.html#api-options" class="nav-item"><i class="ti ti-terminal-2"></i> API Reference</a>
+        <a href="docs.html#pip-architecture" class="nav-item"><i class="ti ti-picture-in-picture"></i> PiP Engine</a>
+        <a href="https://github.com/thevikasgurjar/YVplayer" target="_blank" rel="noopener noreferrer" class="nav-item"><i class="ti ti-brand-github"></i> GitHub</a>
+      </nav>
+
+      <div class="header-right">
+        <button type="button" class="theme-toggle-btn" id="theme-toggle" title="Toggle Light / Dark Mode" aria-label="Toggle light and dark mode">
+          <i class="ti ti-sun"></i>
+        </button>
+        <button id="open-embed-modal" class="btn-primary-ghost" title="Open Customizer & Embed Snippet (Ctrl+E)">
+          <i class="ti ti-code"></i>
+          <span>Embed Snippet</span>
+          <span class="kbd-pill" id="embed-shortcut-pill">Ctrl+E</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="app-container" id="main-content">
+    <!-- Hero Showcase Section -->
+    <section class="hero-section">
+            <div class="hero-badge">
+        <span class="badge-dot"></span>
+        <span>Zero YouTube Elements · Zero Branding · 1080p Clean Playback</span>
+      </div>
+      <h1 class="hero-title">The custom player for YouTube videos without YouTube elements or branding.</h1>
+      <p class="hero-description">
+        Strips YouTube watermarks, logos, channel titles, and suggested video overlays. Delivers clean distraction-free playback, frame-accurate thumbnail scrubbing, native OS Picture-in-Picture with volume control, and custom CSS themes in a zero-dependency package.
+      </p>
+
+      <!-- Sleek Command Omnibar -->
+      <div class="omnibar-wrapper">
+        <div class="omnibar">
+          <div class="omnibar-icon"><i class="ti ti-link"></i></div>
+          <input 
+            type="text" 
+            id="video-input" 
+            placeholder="Paste any YouTube URL or 11-character video ID..." 
+            value="https://www.youtube.com/watch?v=LXb3EKWsInQ"
+            autocomplete="off"
+            spellcheck="false"
+          >
+          <button id="load-btn" class="omnibar-submit" title="Load and play video">
+            <i class="ti ti-player-play-filled"></i>
+            <span>Load Video</span>
+          </button>
+        </div>
+
+        <!-- Quick Launch Presets -->
+        <div class="preset-chips-bar">
+          <span class="preset-label">Quick Samples:</span>
+          <div class="preset-chips">
+            <button type="button" class="preset-chip is-active" data-id="LXb3EKWsInQ" title="TCOSTA RICA">
+              <span class="chip-tag">1080p</span>
+            </button>
+            <button type="button" class="preset-chip" data-id="aqz-KE-bpKQ" title="Big Buck Bunny 4K 60fps">
+              <span class="chip-tag">4K</span>
+            </button>
+            <button type="button" class="preset-chip" data-id="4xDzrJKXOOY" title="Synthwave Retrowave Radio">
+              <span class="chip-tag">Music</span>
+            </button>
+            <button type="button" class="preset-chip" data-id="0sfDth4lMLc" data-live="true" title="Lofi Girl 24/7 Beats - Live Stream">
+              <span class="chip-tag chip-live-tag"><span class="chip-live-dot"></span> LIVE</span>
+            </button>
+            <button type="button" class="preset-chip" data-id="YlyI2jmHEYc" data-shorts="true" title="YouTube Shorts (9:16 Vertical Video)">
+              <span class="chip-tag chip-shorts-tag"><i class="ti ti-brand-tiktok"></i> Shorts</span>
+            </button>
+            <button type="button" class="preset-chip" data-id="aqz-KE-bpKQ" data-background="true" title="Background Play Mode (Muted &amp; Looping Behind Content - Zero Controls)">
+              <span class="chip-tag chip-bg-tag"><i class="ti ti-backdrop"></i> Background Video</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Main Player Showcase Stage -->
+    <div class="player-stage">
+      <div class="player-wrapper">
+        <div id="video1"></div>
+      </div>
+
+      <!-- Live Interactive Theme Strip -->
+      <div class="player-toolbar">
+        <div class="toolbar-left">
+          <span class="toolbar-label"><i class="ti ti-palette"></i> Live Accent Theme:</span>
+          <div class="theme-quick-swatches">
+            <button type="button" class="theme-quick-btn is-active" data-theme="red" data-color="#fe0001" title="Classic Cinema Red">
+              <span class="swatch-indicator" style="background:#fe0001;"></span> Classic Red
+            </button>
+            <button type="button" class="theme-quick-btn" data-theme="cyan" data-color="#00e5ff" title="City Cyan">
+              <span class="swatch-indicator" style="background:#00e5ff;"></span> City Cyan
+            </button>
+            <button type="button" class="theme-quick-btn" data-theme="purple" data-color="#a855f7" title="Fantasy Purple">
+              <span class="swatch-indicator" style="background:#a855f7;"></span> Purple
+            </button>
+            <button type="button" class="theme-quick-btn" data-theme="emerald" data-color="#10b981" title="Forest Emerald">
+              <span class="swatch-indicator" style="background:#10b981;"></span> Emerald
+            </button>
+            <button type="button" class="theme-quick-btn" data-theme="gold" data-color="#f59e0b" title="Amber Gold">
+              <span class="swatch-indicator" style="background:#f59e0b;"></span> Amber
+            </button>
+            <button type="button" class="theme-quick-btn" data-theme="white" data-color="#ffffff" title="Minimal Monochrome">
+              <span class="swatch-indicator" style="background:#ffffff;"></span> Monochrome
+            </button>
+          </div>
+        </div>
+        <div class="toolbar-right">
+          <button type="button" id="stage-customize-btn" class="toolbar-action-btn" aria-label="Open full player customizer">
+            <i class="ti ti-adjustments-horizontal"></i>
+            <span>Full Customizer</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quick Embed Drawer (Developer First) -->
+    <section class="quick-code-section">
+      <div class="code-box-card">
+        <div class="code-box-header">
+          <div class="code-box-tabs">
+            <button type="button" class="code-tab is-active" data-drawer-tab="dropin">
+              <i class="ti ti-bolt"></i> 1-Click Drop-In HTML
+            </button>
+            <button type="button" class="code-tab" data-drawer-tab="js">
+              <i class="ti ti-code"></i> JavaScript API
+            </button>
+            <button type="button" class="code-tab" data-drawer-tab="react">
+              <i class="ti ti-brand-react"></i> React / Next.js
+            </button>
+          </div>
+          <div class="code-box-actions">
+            <button type="button" id="copy-drawer-code-btn" class="btn-copy-tactile">
+              <i class="ti ti-copy"></i>
+              <span>Copy Code</span>
+            </button>
+          </div>
+        </div>
+        <pre class="code-box-content"><code id="drawer-code-content">&lt;!-- 1. Include Tabler Icons, YVPlayer CSS &amp; JS --&gt;
+&lt;link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css" /&gt;
+&lt;link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/thevikasgurjar/YVplayer@main/yvPlayer.css" /&gt;
+&lt;script src="https://cdn.jsdelivr.net/gh/thevikasgurjar/YVplayer@main/yvPlayer.js"&gt;&lt;/script&gt;
+
+&lt;!-- 2. Zero-JS Player Element (Drop anywhere) --&gt;
+&lt;div
+  data-yv-video="LXb3EKWsInQ"
+  data-yv-theme="red"
+  style="width: 100%; max-width: 960px; aspect-ratio: 16 / 9; margin: 0 auto; border-radius: 14px; overflow: hidden;"
+&gt;&lt;/div&gt;</code></pre>
+      </div>
+    </section>
+
+
+    <!-- Technical Feature Bento Grid -->
+    <section class="bento-section">
+      <div class="bento-header">
+        <span class="bento-eyebrow">ENGINE CAPABILITIES</span>
+        <h2 class="bento-title">Engineered to play YouTube videos without YouTube elements.</h2>
+      </div>
+
+      <div class="bento-grid">
+        <div class="bento-card">
+          <div class="bento-icon"><i class="ti ti-eye-off"></i></div>
+          <div class="bento-meta">
+            <span class="bento-badge">ZERO OVERLAY</span>
+            <h3>No Corporate Distractions</h3>
+            <p>Strips YouTube video titles, channel avatars, suggested watch-next end-screens, and external branding cards completely.</p>
+          </div>
+        </div>
+
+        <div class="bento-card">
+          <div class="bento-icon"><i class="ti ti-slideshow"></i></div>
+          <div class="bento-meta">
+            <span class="bento-badge">VTT STORYBOARD</span>
+            <h3>Real-Time Hover Scrubbing</h3>
+            <p>Precise frame thumbnail previews while scrubbing along the seekbar, powered by YouTube's high-resolution storyboard sheets.</p>
+          </div>
+        </div>
+
+        <div class="bento-card">
+          <div class="bento-icon"><i class="ti ti-picture-in-picture-on"></i></div>
+          <div class="bento-meta">
+            <span class="bento-badge">DUAL-ENGINE PiP</span>
+            <h3>720p HD Picture-in-Picture</h3>
+            <p>Switch between native OS-level floating PiP with responsive volume control, or an in-page floating dock with 4-corner 16:9 resize.</p>
+          </div>
+        </div>
+
+        <div class="bento-card">
+          <div class="bento-icon"><i class="ti ti-badge-cc"></i></div>
+          <div class="bento-meta">
+            <span class="bento-badge">ACCESSIBILITY</span>
+            <h3>Custom Captions Styler</h3>
+            <p>Configure font size, opacity, solid backdrops vs transparent boxes with live preview directly inside the settings drawer.</p>
+          </div>
+        </div>
+
+        <div class="bento-card">
+          <div class="bento-icon"><i class="ti ti-adjustments-horizontal"></i></div>
+          <div class="bento-meta">
+            <span class="bento-badge">STREAM RESOLUTION</span>
+            <h3>Direct Quality Selection</h3>
+            <p>Built-in quality renditions: 1080p, 720p, 480p, 360p, 240p, 144p with instant manual lock or adaptive auto resolution.</p>
+          </div>
+        </div>
+
+        <div class="bento-card">
+          <div class="bento-icon"><i class="ti ti-moon"></i></div>
+          <div class="bento-meta">
+            <span class="bento-badge">SLEEP TIMER</span>
+            <h3>Auto-Pause & Fade</h3>
+            <p>Schedule automatic playback pause after 15m, 30m, 45m, 60m or video conclusion with a persistent countdown badge.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Interactive LLM Prompt Generator Section -->
+    <section id="prompt-generator" class="prompt-generator-section">
+      <div class="prompt-gen-header">
+        <div class="prompt-badge"><i class="ti ti-sparkles"></i> AI Prompt Architect</div>
+        <h2 class="prompt-title">Generate Production AI Prompts in 1 Click</h2>
+        <p class="prompt-subtitle">
+          Select your tech stack, PiP engine, theme palette, and open-source stream proxies. Copy and paste the generated prompt into <strong>ChatGPT, Claude, Cursor, Copilot, or Gemini</strong> to integrate YVPlayer flawlessly into your codebase.
+        </p>
+      </div>
+
+      <div class="prompt-gen-layout">
+        <!-- Left: Interactive Options -->
+        <div class="prompt-options-pane">
+          
+          <!-- Target Framework -->
+          <div class="prompt-group">
+            <label class="prompt-group-label"><i class="ti ti-layers-linked"></i> Target Framework</label>
+            <div class="prompt-pill-selector" data-group="framework">
+              <button type="button" class="prompt-pill is-active" data-val="react"><i class="ti ti-brand-react"></i> React / Next.js</button>
+              <button type="button" class="prompt-pill" data-val="html"><i class="ti ti-brand-html5"></i> HTML / Vanilla</button>
+              <button type="button" class="prompt-pill" data-val="vue"><i class="ti ti-brand-vue"></i> Vue / Nuxt</button>
+              <button type="button" class="prompt-pill" data-val="svelte"><i class="ti ti-brand-svelte"></i> Svelte</button>
+            </div>
+          </div>
+
+          <!-- Video Mode -->
+          <div class="prompt-group">
+            <label class="prompt-group-label"><i class="ti ti-device-tv"></i> Video Player Mode</label>
+            <div class="prompt-pill-selector" data-group="mode">
+              <button type="button" class="prompt-pill is-active" data-val="standard"><i class="ti ti-aspect-ratio"></i> Standard (16:9)</button>
+              <button type="button" class="prompt-pill" data-val="shorts"><i class="ti ti-device-mobile"></i> Shorts (9:16)</button>
+              <button type="button" class="prompt-pill" data-val="background"><i class="ti ti-sparkles"></i> Background Ambient</button>
+              <button type="button" class="prompt-pill" data-val="live"><i class="ti ti-broadcast"></i> Live Stream</button>
+            </div>
+          </div>
+
+          <!-- Optional Target Video Input -->
+          <div class="prompt-group">
+            <label class="prompt-group-label"><i class="ti ti-link"></i> Target YouTube Video URL or ID (Optional)</label>
+            <input type="text" class="prompt-input prompt-video-input" placeholder="e.g. paste YouTube or Shorts link (defaults to mode sample)">
+          </div>
+
+          <!-- Picture-in-Picture Engine Selection -->
+          <div class="prompt-group">
+            <label class="prompt-group-label"><i class="ti ti-picture-in-picture"></i> Picture-in-Picture Engine</label>
+            <div class="prompt-pill-selector" data-group="pipMode">
+              <button type="button" class="prompt-pill is-active" data-val="dual"><i class="ti ti-layers-intersect"></i> Dual-Engine (Auto)</button>
+              <button type="button" class="prompt-pill" data-val="document"><i class="ti ti-browser"></i> Document PiP (OS Window)</button>
+              <button type="button" class="prompt-pill" data-val="inpage"><i class="ti ti-layout-bottombar"></i> In-Page Floating Dock</button>
+              <button type="button" class="prompt-pill" data-val="none"><i class="ti ti-circle-off"></i> Disabled</button>
+            </div>
+          </div>
+
+          <!-- Captions & Subtitles Engine -->
+          <div class="prompt-group">
+            <label class="prompt-group-label"><i class="ti ti-badge-cc"></i> Subtitle &amp; Captions Engine</label>
+            <div class="prompt-pill-selector" data-group="captionMode">
+              <button type="button" class="prompt-pill is-active" data-val="custom-both"><i class="ti ti-color-filter"></i> Dual-Backdrop (Solid + Transparent)</button>
+              <button type="button" class="prompt-pill" data-val="transparent"><i class="ti ti-box-model-2"></i> Transparent Box</button>
+              <button type="button" class="prompt-pill" data-val="solid"><i class="ti ti-square-filled"></i> Solid Backdrop</button>
+              <button type="button" class="prompt-pill" data-val="none"><i class="ti ti-circle-off"></i> Disabled</button>
+            </div>
+          </div>
+
+          <!-- End-User Customization Permission -->
+          <div class="prompt-group">
+            <label class="prompt-group-label"><i class="ti ti-user-cog"></i> End-User Customizer Access</label>
+            <div class="prompt-pill-selector" data-group="userCustomization">
+              <button type="button" class="prompt-pill is-active" data-val="full"><i class="ti ti-adjustments-horizontal"></i> Viewer Customizer Enabled (Settings Drawer)</button>
+              <button type="button" class="prompt-pill" data-val="locked"><i class="ti ti-lock"></i> Locked to Dev Presets (Zero Viewer Tampering)</button>
+            </div>
+          </div>
+
+          <!-- Supported Theme Accents (Multi-Select) -->
+          <div class="prompt-group">
+            <label class="prompt-group-label"><i class="ti ti-palette"></i> Supported Theme Accents (Multi-Select)</label>
+            <div class="prompt-theme-multiselect">
+              <label class="prompt-theme-chip is-selected" data-theme="red">
+                <input type="checkbox" data-theme-val="red" checked>
+                <span class="theme-color-dot" style="background: #fe0001;"></span>
+                <span>Red</span>
+              </label>
+              <label class="prompt-theme-chip is-selected" data-theme="cyan">
+                <input type="checkbox" data-theme-val="cyan" checked>
+                <span class="theme-color-dot" style="background: #00e5ff;"></span>
+                <span>Cyan</span>
+              </label>
+              <label class="prompt-theme-chip is-selected" data-theme="purple">
+                <input type="checkbox" data-theme-val="purple" checked>
+                <span class="theme-color-dot" style="background: #a855f7;"></span>
+                <span>Purple</span>
+              </label>
+              <label class="prompt-theme-chip is-selected" data-theme="emerald">
+                <input type="checkbox" data-theme-val="emerald" checked>
+                <span class="theme-color-dot" style="background: #10b981;"></span>
+                <span>Emerald</span>
+              </label>
+              <label class="prompt-theme-chip is-selected" data-theme="amber">
+                <input type="checkbox" data-theme-val="amber" checked>
+                <span class="theme-color-dot" style="background: #f59e0b;"></span>
+                <span>Amber</span>
+              </label>
+              <label class="prompt-theme-chip is-selected" data-theme="white">
+                <input type="checkbox" data-theme-val="white" checked>
+                <span class="theme-color-dot" style="background: #ffffff;"></span>
+                <span>White</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Stream Proxy Provider Selection -->
+          <div class="prompt-group">
+            <label class="prompt-group-label"><i class="ti ti-server-2"></i> Stream Proxy Provider (For Native PiP &amp; Direct Streams)</label>
+            <div class="prompt-pill-selector" data-group="proxyProvider">
+              <button type="button" class="prompt-pill is-active" data-val="piped"><i class="ti ti-brand-youtube"></i> Piped API (Open-Source / Zero Backend)</button>
+              <button type="button" class="prompt-pill" data-val="invidious"><i class="ti ti-world"></i> Invidious API (Open-Source)</button>
+              <button type="button" class="prompt-pill" data-val="cobalt"><i class="ti ti-bolt"></i> Cobalt API (High-Speed)</button>
+              <button type="button" class="prompt-pill" data-val="local"><i class="ti ti-server"></i> Self-Hosted Python (yt-dlp)</button>
+            </div>
+          </div>
+
+          <!-- Controls Row: Default Theme & Delivery CDN -->
+          <div class="prompt-row-controls">
+            <div class="prompt-field-half">
+              <label class="prompt-group-label"><i class="ti ti-color-swatch"></i> Default Starting Theme</label>
+              <select class="prompt-select prompt-theme-select">
+                <option value="red" selected>Classic Red (#fe0001)</option>
+                <option value="cyan">City Cyan (#00e5ff)</option>
+                <option value="purple">Fantasy Purple (#a855f7)</option>
+                <option value="emerald">Forest Emerald (#10b981)</option>
+                <option value="amber">Amber Gold (#f59e0b)</option>
+                <option value="white">Minimal White (#ffffff)</option>
+              </select>
+            </div>
+            <div class="prompt-field-half">
+              <label class="prompt-group-label"><i class="ti ti-cloud-download"></i> Delivery CDN</label>
+              <select class="prompt-select prompt-cdn-select">
+                <option value="jsdelivr" selected>jsDelivr CDN (Production)</option>
+                <option value="local">Self-Hosted / Local</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- LLM Format -->
+          <div class="prompt-group">
+            <label class="prompt-group-label"><i class="ti ti-robot"></i> LLM Output Format</label>
+            <div class="prompt-pill-selector" data-group="llmFormat">
+              <button type="button" class="prompt-pill is-active" data-val="chat"><i class="ti ti-message-chatbot"></i> Chat (ChatGPT / Claude / Gemini)</button>
+              <button type="button" class="prompt-pill" data-val="cursor"><i class="ti ti-terminal"></i> Cursor Rules (.cursorrules)</button>
+              <button type="button" class="prompt-pill" data-val="task"><i class="ti ti-checklist"></i> Single Coding Task</button>
+            </div>
+          </div>
+
+          <!-- Features Grid -->
+          <div class="prompt-group">
+            <label class="prompt-group-label"><i class="ti ti-components"></i> Included Features &amp; Capabilities</label>
+            <div class="prompt-features-grid">
+              <label class="prompt-checkbox-item">
+                <input type="checkbox" data-feature="nocookie" checked>
+                <span class="prompt-checkbox-custom"></span>
+                <span class="prompt-checkbox-text">
+                  <strong>YouTube-NoCookie</strong>
+                  <small>Zero tracking cookies</small>
+                </span>
+              </label>
+
+              <label class="prompt-checkbox-item">
+                <input type="checkbox" data-feature="loop" checked>
+                <span class="prompt-checkbox-custom"></span>
+                <span class="prompt-checkbox-text">
+                  <strong>Loop Control</strong>
+                  <small>Seamless repeat toggle</small>
+                </span>
+              </label>
+
+              <label class="prompt-checkbox-item">
+                <input type="checkbox" data-feature="storyboard" checked>
+                <span class="prompt-checkbox-custom"></span>
+                <span class="prompt-checkbox-text">
+                  <strong>VTT Storyboard</strong>
+                  <small>Scrubbing frame hover previews</small>
+                </span>
+              </label>
+
+              <label class="prompt-checkbox-item">
+                <input type="checkbox" data-feature="sleeptimer" checked>
+                <span class="prompt-checkbox-custom"></span>
+                <span class="prompt-checkbox-text">
+                  <strong>Sleep Timer</strong>
+                  <small>Schedule auto-pause &amp; fade</small>
+                </span>
+              </label>
+
+              <label class="prompt-checkbox-item">
+                <input type="checkbox" data-feature="speed" checked>
+                <span class="prompt-checkbox-custom"></span>
+                <span class="prompt-checkbox-text">
+                  <strong>Speed Selector</strong>
+                  <small>0.25x – 2.0x playback rates</small>
+                </span>
+              </label>
+
+              <label class="prompt-checkbox-item">
+                <input type="checkbox" data-feature="quality" checked>
+                <span class="prompt-checkbox-custom"></span>
+                <span class="prompt-checkbox-text">
+                  <strong>Direct Quality</strong>
+                  <small>1080p, 720p, 480p, 360p</small>
+                </span>
+              </label>
+
+              <label class="prompt-checkbox-item">
+                <input type="checkbox" data-feature="hotkeys" checked>
+                <span class="prompt-checkbox-custom"></span>
+                <span class="prompt-checkbox-text">
+                  <strong>Shortcuts Modal</strong>
+                  <small>Media hotkeys (Space, J, K, L, M, F, P, ?)</small>
+                </span>
+              </label>
+
+              <label class="prompt-checkbox-item">
+                <input type="checkbox" data-feature="autoplay">
+                <span class="prompt-checkbox-custom"></span>
+                <span class="prompt-checkbox-text">
+                  <strong>Autoplay</strong>
+                  <small>Start playing on mount</small>
+                </span>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Live Generated Prompt Display -->
+        <div class="prompt-preview-pane">
+          <div class="prompt-preview-header">
+            <div class="prompt-preview-title">
+              <span class="prompt-live-dot"></span>
+              <span>Live Generated Prompt</span>
+            </div>
+            <div class="prompt-preview-actions">
+              <span class="prompt-stats-badge">~380 tokens</span>
+              <button type="button" class="prompt-copy-btn" title="Copy to clipboard">
+                <i class="ti ti-copy"></i>
+                <span>Copy Prompt</span>
+              </button>
+            </div>
+          </div>
+          <div class="prompt-code-wrap">
+            <pre><code class="prompt-code-output"></code></pre>
+          </div>
+          <div class="prompt-preview-footer">
+            <span class="prompt-tip"><i class="ti ti-info-circle"></i> Paste directly into <strong>Claude, CodeX, Cursor, or any coding agent</strong> to build in seconds.</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SEO Frequently Asked Questions Section -->
+    <section class="faq-section" id="faq">
+      <div class="bento-header">
+        <span class="bento-eyebrow">FREQUENTLY ASKED QUESTIONS</span>
+        <h2 class="bento-title">Everything about playing YouTube videos without YouTube elements.</h2>
+      </div>
+
+      <div class="faq-grid">
+        <details class="faq-item" open>
+          <summary class="faq-question">
+            <span>Can I use this player for YouTube videos without YouTube elements and branding?</span>
+            <i class="ti ti-chevron-down"></i>
+          </summary>
+          <div class="faq-answer">
+            <p><strong>Yes, absolutely.</strong> YVPlayer is engineered specifically as a distraction-free HTML5 video player wrapper for YouTube videos. It masks all native YouTube UI elements, corporate watermarks, channel titles, subscribe popups, and watch-next recommendation grids, giving your viewers a cinema-grade playback experience with custom CSS controls.</p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary class="faq-question">
+            <span>How do I embed a YouTube video without the YouTube logo, watermark, and suggested videos?</span>
+            <i class="ti ti-chevron-down"></i>
+          </summary>
+          <div class="faq-answer">
+            <p>Simply drop a single HTML tag into your website: <code>&lt;div data-yv-video="LXb3EKWsInQ" data-yv-theme="red"&gt;&lt;/div&gt;</code> and include the lightweight YVPlayer CSS and JS files. The player automatically initializes, removes YouTube elements, and provides modern frame-accurate thumbnail hover scrubbing.</p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary class="faq-question">
+            <span>Does YVPlayer support 1080p, 4K, and 60fps YouTube videos?</span>
+            <i class="ti ti-chevron-down"></i>
+          </summary>
+          <div class="faq-answer">
+            <p>Yes. YVPlayer supports all YouTube resolutions including 4K, 1440p, 1080p60, 720p, 480p, 360p, and adaptive streaming. You can lock in 1080p HD resolution or allow automatic quality switching based on network speed.</p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary class="faq-question">
+            <span>Can I customize the player colors and accent themes to match my brand?</span>
+            <i class="ti ti-chevron-down"></i>
+          </summary>
+          <div class="faq-answer">
+            <p>Yes. YVPlayer provides 6 built-in themes (Classic Red, City Cyan, Fantasy Purple, Forest Emerald, Amber Gold, Minimal Monochrome) and supports custom Hex color variables (<code>--themeAccent</code>, <code>--themeGlow</code>, <code>--themeHoverBg</code>) so the seekbar, glowing badges, volume pills, and hover states match your design system seamlessly.</p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary class="faq-question">
+            <span>Does YVPlayer require any backend servers or YouTube API keys?</span>
+            <i class="ti ti-chevron-down"></i>
+          </summary>
+          <div class="faq-answer">
+            <p>No backend servers or API keys are required. YVPlayer is a 100% client-side, zero-dependency library released under the MIT open-source license. It operates with zero tracking cookies and zero telemetries.</p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary class="faq-question">
+            <span>Does Picture-in-Picture (PiP) work with volume and custom controls?</span>
+            <i class="ti ti-chevron-down"></i>
+          </summary>
+          <div class="faq-answer">
+            <p>Yes! YVPlayer features a dual-engine PiP architecture. On supported Chromium browsers, it uses the Document Picture-in-Picture API to open a native OS floating window containing the full player with volume controls, seekbar, captions, and speed selectors. On other browsers, it falls back to 720p native video PiP or a 4-corner resizable in-page floating dock.</p>
+          </div>
+        </details>
+      </div>
+    </section>
+
+    <!-- Shared Unified Footer -->
+    <footer class="site-footer">
+      <div class="site-footer-inner">
+        <div class="footer-left">
+          <span class="footer-brand">YVPLAYER</span>
+          <span class="footer-copy">© 2026 Open Source Project. Released under the MIT License.</span>
+        </div>
+        <div class="footer-links">
+          <a href="index.html">Home</a>
+          <a href="docs.html">Documentation</a>
+          <a href="docs.html#api-options">API Reference</a>
+          <a href="docs.html#worker-deployment">Cloudflare Worker</a>
+          <a href="https://github.com/thevikasgurjar/YVplayer" target="_blank" rel="noopener noreferrer">GitHub</a>
+        </div>
+      </div>
+    </footer>
+  </main>
+
+  <!-- Advanced Embed Customizer Modal -->
+  <div id="embed-modal" class="embed-modal" style="display:none;">
+    <div class="embed-backdrop"></div>
+    <div class="embed-dialog">
+      <div class="embed-header">
+        <div class="embed-title-box">
+          <div class="embed-icon-badge"><i class="ti ti-code"></i></div>
+          <div>
+            <h3>Embed YVPlayer in Your Project</h3>
+            <p>Configure theme accent, controls, layout dimensions and copy snippet</p>
+          </div>
+        </div>
+        <button type="button" id="close-embed-modal" class="embed-close-btn" title="Close (Esc)">
+          <i class="ti ti-x"></i>
+        </button>
+      </div>
+
+      <div class="embed-body">
+        <div class="embed-tabs">
+          <button type="button" class="embed-tab is-active" data-tab="dropin">⚡ 1-Click Drop-In (HTML)</button>
+          <button type="button" class="embed-tab" data-tab="js">⚙️ JavaScript API</button>
+          <button type="button" class="embed-tab" data-tab="react">⚛️ React / Next.js</button>
+        </div>
+
+        <!-- Primary Controls -->
+        <div class="embed-controls-row">
+          <div class="embed-field">
+            <label for="embed-video-id">Video ID / YouTube URL:</label>
+            <input type="text" id="embed-video-id" placeholder="e.g. LXb3EKWsInQ" value="LXb3EKWsInQ">
+          </div>
+          <div class="embed-field">
+            <label for="embed-cdn-provider">CDN Source:</label>
+            <select id="embed-cdn-provider">
+              <option value="jsdelivr" selected>jsDelivr CDN (Production - Fast)</option>
+              <option value="local">Self-Hosted / Local Files</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Theme Customizer Section -->
+        <div class="embed-config-section">
+          <div class="embed-section-title"><i class="ti ti-palette"></i> Player Theme & Accent Color</div>
+          <div class="embed-theme-controls">
+            <div class="embed-theme-mode-row">
+              <label class="embed-radio-label">
+                <input type="radio" name="embed-theme-mode" value="preset" checked>
+                <span>Preset Themes</span>
+              </label>
+              <label class="embed-radio-label">
+                <input type="radio" name="embed-theme-mode" value="custom">
+                <span>Custom Hex Color</span>
+              </label>
+              <label class="embed-radio-label">
+                <input type="radio" name="embed-theme-mode" value="none">
+                <span>No Theme (Neutral Chrome)</span>
+              </label>
+            </div>
+
+            <!-- Preset Swatches Grid -->
+            <div id="embed-preset-box" class="embed-preset-grid">
+              <button type="button" class="embed-swatch-btn is-active" data-preset="red" data-color="#fe0001" style="--c:#fe0001;">Classic Red</button>
+              <button type="button" class="embed-swatch-btn" data-preset="cyan" data-color="#00e5ff" style="--c:#00e5ff;">City Cyan</button>
+              <button type="button" class="embed-swatch-btn" data-preset="purple" data-color="#a855f7" style="--c:#a855f7;">Fantasy Purple</button>
+              <button type="button" class="embed-swatch-btn" data-preset="emerald" data-color="#10b981" style="--c:#10b981;">Forest Emerald</button>
+              <button type="button" class="embed-swatch-btn" data-preset="teal" data-color="#14b8a6" style="--c:#14b8a6;">Sea Teal</button>
+              <button type="button" class="embed-swatch-btn" data-preset="gold" data-color="#f59e0b" style="--c:#f59e0b;">Amber Gold</button>
+              <button type="button" class="embed-swatch-btn" data-preset="white" data-color="#ffffff" style="--c:#ffffff;">Minimal White</button>
+            </div>
+
+            <!-- Custom Hex Input & Picker -->
+            <div id="embed-custom-color-box" class="embed-custom-color-row" style="display:none;">
+              <label class="embed-color-picker-label" title="Click to open color picker">
+                <input type="color" id="embed-color-picker" value="#fe0001">
+                <span class="embed-color-preview" id="embed-color-preview" style="background:#fe0001;"></span>
+              </label>
+              <input type="text" id="embed-color-hex" class="embed-hex-input" value="#fe0001" placeholder="#fe0001" maxlength="7">
+              <span class="embed-hint">Seekbar tracks, glowing badges, volume pills, and hover states adapt automatically.</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Features & Playback Toggles -->
+        <div class="embed-config-section">
+          <div class="embed-section-title"><i class="ti ti-adjustments-horizontal"></i> Feature Toggles & Controls</div>
+          <div class="embed-toggles-grid">
+            <label class="embed-toggle-chip">
+              <input type="checkbox" id="embed-opt-autoplay" checked>
+              <i class="ti ti-player-play"></i>
+              <span>Autoplay</span>
+            </label>
+            <label class="embed-toggle-chip">
+              <input type="checkbox" id="embed-opt-storyboard" checked>
+              <i class="ti ti-slideshow"></i>
+              <span>Storyboard Scrubbing</span>
+            </label>
+            <label class="embed-toggle-chip">
+              <input type="checkbox" id="embed-opt-pip" checked>
+              <i class="ti ti-picture-in-picture"></i>
+              <span>Picture-in-Picture</span>
+            </label>
+            <label class="embed-toggle-chip">
+              <input type="checkbox" id="embed-opt-shortcuts" checked>
+              <i class="ti ti-keyboard"></i>
+              <span>Keyboard Hotkeys</span>
+            </label>
+            <label class="embed-toggle-chip">
+              <input type="checkbox" id="embed-opt-sleep" checked>
+              <i class="ti ti-moon"></i>
+              <span>Sleep Auto-Pause</span>
+            </label>
+            <label class="embed-toggle-chip">
+              <input type="checkbox" id="embed-opt-muted">
+              <i class="ti ti-volume-off"></i>
+              <span>Start Muted</span>
+            </label>
+            <label class="embed-toggle-chip">
+              <input type="checkbox" id="embed-opt-loop">
+              <i class="ti ti-repeat"></i>
+              <span>Loop Playback</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Layout & Sizing -->
+        <div class="embed-config-row-flex">
+          <div class="embed-field">
+            <label for="embed-pip-mode">Default PiP Mode:</label>
+            <select id="embed-pip-mode">
+              <option value="document">Document PiP (Full Player in OS Window)</option>
+              <option value="os" selected>Native Video PiP (720p HD Stream)</option>
+              <option value="inpage">In-Page Dock (16:9 Corner Resize)</option>
+            </select>
+          </div>
+          <div class="embed-field">
+            <label for="embed-max-width">Container Max Width:</label>
+            <select id="embed-max-width">
+              <option value="960px" selected>960px (Recommended)</option>
+              <option value="800px">800px</option>
+              <option value="1200px">1200px</option>
+              <option value="100%">100% (Full Fluid Width)</option>
+            </select>
+          </div>
+          <div class="embed-field">
+            <label for="embed-radius">Border Radius:</label>
+            <select id="embed-radius">
+              <option value="12px" selected>12px (Smooth Modern)</option>
+              <option value="8px">8px (Subtle)</option>
+              <option value="16px">16px (Pill Soft)</option>
+              <option value="0px">0px (Sharp Cinema)</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Code Preview Card -->
+        <div class="embed-code-card">
+          <div class="embed-code-header">
+            <span id="embed-code-badge" class="embed-code-badge">1-Click Drop-In HTML</span>
+            <button type="button" id="copy-embed-btn" class="btn btn-copy" title="Copy code to clipboard">
+              <i class="ti ti-copy"></i> <span>Copy Code</span>
+            </button>
+          </div>
+          <pre class="embed-code-pre"><code id="embed-code-text"></code></pre>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- YouTube IFrame API loaded async (non-blocking) -->
+  <script src="https://www.youtube.com/iframe_api" async></script>
+  <script src="yvPlayer.js" defer></script>
+  <script src="app.js" defer></script>
+</body>
+</html>
