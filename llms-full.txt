@@ -1,0 +1,80 @@
+# YVPlayer — Custom Player for YouTube Videos Without YouTube Elements
+## Complete Technical Specification & API Reference
+
+> The cinema-grade, distraction-free HTML5 video player for YouTube videos without YouTube elements, branding, watermarks, or suggested watch-next overlays. Default video: `LXb3EKWsInQ`.
+
+## Core Architecture Overview
+YVPlayer wraps the Google YouTube IFrame API (`https://www.youtube.com/iframe_api`) inside a custom UI layer. The underlying YouTube iframe is placed inside an isolated container while YVPlayer renders full custom HTML5-like media controls on top of it. All YouTube default annotations, branding cards, video titles, and end-screen suggestions are masked or suppressed.
+
+### Zero Dependencies
+YVPlayer requires no external JavaScript frameworks. It ships as a single lightweight core JS file (`yvPlayer.js`), a companion CSS file (`yvPlayer.css`), and Tabler Icons webfont for vector iconography.
+
+## JavaScript API Reference
+
+### Global Object
+The library exposes the global object `window.YVPlayer`.
+
+### Initialization: `YVPlayer.init(containerId, options)`
+Initializes a new player instance inside the DOM element identified by `containerId`.
+
+#### Configuration Options
+- `defaultId` (string, required): 11-character YouTube video ID or full YouTube URL.
+- `autoplay` (boolean, default: `false`): Whether to start playback automatically on mount.
+- `thumbnail` (boolean, default: `true`): Whether to preload the video poster thumbnail.
+- `isLive` (boolean, default: `false`): Enables live stream broadcast controls (removes seekbar slider, displays real-time `LIVE` sync dot).
+- `shorts` (boolean, default: `false`): Enables 9:16 vertical video layout mode.
+- `background` (boolean, default: `false`): Ambient mode (muted, looping, zero player chrome/controls, runs seamlessly behind web content).
+- `theme` (string, default: `null`): CSS accent theme name (`"red"`, `"cyan"`, `"purple"`, `"emerald"`, `"amber"`, `"white"`, `"monochrome"`).
+- `controls` (boolean, default: `true`): Whether player controls should be displayed.
+- `loop` (boolean, default: `false`): Loop playback automatically when video finishes.
+- `pipMode` (string, default: `"dual"`): Picture-in-picture engine strategy (`"dual"`, `"document"`, `"os"`, or `"inpage"`).
+
+### Methods
+- `YVPlayer.play(containerId)`: Starts or resumes video playback.
+- `YVPlayer.pause(containerId)`: Pauses video playback.
+- `YVPlayer.togglePlay(containerId)`: Toggles play/pause state.
+- `YVPlayer.mute(containerId)`: Mutes video audio.
+- `YVPlayer.unMute(containerId)`: Unmutes video audio.
+- `YVPlayer.toggleMute(containerId)`: Toggles mute status.
+- `YVPlayer.setVolume(containerId, volume)`: Sets volume level between `0` and `100`.
+- `YVPlayer.seekTo(containerId, seconds)`: Seeks to specific time offset in seconds.
+- `YVPlayer.seekBy(containerId, deltaSeconds)`: Relative seek (e.g., `+10` or `-10`).
+- `YVPlayer.setSpeed(containerId, rate)`: Sets playback rate (`0.25`, `0.5`, `0.75`, `1.0`, `1.25`, `1.5`, `1.75`, `2.0`).
+- `YVPlayer.changeVideo(containerId, videoId, options)`: Dynamically swaps the active video stream without reloading the container DOM.
+- `YVPlayer.togglePiP(containerId)`: Activates or exits Picture-in-Picture window.
+- `YVPlayer.toggleFullscreen(containerId)`: Toggles full-screen view.
+- `YVPlayer.destroy(containerId)`: Disposes the YouTube player instance and cleans up event listeners.
+
+## Keyboard Hotkey Map
+- `Space` or `K`: Toggle play/pause
+- `J`: Seek backward 10 seconds
+- `L`: Seek forward 10 seconds
+- `ArrowLeft`: Seek backward 5 seconds
+- `ArrowRight`: Seek forward 5 seconds
+- `ArrowUp`: Increase volume by 5%
+- `ArrowDown`: Decrease volume by 5%
+- `M`: Toggle audio mute
+- `F`: Toggle fullscreen
+- `P`: Toggle Picture-in-Picture mode
+- `C`: Toggle closed captions
+- `0`-`9`: Jump to percentage of video duration (e.g. `5` jumps to 50%)
+- `?`: Open keyboard shortcuts cheat sheet dialog
+
+## Dual-Engine Picture-in-Picture Architecture
+1. **Document Picture-in-Picture API**: For Chromium browsers supporting the new Window-level PiP standard, YVPlayer opens a native OS floating window containing the full interactive player with volume controls, captions, seekbar, and speed controls.
+2. **Native Video PiP Stream**: When Document PiP is unavailable, YVPlayer utilizes open-source proxy stream resolution (via Piped / Invidious API) to fetch direct 720p video tracks into a hidden `<video>` element and activates standard OS `video.requestPictureInPicture()`.
+3. **In-Page Floating Dock**: If neither native API is supported, an in-page sticky floating viewport with 4-corner 16:9 resize handles docks to the corner of the browser window as the user scrolls.
+
+## Declarative 1-Click Drop-In HTML
+```html
+<link rel="preload" href="https://cdn.jsdelivr.net/gh/thevikasgurjar/YVplayer@main/fonts/tabler-icons.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/thevikasgurjar/YVplayer@main/tabler-icons.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/thevikasgurjar/YVplayer@main/yvPlayer.css">
+<script src="https://cdn.jsdelivr.net/gh/thevikasgurjar/YVplayer@main/yvPlayer.js" defer></script>
+
+<div
+  data-yv-video="LXb3EKWsInQ"
+  data-yv-theme="red"
+  style="width: 100%; max-width: 960px; aspect-ratio: 16 / 9; margin: 0 auto; border-radius: 12px; overflow: hidden;"
+></div>
+```

@@ -1,0 +1,37 @@
+User-agent: *
+Allow: /
+
+# Explicit AI Agent & Bot Allowances (Agentic Browsing)
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: Bytespider
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+# Sitemaps & Machine-Readable LLM Context
+Sitemap: https://thevikasgurjar.github.io/YVplayer/sitemap.xml
+Sitemap: https://yvplayertrial.pages.dev/sitemap.xml
+# LLM Context Map (Agentic Web Standard)
+# https://llmstxt.org/
+# https://thevikasgurjar.github.io/YVplayer/llms.txt

@@ -1,4 +1,4 @@
-# YVPlayer 🎥
+# YVPlayer — Custom Player for YouTube Videos Without YouTube Elements &amp; Branding 🎥
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Vanilla JS](https://img.shields.io/badge/Vanilla-JavaScript-yellow.svg)](yvPlayer.js)
@@ -7,7 +7,7 @@
 [![GitHub Pages](https://img.shields.io/badge/GitHub_Pages-Demo_Live-purple.svg)](https://thevikasgurjar.github.io/YVplayer/)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/thevikasgurjar/YVplayer/pulls)
 
-A modern, cinema-grade, distraction-free HTML5 video player overlay designed specifically for **YouTube**. **YVPlayer** completely masks and strips native YouTube clutter (title bars, channel watermarks, recommended videos, and end-screen cards) while delivering high-end features inspired by **Video.js 10**: interactive storyboard scrubbing, custom multi-themes, line-by-line customizable captions, connected floating Picture-in-Picture with volume control, and open-source stream proxy integration.
+A modern, cinema-grade, distraction-free HTML5 video player overlay designed specifically for **YouTube**. **YVPlayer** is the premier custom player for YouTube videos without YouTube elements, branding, watermarks, or suggested videos. It completely masks and strips native YouTube clutter (title bars, channel watermarks, recommended videos, and end-screen cards) while delivering high-end features inspired by **Video.js 10**: interactive storyboard scrubbing, custom multi-themes, line-by-line customizable captions, connected floating Picture-in-Picture with volume control, and open-source stream proxy integration. Default showcase video: `LXb3EKWsInQ`.
 
 ---
 
