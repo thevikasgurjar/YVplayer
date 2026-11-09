@@ -1,14 +1,16 @@
-# YVPlayer Demo Website (Cloudflare Pages) ⚡
+# YVPlayer — Custom Player for YouTube Videos Without YouTube Elements &amp; Branding ⚡
+
+> The cinema-grade, distraction-free HTML5 video player for YouTube videos without YouTube elements, logos, watermarks, or suggested watch-next overlays. Includes custom storyboard timeline scrub previews, 720p HD Picture-in-Picture, custom themes, line-by-line captions, and rich keyboard gestures.
 
 [![Live on Cloudflare Pages](https://img.shields.io/badge/Cloudflare_Pages-yvplayer.pages.dev-orange.svg)](https://yvplayer.pages.dev)
 [![Live on GitHub Pages](https://img.shields.io/badge/GitHub_Pages-thevikasgurjar.github.io%2FYVplayer-purple.svg)](https://thevikasgurjar.github.io/YVplayer/)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/thevikasgurjar/YVplayer/pulls)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
-This branch (`demo`) is configured for continuous deployment on **Cloudflare Pages**, hosted live at:
+This branch (`demo`) is configured for continuous deployment on **Cloudflare Pages**:
 
 👉 **[https://yvplayer.pages.dev](https://yvplayer.pages.dev)**  
-*(Also available via GitHub Pages on the [`gh-pages`](https://github.com/thevikasgurjar/YVplayer/tree/gh-pages) branch at [https://thevikasgurjar.github.io/YVplayer/](https://thevikasgurjar.github.io/YVplayer/))*
+⚡ *Also mirrored on GitHub Pages via the [`gh-pages`](https://github.com/thevikasgurjar/YVplayer/tree/gh-pages) branch at [https://thevikasgurjar.github.io/YVplayer/](https://thevikasgurjar.github.io/YVplayer/)*
 
 ---
 

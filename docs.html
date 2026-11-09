@@ -3,23 +3,24 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>YVPlayer Documentation &mdash; Architecture, API Reference &amp; Integration Guide</title>
-  <meta name="description" content="Complete YVPlayer documentation: API reference, PiP architecture, Cloudflare Worker setup, keyboard shortcuts, theming, captions, and integration guides for React, Vue, and vanilla JS.">
+  <title>YVPlayer Documentation — Custom Player for YouTube Videos Without YouTube Elements</title>
+  <meta name="description" content="Complete developer documentation for YVPlayer: The custom HTML5 player for YouTube videos without YouTube elements, branding, or watermarks. Full API reference and integration guides.">
+  <meta name="keywords" content="player for youtube video without youtube elements, youtube player documentation, custom youtube player api, hide youtube elements api, clean youtube embed, distraction free youtube player">
   <meta name="theme-color" content="#000000">
-  <link rel="canonical" href="https://yvplayertrial.pages.dev/docs.html">
+  <link rel="canonical" href="https://thevikasgurjar.github.io/YVplayer/docs.html">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="sitemap" type="application/xml" href="sitemap.xml">
   <link rel="alternate" type="text/markdown" href="llms.txt" title="LLM Agent Context">
 
   <!-- Open Graph / Social -->
   <meta property="og:type" content="website">
-  <meta property="og:url" content="https://yvplayertrial.pages.dev/docs.html">
-  <meta property="og:title" content="YVPlayer Documentation — API Reference &amp; Integration Guide">
-  <meta property="og:description" content="Complete YVPlayer documentation: API options, PiP architecture, Cloudflare Worker setup, keyboard shortcuts, theming, captions, and integration guides.">
+  <meta property="og:url" content="https://thevikasgurjar.github.io/YVplayer/docs.html">
+  <meta property="og:title" content="YVPlayer Documentation — Custom Player for YouTube Videos Without YouTube Elements">
+  <meta property="og:description" content="Complete developer documentation for YVPlayer: The custom HTML5 player for YouTube videos without YouTube elements, branding, or watermarks.">
   <meta property="og:site_name" content="YVPlayer">
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="YVPlayer Documentation">
-  <meta name="twitter:description" content="Complete API reference and integration guide for YVPlayer.">
+  <meta name="twitter:title" content="YVPlayer Documentation — Custom Player for YouTube Videos Without YouTube Elements">
+  <meta name="twitter:description" content="Complete API reference and integration guide for YVPlayer: The custom player for YouTube videos without YouTube elements.">
 
   <!-- Preconnect for performance -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -666,7 +667,7 @@
 
 <!-- 2. Player Element: Set data-yv-video with your YouTube ID or URL -->
 <div 
-  data-yv-video="M7lc1UVf-VE" 
+  data-yv-video="LXb3EKWsInQ" 
   data-yv-theme="red"
   style="max-width: 960px; aspect-ratio: 16/9; margin: 0 auto; border-radius: 12px; overflow: hidden;"
 ></div>'><i class="ti ti-copy"></i> Copy</button>
@@ -678,7 +679,7 @@
 
 <span class="token-comment">&lt;!-- 2. Player Element: Set data-yv-video with your YouTube ID or URL --&gt;</span>
 &lt;<span class="token-tag">div</span> 
-  <span class="token-attr">data-yv-video</span>=<span class="token-str">"M7lc1UVf-VE"</span> 
+  <span class="token-attr">data-yv-video</span>=<span class="token-str">"LXb3EKWsInQ"</span> 
   <span class="token-attr">data-yv-theme</span>=<span class="token-str">"red"</span>
   <span class="token-attr">style</span>=<span class="token-str">"max-width: 960px; aspect-ratio: 16/9; margin: 0 auto; border-radius: 12px; overflow: hidden;"</span>
 &gt;&lt;/<span class="token-tag">div</span>&gt;</code></pre>
@@ -744,7 +745,7 @@
 <script>
   window.onYouTubeIframeAPIReady = function() {
     YVPlayer.init("player", {
-      defaultId: "M7lc1UVf-VE",
+      defaultId: "LXb3EKWsInQ",
       theme: "red",
       autoplay: true,
       loop: false
@@ -764,7 +765,7 @@
 &lt;<span class="token-tag">script</span>&gt;
   <span class="token-keyword">window</span>.<span class="token-func">onYouTubeIframeAPIReady</span> = <span class="token-keyword">function</span>() {
     <span class="token-keyword">YVPlayer</span>.<span class="token-func">init</span>(<span class="token-str">"player"</span>, {
-      <span class="token-attr">defaultId</span>: <span class="token-str">"M7lc1UVf-VE"</span>,
+      <span class="token-attr">defaultId</span>: <span class="token-str">"LXb3EKWsInQ"</span>,
       <span class="token-attr">theme</span>: <span class="token-str">"red"</span>,
       <span class="token-attr">autoplay</span>: <span class="token-keyword">true</span>,
       <span class="token-attr">loop</span>: <span class="token-keyword">false</span>
@@ -1010,7 +1011,7 @@ onBeforeUnmount(() => {
             <button type="button" class="btn-copy-code" data-code='<script>
   import { onMount, onDestroy } from "svelte";
 
-  export let videoId = "M7lc1UVf-VE";
+  export let videoId = "LXb3EKWsInQ";
   export let theme = "red";
   export let customColor = null;
   export let pipMode = "document";
@@ -1058,7 +1059,7 @@ onBeforeUnmount(() => {
           <pre><code><span class="token-tag">&lt;script&gt;</span>
   <span class="token-keyword">import</span> { onMount, onDestroy } <span class="token-keyword">from</span> <span class="token-val">"svelte"</span>;
 
-  <span class="token-keyword">export let</span> videoId = <span class="token-val">"M7lc1UVf-VE"</span>;
+  <span class="token-keyword">export let</span> videoId = <span class="token-val">"LXb3EKWsInQ"</span>;
   <span class="token-keyword">export let</span> theme = <span class="token-val">"red"</span>;
   <span class="token-keyword">export let</span> customColor = <span class="token-keyword">null</span>;
   <span class="token-keyword">export let</span> pipMode = <span class="token-val">"document"</span>;
@@ -2459,7 +2460,7 @@ export default {
           <div class="code-block-header">
             <span>JavaScript &mdash; Initializing with Piped Stream Proxy</span>
             <button type="button" class="btn-copy-code" data-code='YVPlayer.init("video-stage", {
-  defaultId: "M7lc1UVf-VE",
+  defaultId: "LXb3EKWsInQ",
   proxyProvider: "piped",
   pipedInstance: "https://pipedapi.kavin.rocks", // Optional custom instance
   pipMode: "dual"
@@ -2468,7 +2469,7 @@ export default {
             </button>
           </div>
           <pre><code><span class="token-func">YVPlayer</span>.<span class="token-func">init</span>(<span class="token-str">"video-stage"</span>, {
-  <span class="token-attr">defaultId</span>: <span class="token-str">"M7lc1UVf-VE"</span>,
+  <span class="token-attr">defaultId</span>: <span class="token-str">"LXb3EKWsInQ"</span>,
   <span class="token-attr">proxyProvider</span>: <span class="token-str">"piped"</span>,
   <span class="token-attr">pipedInstance</span>: <span class="token-str">"https://pipedapi.kavin.rocks"</span>, <span class="token-comment">// Optional custom instance</span>
   <span class="token-attr">pipMode</span>: <span class="token-str">"dual"</span>
@@ -2490,7 +2491,7 @@ export default {
           <div class="code-block-header">
             <span>JavaScript &mdash; Initializing with Invidious Stream Proxy</span>
             <button type="button" class="btn-copy-code" data-code='YVPlayer.init("video-stage", {
-  defaultId: "M7lc1UVf-VE",
+  defaultId: "LXb3EKWsInQ",
   proxyProvider: "invidious",
   invidiousInstance: "https://inv.tux.pizza"
 });'>
@@ -2498,7 +2499,7 @@ export default {
             </button>
           </div>
           <pre><code><span class="token-func">YVPlayer</span>.<span class="token-func">init</span>(<span class="token-str">"video-stage"</span>, {
-  <span class="token-attr">defaultId</span>: <span class="token-str">"M7lc1UVf-VE"</span>,
+  <span class="token-attr">defaultId</span>: <span class="token-str">"LXb3EKWsInQ"</span>,
   <span class="token-attr">proxyProvider</span>: <span class="token-str">"invidious"</span>,
   <span class="token-attr">invidiousInstance</span>: <span class="token-str">"https://inv.tux.pizza"</span>
 });</code></pre>
@@ -2517,7 +2518,7 @@ export default {
           <div class="code-block-header">
             <span>JavaScript &mdash; Initializing with Cobalt Stream API</span>
             <button type="button" class="btn-copy-code" data-code='YVPlayer.init("video-stage", {
-  defaultId: "M7lc1UVf-VE",
+  defaultId: "LXb3EKWsInQ",
   proxyProvider: "cobalt",
   cobaltInstance: "https://api.cobalt.tools"
 });'>
@@ -2525,7 +2526,7 @@ export default {
             </button>
           </div>
           <pre><code><span class="token-func">YVPlayer</span>.<span class="token-func">init</span>(<span class="token-str">"video-stage"</span>, {
-  <span class="token-attr">defaultId</span>: <span class="token-str">"M7lc1UVf-VE"</span>,
+  <span class="token-attr">defaultId</span>: <span class="token-str">"LXb3EKWsInQ"</span>,
   <span class="token-attr">proxyProvider</span>: <span class="token-str">"cobalt"</span>,
   <span class="token-attr">cobaltInstance</span>: <span class="token-str">"https://api.cobalt.tools"</span>
 });</code></pre>
@@ -2793,14 +2794,14 @@ WantedBy=multi-user.target</code></pre>
         <!-- Omnibar inside popup -->
         <div class="docs-modal-omnibar">
           <i class="ti ti-link"></i>
-          <input type="text" id="docs-modal-input" placeholder="Paste YouTube link or choose sample..." value="https://www.youtube.com/watch?v=M7lc1UVf-VE">
+          <input type="text" id="docs-modal-input" placeholder="Paste YouTube link or choose sample..." value="https://www.youtube.com/watch?v=LXb3EKWsInQ">
           <button id="docs-modal-load-btn" class="docs-modal-submit"><i class="ti ti-player-play-filled"></i> Play</button>
         </div>
 
         <!-- Quick sample chips -->
         <div class="docs-modal-chips">
           <span class="modal-chips-label">Samples:</span>
-          <button type="button" class="docs-sample-chip is-active" data-id="M7lc1UVf-VE" title="Blender Foundation Sci-Fi Short">
+          <button type="button" class="docs-sample-chip is-active" data-id="LXb3EKWsInQ" title="Blender Foundation Sci-Fi Short">
             <span class="chip-tag chip-tag-resolution">1080p</span>
             <span class="chip-title">Tears of Steel</span>
           </button>

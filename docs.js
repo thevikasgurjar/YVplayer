@@ -1,4 +1,4 @@
-// ============================================================
+﻿// ============================================================
 // YVPLAYER DOCUMENTATION INTERACTIONS (SCROLLSPY, COPY, SEARCH, MODAL)
 // ============================================================
 
@@ -184,7 +184,7 @@ document.addEventListener("DOMContentLoaded", function () {
   var demoLoadBtn = document.getElementById("docs-modal-load-btn");
   var demoChips = document.querySelectorAll(".docs-sample-chip");
   var demoThemeBtns = document.querySelectorAll(".modal-theme-btn");
-  var currentModalVideoId = "M7lc1UVf-VE";
+  var currentModalVideoId = "LXb3EKWsInQ";
   var currentModalTheme = "red";
   var currentModalColor = "#fe0001";
 
@@ -527,7 +527,7 @@ function initPromptGenerator(containerSelector) {
   };
 
   var MODES = {
-    standard: { name: "Standard 16:9 Cinema", ratio: "16 / 9", defaultId: "M7lc1UVf-VE" },
+    standard: { name: "Standard 16:9 Cinema", ratio: "16 / 9", defaultId: "LXb3EKWsInQ" },
     shorts: { name: "YouTube Shorts (9:16 Vertical)", ratio: "9 / 16", defaultId: "YlyI2jmHEYc" },
     background: { name: "Ambient Background Mode", ratio: "16 / 9", defaultId: "jfKfPfyJRdk" },
     live: { name: "24/7 Live Stream Broadcast", ratio: "16 / 9", defaultId: "0sfDth4lMLc" }
