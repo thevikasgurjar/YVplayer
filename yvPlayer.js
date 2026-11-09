@@ -49,7 +49,7 @@ var YVPlayer = {
     return new Promise((resolve, reject) => {
       var hostEl = document.getElementById(videoTag);
       if (hostEl) hostEl.innerHTML = `
-      <div class="yvPlayer ${themeClass} ${liveClass} ${shortsClass} ${bgClass}">
+      <div class="yvPlayer ${themeClass} ${liveClass} ${shortsClass} ${bgClass}" tabindex="0">
         <div class="yvPlayer-native-pip-notice">Playing in picture-in-picture</div>
         <button type="button" class="yvPlayer-native-pip-exit-btn" aria-label="Exit picture-in-picture">
           <span>Exit picture-in-picture</span>
@@ -1160,6 +1160,12 @@ var YVPlayer = {
                 });
 
                 var pipBtn = parent.querySelector(".yvPlayer-controls-box .yvPlayer-controls .pipBtn");
+                var curParams = (YVPlayer.players[videoTag] && YVPlayer.players[videoTag].params) || {};
+                if (curParams.pip === false || curParams.disablePip) {
+                  if (pipBtn) pipBtn.style.display = "none";
+                  var pipSettingsRow = parent.querySelector('.yvPlayer-settings-row[data-target="pipMode"]');
+                  if (pipSettingsRow) pipSettingsRow.style.display = "none";
+                }
 
                 function setPipButtonActive(isActive) {
                   if (!pipBtn) return;
@@ -2192,17 +2198,88 @@ var YVPlayer = {
                   showHUD(forward ? "ti ti-chevron-right" : "ti ti-chevron-left", forward ? "Frame +1" : "Frame -1");
                 }
 
-                document.addEventListener("keydown", function (e) {
-                  if (e.target && (e.target.tagName === "INPUT" || e.target.tagName === "TEXTAREA")) return;
+                parent.setAttribute("tabindex", "0");
+                parent.addEventListener("click", function () {
+                  try { parent.focus(); } catch (e) { }
+                });
+
+                function handleHotkeys(e) {
+                  if (e.target && (e.target.tagName === "INPUT" || e.target.tagName === "TEXTAREA" || e.target.isContentEditable)) return;
                   var yt = YVPlayer.players[videoTag] ? YVPlayer.players[videoTag]["videoTag"] : null;
                   if (!yt) return;
 
                   var k = e.key;
-                  if (k === "?" || (e.shiftKey && (k === "/" || k === "?"))) {
+                  if (k === " " || k === "Spacebar" || k === "k" || k === "K") {
+                    e.preventDefault();
+                    togglePlayPause();
+                  } else if (k === "j" || k === "J") {
+                    e.preventDefault();
+                    backward();
+                    showHUD("ti ti-rewind-backward-10", "-10s");
+                  } else if (k === "l" || k === "L") {
+                    e.preventDefault();
+                    forward();
+                    showHUD("ti ti-rewind-forward-10", "+10s");
+                  } else if (k === "ArrowLeft") {
+                    e.preventDefault();
+                    var cur = yt.getCurrentTime ? yt.getCurrentTime() : 0;
+                    yt.seekTo(Math.max(0, cur - 5), true);
+                    updateTextTime();
+                    updateTimeSlider();
+                    showHUD("ti ti-rewind-backward-10", "-5s");
+                  } else if (k === "ArrowRight") {
+                    e.preventDefault();
+                    var cur = yt.getCurrentTime ? yt.getCurrentTime() : 0;
+                    var dur = yt.getDuration ? yt.getDuration() : 0;
+                    yt.seekTo(dur > 0 ? Math.min(dur, cur + 5) : cur + 5, true);
+                    updateTextTime();
+                    updateTimeSlider();
+                    showHUD("ti ti-rewind-forward-10", "+5s");
+                  } else if (k === "ArrowUp") {
+                    e.preventDefault();
+                    var curV = yt.getVolume ? yt.getVolume() : 100;
+                    if (yt.isMuted && yt.isMuted()) { yt.unMute(); curV = 0; }
+                    var newV = Math.min(100, Math.round(curV + 5));
+                    yt.setVolume(newV);
+                    if (volSlider) { volSlider.value = newV; volSlider.style.setProperty("--volPercent", newV + "%"); }
+                    updateVolumeIcon(newV, false);
+                    YVStorage.set("volume", newV);
+                    showHUD(newV < 50 ? "ti ti-volume-2" : "ti ti-volume", newV + "%");
+                  } else if (k === "ArrowDown") {
+                    e.preventDefault();
+                    var curV = yt.getVolume ? yt.getVolume() : 100;
+                    var newV = Math.max(0, Math.round(curV - 5));
+                    yt.setVolume(newV);
+                    if (newV === 0) yt.mute();
+                    if (volSlider) { volSlider.value = newV; volSlider.style.setProperty("--volPercent", newV + "%"); }
+                    updateVolumeIcon(newV, newV === 0);
+                    YVStorage.set("volume", newV);
+                    showHUD(newV === 0 ? "ti ti-volume-3" : (newV < 50 ? "ti ti-volume-2" : "ti ti-volume"), newV + "%");
+                  } else if (k === "m" || k === "M") {
+                    e.preventDefault();
+                    if (volBtn) volBtn.click();
+                  } else if (k === "f" || k === "F") {
+                    e.preventDefault();
+                    toggleFullscreen();
+                  } else if (k === "p" || k === "P") {
+                    e.preventDefault();
+                    togglePiP();
+                  } else if (k === "c" || k === "C") {
+                    e.preventDefault();
+                    toggleCaptions();
+                  } else if (k === "s" || k === "S") {
+                    e.preventDefault();
+                    if (speedBtn) speedBtn.click();
+                  } else if (k === "?" || (e.shiftKey && (k === "/" || k === "?"))) {
                     e.preventDefault();
                     toggleShortcutsModal();
                   } else if (k === "Escape") {
                     toggleShortcutsModal(false);
+                    if (parent.classList.contains("is-pip")) exitInPagePiP();
+                    var openSettings = parent.querySelector(".yvPlayer-settings-menu.is-active");
+                    if (openSettings) openSettings.classList.remove("is-active");
+                    var openSpeed = parent.querySelector(".yvPlayer-speed-panel.is-active");
+                    if (openSpeed) openSpeed.classList.remove("is-active");
                   } else if (k === "," || k === "<") {
                     e.preventDefault();
                     stepFrame(false);
@@ -2219,7 +2296,10 @@ var YVPlayer = {
                       showHUD("ti ti-clock", pct + "%");
                     }
                   }
-                });
+                }
+
+                document.addEventListener("keydown", handleHotkeys);
+                parent.addEventListener("keydown", handleHotkeys);
 
                 // 10. Interactive Chapter Notches Rendering & Tooltip
                 var chaptersList = (YVPlayer.players[videoTag]["params"] && YVPlayer.players[videoTag]["params"]["chapters"]) || [];
@@ -2436,21 +2516,38 @@ var YVPlayer = {
                   img.src = `/api/storyboard/sheet?id=${encodeURIComponent(activeId)}&sheet=${sheetIdx}`;
                 }
 
+                function setupCdnFallbackStoryboard(vid) {
+                  if (!vid) return;
+                  storyboardData = {
+                    isCdnFallback: true,
+                    videoId: vid
+                  };
+                  try {
+                    [1, 2, 3].forEach(n => {
+                      var img = new Image();
+                      img.src = "https://img.youtube.com/vi/" + vid + "/" + n + ".jpg";
+                    });
+                  } catch (e) { }
+                  if (previewBox) previewBox.classList.add("has-preview");
+                }
+
                 function loadStoryboardForVideo(newId) {
                   if (!newId) return;
                   if (YVPlayer.players[videoTag] && YVPlayer.players[videoTag]["params"]) {
                     YVPlayer.players[videoTag]["params"]["defaultId"] = newId;
                   }
-                  storyboardData = null;
                   loadedSheets.clear();
                   masterReady = false;
-                  if (previewBox) previewBox.classList.remove("has-preview");
+                  setupCdnFallbackStoryboard(newId);
 
                   fetch("/api/storyboard?id=" + encodeURIComponent(newId))
-                    .then(res => res.json())
+                    .then(res => {
+                      if (!res.ok) throw new Error("No API");
+                      return res.json();
+                    })
                     .then(data => {
                       if (getActiveVideoId() !== newId) return;
-                      if (data && data.success) {
+                      if (data && data.success && data.fragmentCount) {
                         storyboardData = data;
                         if (data.hasMaster) {
                           var mImg = new Image();
@@ -2481,6 +2578,25 @@ var YVPlayer = {
                 function renderPreviewThumb(hoverSecs, duration) {
                   if (!storyboardData || !previewThumb || !previewBox) return;
                   var activeId = getActiveVideoId();
+
+                  if (storyboardData.isCdnFallback) {
+                    var pct = duration > 0 ? (hoverSecs / duration) : 0.5;
+                    var frameNum = 1;
+                    if (pct < 0.33) {
+                      frameNum = 1;
+                    } else if (pct < 0.66) {
+                      frameNum = 2;
+                    } else {
+                      frameNum = 3;
+                    }
+                    var cdnUrl = "https://img.youtube.com/vi/" + activeId + "/" + frameNum + ".jpg";
+                    previewThumb.style.backgroundImage = 'url("' + cdnUrl + '")';
+                    previewThumb.style.backgroundPosition = "center center";
+                    previewThumb.style.backgroundSize = "cover";
+                    previewThumb.style.backgroundRepeat = "no-repeat";
+                    previewBox.classList.add("has-preview");
+                    return;
+                  }
 
                   var totalFrames = storyboardData.totalCount || (storyboardData.fragmentCount * storyboardData.framesPerSheet);
                   var frameIndex = 0;
@@ -4473,6 +4589,14 @@ if (typeof module !== "undefined" && typeof module.exports !== "undefined") {
 // Auto-initialize elements with data-yv-video (1-Click Drop-In Support)
 if (typeof window !== "undefined" && typeof document !== "undefined") {
   function autoInitYVElements() {
+    if (typeof window !== "undefined" && window.self !== window.top) {
+      try {
+        document.documentElement.style.overflow = "hidden";
+        document.body.style.overflow = "hidden";
+        document.body.style.margin = "0";
+        document.body.style.padding = "0";
+      } catch (e) { }
+    }
     var elements = document.querySelectorAll("[data-yv-video]");
     elements.forEach(function (el) {
       if (el._yvAutoInitDone) return;
@@ -4491,6 +4615,9 @@ if (typeof window !== "undefined" && typeof document !== "undefined") {
       var isBg = (el.getAttribute("data-yv-background") === "true") || (el.getAttribute("data-background") === "true");
       var isLive = (el.getAttribute("data-yv-live") === "true") || (el.getAttribute("data-live") === "true");
 
+      var pipAttr = el.getAttribute("data-yv-pip") || el.getAttribute("data-pip");
+      var disablePip = (pipAttr === "none" || pipAttr === "false" || pipAttr === "off" || pipAttr === "0");
+
       function startPlayer() {
         whenYTReady().then(function () {
           YVPlayer.init(el.id, {
@@ -4499,7 +4626,8 @@ if (typeof window !== "undefined" && typeof document !== "undefined") {
             autoplay: isBg ? true : autoplay,
             shorts: isShorts,
             background: isBg,
-            isLive: isLive
+            isLive: isLive,
+            pip: !disablePip
           }).then(function () {
             if (customColor) YVPlayer.setTheme(el.id, customColor, "Custom");
           }).catch(function (err) {

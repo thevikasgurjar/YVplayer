@@ -617,8 +617,8 @@ function initPromptGenerator(containerSelector) {
 
     // Source links
     var cdnBase = "https://cdn.jsdelivr.net/gh/thevikasgurjar/YVplayer@main";
-    var cssUrl = cdn === "jsdelivr" ? cdnBase + "/yvPlayer.css" : "./yvPlayer.css";
-    var jsUrl = cdn === "jsdelivr" ? cdnBase + "/yvPlayer.js" : "./yvPlayer.js";
+    var cssUrl = cdn === "jsdelivr" ? cdnBase + "/yvPlayer.min.css" : "./yvPlayer.min.css";
+    var jsUrl = cdn === "jsdelivr" ? cdnBase + "/yvPlayer.min.js" : "./yvPlayer.min.js";
     var iconsUrl = cdn === "jsdelivr"
       ? "https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css"
       : "./tabler-icons.min.css";

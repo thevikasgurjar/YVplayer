@@ -45,11 +45,11 @@ Include the stylesheet and script in your HTML:
 <!-- Tabler Icons (Optional for UI icons) -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/thevikasgurjar/YVplayer@main/tabler-icons.min.css">
 
-<!-- YVPlayer CSS -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/thevikasgurjar/YVplayer@main/yvPlayer.css">
+<!-- YVPlayer Minified CSS (Ultra-fast, ~12 KB gzipped) -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/thevikasgurjar/YVplayer@main/yvPlayer.min.css">
 
-<!-- YVPlayer JS -->
-<script src="https://cdn.jsdelivr.net/gh/thevikasgurjar/YVplayer@main/yvPlayer.js"></script>
+<!-- YVPlayer Minified JS (Ultra-fast, ~28 KB gzipped) -->
+<script src="https://cdn.jsdelivr.net/gh/thevikasgurjar/YVplayer@main/yvPlayer.min.js"></script>
 ```
 
 ### 2. Basic Initialization
