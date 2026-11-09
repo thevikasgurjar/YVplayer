@@ -662,8 +662,8 @@
             <button type="button" class="btn-copy-code" data-code='<!-- 1. YVPlayer Styles & Script via jsDelivr CDN -->
 <link rel="preload" href="fonts/tabler-icons.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="tabler-icons.min.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/thevikasgurjar/YVplayer@main/yvPlayer.css" />
-<script src="https://cdn.jsdelivr.net/gh/thevikasgurjar/YVplayer@main/yvPlayer.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/thevikasgurjar/YVplayer@main/yvPlayer.min.css" />
+<script src="https://cdn.jsdelivr.net/gh/thevikasgurjar/YVplayer@main/yvPlayer.min.js"></script>
 
 <!-- 2. Player Element: Set data-yv-video with your YouTube ID or URL -->
 <div 
@@ -674,8 +674,8 @@
           </div>
           <pre><code><span class="token-comment">&lt;!-- 1. YVPlayer Styles & Script via jsDelivr CDN --&gt;</span>
 &lt;<span class="token-tag">link</span> <span class="token-attr">rel</span>=<span class="token-str">"stylesheet"</span> <span class="token-attr">href</span>=<span class="token-str">"https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css"</span> /&gt;
-&lt;<span class="token-tag">link</span> <span class="token-attr">rel</span>=<span class="token-str">"stylesheet"</span> <span class="token-attr">href</span>=<span class="token-str">"https://cdn.jsdelivr.net/gh/thevikasgurjar/YVplayer@main/yvPlayer.css"</span> /&gt;
-&lt;<span class="token-tag">script</span> <span class="token-attr">src</span>=<span class="token-str">"https://cdn.jsdelivr.net/gh/thevikasgurjar/YVplayer@main/yvPlayer.js"</span>&gt;&lt;/<span class="token-tag">script</span>&gt;
+&lt;<span class="token-tag">link</span> <span class="token-attr">rel</span>=<span class="token-str">"stylesheet"</span> <span class="token-attr">href</span>=<span class="token-str">"https://cdn.jsdelivr.net/gh/thevikasgurjar/YVplayer@main/yvPlayer.min.css"</span> /&gt;
+&lt;<span class="token-tag">script</span> <span class="token-attr">src</span>=<span class="token-str">"https://cdn.jsdelivr.net/gh/thevikasgurjar/YVplayer@main/yvPlayer.min.js"</span>&gt;&lt;/<span class="token-tag">script</span>&gt;
 
 <span class="token-comment">&lt;!-- 2. Player Element: Set data-yv-video with your YouTube ID or URL --&gt;</span>
 &lt;<span class="token-tag">div</span> 
@@ -712,15 +712,21 @@
             </thead>
             <tbody>
               <tr>
-                <td><strong>jsDelivr (Recommended)</strong></td>
+                <td><strong>jsDelivr Minified (Recommended)</strong></td>
+                <td><code>https://cdn.jsdelivr.net/gh/thevikasgurjar/YVplayer@main/yvPlayer.min.css</code></td>
+                <td><code>https://cdn.jsdelivr.net/gh/thevikasgurjar/YVplayer@main/yvPlayer.min.js</code></td>
+                <td><span class="status-live">Production / Ultra-Fast (~28 KB gz)</span></td>
+              </tr>
+              <tr>
+                <td><strong>jsDelivr Uncompressed</strong></td>
                 <td><code>https://cdn.jsdelivr.net/gh/thevikasgurjar/YVplayer@main/yvPlayer.css</code></td>
                 <td><code>https://cdn.jsdelivr.net/gh/thevikasgurjar/YVplayer@main/yvPlayer.js</code></td>
-                <td><span class="status-live">Production / Fast</span></td>
+                <td><span class="status-live">Full Source</span></td>
               </tr>
               <tr>
                 <td><strong>Self-Hosted / Local</strong></td>
-                <td><code>./yvPlayer.css</code></td>
-                <td><code>./yvPlayer.js</code></td>
+                <td><code>./yvPlayer.min.css</code></td>
+                <td><code>./yvPlayer.min.js</code></td>
                 <td><span class="status-custom">Offline / Private</span></td>
               </tr>
             </tbody>
