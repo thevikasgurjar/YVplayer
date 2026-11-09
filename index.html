@@ -36,7 +36,7 @@
   <noscript><link rel="stylesheet" href="tabler-icons.min.css"></noscript>
 
   <!-- Player CSS (required for layout) -->
-  <link rel="stylesheet" href="yvPlayer.css?v=3.7">
+  <link rel="stylesheet" href="yvPlayer.css">
 
   <!-- Google Fonts: async to avoid render-blocking -->
   <link rel="preload" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
@@ -97,7 +97,7 @@
             <span class="brand-rec-dot"></span>
           </div>
           <span class="brand-name">YVPLAYER</span>
-          <span class="brand-version">v3.7</span>
+          <span class="brand-version">v1.1</span>
         </a>
       </div>
 
@@ -144,7 +144,7 @@
             type="text" 
             id="video-input" 
             placeholder="Paste any YouTube URL or 11-character video ID..." 
-            value="https://www.youtube.com/watch?v=M7lc1UVf-VE"
+            value="https://www.youtube.com/watch?v=LXb3EKWsInQ"
             autocomplete="off"
             spellcheck="false"
           >
@@ -158,23 +158,23 @@
         <div class="preset-chips-bar">
           <span class="preset-label">Quick Samples:</span>
           <div class="preset-chips">
-            <button type="button" class="preset-chip is-active" data-id="M7lc1UVf-VE" title="Blender Foundation Sci-Fi Short">
-              <span class="chip-tag">1080p</span> Tears of Steel
+            <button type="button" class="preset-chip is-active" data-id="LXb3EKWsInQ" title="TCOSTA RICA">
+              <span class="chip-tag">1080p</span>
             </button>
             <button type="button" class="preset-chip" data-id="aqz-KE-bpKQ" title="Big Buck Bunny 4K 60fps">
-              <span class="chip-tag">4K</span> Big Buck Bunny
+              <span class="chip-tag">4K</span>
             </button>
             <button type="button" class="preset-chip" data-id="4xDzrJKXOOY" title="Synthwave Retrowave Radio">
-              <span class="chip-tag">Music</span> Synthwave Chill
+              <span class="chip-tag">Music</span>
             </button>
             <button type="button" class="preset-chip" data-id="0sfDth4lMLc" data-live="true" title="Lofi Girl 24/7 Beats - Live Stream">
-              <span class="chip-tag chip-live-tag"><span class="chip-live-dot"></span> LIVE</span> Lofi Girl
+              <span class="chip-tag chip-live-tag"><span class="chip-live-dot"></span> LIVE</span>
             </button>
             <button type="button" class="preset-chip" data-id="YlyI2jmHEYc" data-shorts="true" title="YouTube Shorts (9:16 Vertical Video)">
-              <span class="chip-tag chip-shorts-tag"><i class="ti ti-brand-tiktok"></i> Shorts</span> Clay Waffle
+              <span class="chip-tag chip-shorts-tag"><i class="ti ti-brand-tiktok"></i> Shorts</span>
             </button>
             <button type="button" class="preset-chip" data-id="aqz-KE-bpKQ" data-background="true" title="Background Play Mode (Muted &amp; Looping Behind Content - Zero Controls)">
-              <span class="chip-tag chip-bg-tag"><i class="ti ti-backdrop"></i> Ambient</span> Background Mode
+              <span class="chip-tag chip-bg-tag"><i class="ti ti-backdrop"></i> Background Video</span>
             </button>
           </div>
         </div>
@@ -250,7 +250,7 @@
 
 &lt;!-- 2. Zero-JS Player Element (Drop anywhere) --&gt;
 &lt;div
-  data-yv-video="M7lc1UVf-VE"
+  data-yv-video="LXb3EKWsInQ"
   data-yv-theme="red"
   style="width: 100%; max-width: 960px; aspect-ratio: 16 / 9; margin: 0 auto; border-radius: 14px; overflow: hidden;"
 &gt;&lt;/div&gt;</code></pre>
@@ -573,7 +573,7 @@
             <pre><code class="prompt-code-output"></code></pre>
           </div>
           <div class="prompt-preview-footer">
-            <span class="prompt-tip"><i class="ti ti-info-circle"></i> Paste directly into <strong>Claude 3.7 / 3.5 Sonnet, ChatGPT GPT-4o, Cursor Composer, or Gemini 2.0</strong> to build in seconds.</span>
+            <span class="prompt-tip"><i class="ti ti-info-circle"></i> Paste directly into <strong>Claude, CodeX, Cursor, or any coding agent</strong> to build in seconds.</span>
           </div>
         </div>
       </div>
@@ -625,7 +625,7 @@
         <div class="embed-controls-row">
           <div class="embed-field">
             <label for="embed-video-id">Video ID / YouTube URL:</label>
-            <input type="text" id="embed-video-id" placeholder="e.g. M7lc1UVf-VE" value="M7lc1UVf-VE">
+            <input type="text" id="embed-video-id" placeholder="e.g. LXb3EKWsInQ" value="LXb3EKWsInQ">
           </div>
           <div class="embed-field">
             <label for="embed-cdn-provider">CDN Source:</label>
@@ -766,7 +766,7 @@
 
   <!-- YouTube IFrame API loaded async (non-blocking) -->
   <script src="https://www.youtube.com/iframe_api" async></script>
-  <script src="yvPlayer.js?v=3.7" defer></script>
-  <script src="app.js?v=3.7" defer></script>
+  <script src="yvPlayer.js" defer></script>
+  <script src="app.js" defer></script>
 </body>
 </html>
