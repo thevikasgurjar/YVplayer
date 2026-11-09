@@ -1,16 +1,47 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>YVPlayer Documentation &mdash; Architecture, API Reference & Integration Guide</title>
-  
+  <title>YVPlayer Documentation &mdash; Architecture, API Reference &amp; Integration Guide</title>
+  <meta name="description" content="Complete YVPlayer documentation: API reference, PiP architecture, Cloudflare Worker setup, keyboard shortcuts, theming, captions, and integration guides for React, Vue, and vanilla JS.">
+  <meta name="theme-color" content="#000000">
+  <link rel="canonical" href="https://yvplayertrial.pages.dev/docs.html">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="sitemap" type="application/xml" href="sitemap.xml">
+  <link rel="alternate" type="text/markdown" href="llms.txt" title="LLM Agent Context">
+
+  <!-- Open Graph / Social -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://yvplayertrial.pages.dev/docs.html">
+  <meta property="og:title" content="YVPlayer Documentation — API Reference &amp; Integration Guide">
+  <meta property="og:description" content="Complete YVPlayer documentation: API options, PiP architecture, Cloudflare Worker setup, keyboard shortcuts, theming, captions, and integration guides.">
+  <meta property="og:site_name" content="YVPlayer">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="YVPlayer Documentation">
+  <meta name="twitter:description" content="Complete API reference and integration guide for YVPlayer.">
+
+  <!-- Preconnect for performance -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+  <link rel="preconnect" href="https://www.youtube.com" crossorigin>
+
+  <!-- Critical icon font preload -->
+  <link rel="preload" href="fonts/tabler-icons.woff2" as="font" type="font/woff2" crossorigin>
+
+  <!-- Non-render-blocking icon font: load async -->
+  <link rel="preload" href="tabler-icons.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="tabler-icons.min.css"></noscript>
+
+  <!-- Google Fonts: async load to avoid render-blocking -->
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet"></noscript>
+
+  <!-- Player and docs CSS -->
   <link rel="stylesheet" href="yvPlayer.css?v=3.7">
   <link rel="stylesheet" href="docs.css?v=1.2">
+
+  <!-- Theme flash prevention (must stay sync/inline) -->
   <script>
     (function () {
       try {
@@ -19,8 +50,30 @@
       } catch (e) { }
     })();
   </script>
+
+  <!-- Structured data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "name": "YVPlayer Documentation",
+    "description": "Complete YVPlayer documentation: API options, PiP architecture, Cloudflare Worker setup, keyboard shortcuts, theming, captions.",
+    "url": "https://yvplayertrial.pages.dev/docs.html",
+    "author": {
+      "@type": "Person",
+      "name": "Vikas Kumar"
+    },
+    "isPartOf": {
+      "@type": "WebSite",
+      "name": "YVPlayer",
+      "url": "https://yvplayertrial.pages.dev/"
+    }
+  }
+  </script>
 </head>
 <body class="docs-body">
+  <!-- Skip to main content (accessibility) -->
+  <a href="#main-content" class="skip-link">Skip to main content</a>
   <!-- Ambient Studio Lighting -->
   <div class="ambient-glow"></div>
 
@@ -54,7 +107,7 @@
       </nav>
 
       <div class="header-right">
-        <button type="button" class="theme-toggle-btn" id="theme-toggle" title="Toggle Light / Dark Mode">
+        <button type="button" class="theme-toggle-btn" id="theme-toggle" title="Toggle Light / Dark Mode" aria-label="Toggle light and dark mode">
           <i class="ti ti-sun"></i>
         </button>
         <button type="button" class="btn-primary-ghost btn-open-demo" id="open-docs-demo-btn" title="Try Live Player Demo">
@@ -119,7 +172,7 @@
       </div>
     </aside>
 
-    <main class="docs-content">
+    <main class="docs-content" id="main-content">
       <!-- Notion Help Center Hero & Search -->
       <div class="notion-help-hero">
         <div class="notion-help-badge">
@@ -2794,8 +2847,9 @@ WantedBy=multi-user.target</code></pre>
     </div>
   </div>
 
-    <script src="https://www.youtube.com/iframe_api"></script>
-  <script src="yvPlayer.js?v=3.8"></script>
-  <script src="docs.js?v=1.4"></script>
+  <!-- YouTube IFrame API loaded async (non-blocking) -->
+  <script src="https://www.youtube.com/iframe_api" async></script>
+  <script src="yvPlayer.js?v=3.8" defer></script>
+  <script src="docs.js?v=1.4" defer></script>
 </body>
 </html>

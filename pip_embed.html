@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -7,7 +7,8 @@
   <title>Picture in Picture</title>
   
   <link rel="preload" href="fonts/tabler-icons.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="tabler-icons.min.css">
+  <link rel="preload" href="tabler-icons.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="tabler-icons.min.css"></noscript>
   <style>
     * {
       box-sizing: border-box;
@@ -405,7 +406,8 @@
       text-rendering: optimizeLegibility;
     }
   </style>
-  <script src="https://www.youtube.com/iframe_api"></script>
+  <!-- YouTube IFrame API loaded async (non-blocking) -->
+  <script src="https://www.youtube.com/iframe_api" async></script>
 </head>
 <body>
   <div class="pip-stage">
