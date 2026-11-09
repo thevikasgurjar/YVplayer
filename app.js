@@ -1,9 +1,9 @@
-/**
+﻿/**
  * YVPlayer Showcase Application Logic
  * v3.7 · Cinema-Grade YouTube Engine
  */
 
-let currentVideoId = "M7lc1UVf-VE";
+let currentVideoId = "LXb3EKWsInQ";
 let currentDrawerTab = "dropin";
 
 const videoInput = document.getElementById("video-input");
@@ -239,7 +239,7 @@ themeQuickBtns.forEach(btn => {
 function initMainApp() {
   const params = new URLSearchParams(window.location.search);
   const paramId = params.get("v") || params.get("id");
-  const initialId = (paramId && extractVideoId(paramId)) ? extractVideoId(paramId) : "M7lc1UVf-VE";
+  const initialId = (paramId && extractVideoId(paramId)) ? extractVideoId(paramId) : "LXb3EKWsInQ";
 
   // Check if YouTube API is ready or wait for it
   if (window.YT && window.YT.Player) {
@@ -310,7 +310,7 @@ window.addEventListener("keydown", (e) => {
 // QUICK CODE DRAWER ON MAIN PAGE
 // ============================================================
 function generateDrawerCode(tab, id) {
-  const cleanId = id || currentVideoId || "M7lc1UVf-VE";
+  const cleanId = id || currentVideoId || "LXb3EKWsInQ";
   const isShorts = currentIsShorts;
   const isBg = currentIsBackground;
 
@@ -538,7 +538,7 @@ function getCdnUrls(provider) {
 }
 
 function generateEmbedCode() {
-  const rawId = (embedVideoIdInput ? embedVideoIdInput.value.trim() : "") || currentVideoId || "M7lc1UVf-VE";
+  const rawId = (embedVideoIdInput ? embedVideoIdInput.value.trim() : "") || currentVideoId || "LXb3EKWsInQ";
   const cleanId = extractVideoId(rawId) || rawId;
   const provider = embedCdnSelect ? embedCdnSelect.value : "jsdelivr";
   const urls = getCdnUrls(provider);
@@ -860,7 +860,7 @@ function initPromptGenerator(containerSelector) {
   };
 
   var MODES = {
-    standard: { name: "Standard 16:9 Cinema", ratio: "16 / 9", defaultId: "M7lc1UVf-VE" },
+    standard: { name: "Standard 16:9 Cinema", ratio: "16 / 9", defaultId: "LXb3EKWsInQ" },
     shorts: { name: "YouTube Shorts (9:16 Vertical)", ratio: "9 / 16", defaultId: "YlyI2jmHEYc" },
     background: { name: "Ambient Background Mode", ratio: "16 / 9", defaultId: "jfKfPfyJRdk" },
     live: { name: "24/7 Live Stream Broadcast", ratio: "16 / 9", defaultId: "0sfDth4lMLc" }

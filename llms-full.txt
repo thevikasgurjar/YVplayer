@@ -1,6 +1,7 @@
-# YVPlayer — Complete Technical Specification & API Reference
+﻿# YVPlayer — Custom Player for YouTube Videos Without YouTube Elements
+## Complete Technical Specification & API Reference
 
-> Cinema-grade, distraction-free HTML5-style YouTube player with zero branding, custom storyboard timeline scrub previews, 720p HD Picture-in-Picture, custom themes, line-by-line captions, and rich keyboard gestures.
+> The cinema-grade, distraction-free HTML5 video player for YouTube videos without YouTube elements, branding, watermarks, or suggested watch-next overlays. Default video: `LXb3EKWsInQ`.
 
 ## Core Architecture Overview
 YVPlayer wraps the Google YouTube IFrame API (`https://www.youtube.com/iframe_api`) inside a custom UI layer. The underlying YouTube iframe is placed inside an isolated container while YVPlayer renders full custom HTML5-like media controls on top of it. All YouTube default annotations, branding cards, video titles, and end-screen suggestions are masked or suppressed.
@@ -72,7 +73,7 @@ Initializes a new player instance inside the DOM element identified by `containe
 <script src="https://cdn.jsdelivr.net/gh/thevikasgurjar/YVplayer@main/yvPlayer.js" defer></script>
 
 <div
-  data-yv-video="M7lc1UVf-VE"
+  data-yv-video="LXb3EKWsInQ"
   data-yv-theme="red"
   style="width: 100%; max-width: 960px; aspect-ratio: 16 / 9; margin: 0 auto; border-radius: 12px; overflow: hidden;"
 ></div>

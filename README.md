@@ -1,4 +1,6 @@
-# YVPlayer Demo & Documentation Portal 🌐
+# YVPlayer — Custom Player for YouTube Videos Without YouTube Elements &amp; Branding 🌐
+
+> The cinema-grade, distraction-free HTML5 video player for YouTube videos without YouTube elements, logos, watermarks, or suggested watch-next overlays. Includes custom storyboard timeline scrub previews, 720p HD Picture-in-Picture, custom themes, line-by-line captions, and rich keyboard gestures.
 
 [![Live on GitHub Pages](https://img.shields.io/badge/GitHub_Pages-thevikasgurjar.github.io%2FYVplayer-purple.svg)](https://thevikasgurjar.github.io/YVplayer/)
 [![Live on Cloudflare Pages](https://img.shields.io/badge/Cloudflare_Pages-yvplayer.pages.dev-orange.svg)](https://yvplayer.pages.dev)

@@ -1,26 +1,27 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="referrer" content="strict-origin-when-cross-origin">
-  <title>YVPlayer · The Cinema-Grade YouTube Player for Modern Web</title>
-  <meta name="description" content="YVPlayer is a distraction-free, cinema-grade YouTube player with zero branding, storyboard scrubbing, native Picture-in-Picture, custom themes, and rich keyboard shortcuts. Zero dependencies.">
+  <title>YVPlayer · Custom Player for YouTube Videos Without YouTube Elements &amp; Branding</title>
+  <meta name="description" content="The custom HTML5 player for YouTube videos without YouTube elements, branding, watermarks, or suggested videos. Cinema-grade 1080p playback, frame scrubbing, native Picture-in-Picture, custom CSS themes, and zero corporate distractions.">
+  <meta name="keywords" content="player for youtube video without youtube elements, youtube player without branding, custom player for youtube videos, clean youtube embed, hide youtube elements, distraction free youtube player, custom html5 youtube player, embed youtube video without logo, youtube video player no branding, custom video player for youtube, youtube embed no watermark">
   <meta name="theme-color" content="#000000">
-  <link rel="canonical" href="https://yvplayertrial.pages.dev/">
+  <link rel="canonical" href="https://thevikasgurjar.github.io/YVplayer/">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="sitemap" type="application/xml" href="sitemap.xml">
   <link rel="alternate" type="text/markdown" href="llms.txt" title="LLM Agent Context">
 
   <!-- Open Graph / Social -->
   <meta property="og:type" content="website">
-  <meta property="og:url" content="https://yvplayertrial.pages.dev/">
-  <meta property="og:title" content="YVPlayer · Cinema-Grade YouTube Player">
-  <meta property="og:description" content="Distraction-free YouTube player with zero branding, storyboard scrubbing, native PiP, and custom CSS themes. Zero dependencies.">
+  <meta property="og:url" content="https://thevikasgurjar.github.io/YVplayer/">
+  <meta property="og:title" content="YVPlayer · Custom Player for YouTube Videos Without YouTube Elements &amp; Branding">
+  <meta property="og:description" content="The custom HTML5 player for YouTube videos without YouTube elements, branding, watermarks, or suggested videos. 1080p playback with zero distractions.">
   <meta property="og:site_name" content="YVPlayer">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="YVPlayer · Cinema-Grade YouTube Player">
-  <meta name="twitter:description" content="Distraction-free YouTube player with zero branding, storyboard scrubbing, native PiP, and custom CSS themes.">
+  <meta name="twitter:title" content="YVPlayer · Custom Player for YouTube Videos Without YouTube Elements">
+  <meta name="twitter:description" content="Custom HTML5 player for YouTube videos without YouTube elements, logos, or watermarks. Frame scrubbing, 1080p playback, and native PiP.">
 
   <!-- Preconnect for performance -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -55,27 +56,75 @@
     })();
   </script>
 
-  <!-- Structured data -->
+    <!-- Structured data -->
   <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "SoftwareApplication",
-    "name": "YVPlayer",
-    "applicationCategory": "MultimediaApplication",
-    "operatingSystem": "Web",
-    "url": "https://yvplayertrial.pages.dev/",
-    "description": "Cinema-grade YouTube player with zero branding, storyboard scrubbing, native Picture-in-Picture, and custom CSS themes.",
-    "license": "https://opensource.org/licenses/MIT",
-    "author": {
-      "@type": "Person",
-      "name": "Vikas Kumar"
+  [
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "YVPlayer",
+      "applicationCategory": "MultimediaApplication",
+      "operatingSystem": "Web",
+      "url": "https://thevikasgurjar.github.io/YVplayer/",
+      "description": "Custom HTML5 player for YouTube videos without YouTube elements, branding, logos, or watermark overlays.",
+      "license": "https://opensource.org/licenses/MIT",
+      "author": {
+        "@type": "Person",
+        "name": "Vikas Kumar"
+      },
+      "featureList": [
+        "Play YouTube videos without YouTube elements or branding",
+        "Strips YouTube logos, channel watermarks, and related video end-screens",
+        "Frame-accurate VTT storyboard hover scrubbing",
+        "Dual-engine 720p HD Picture-in-Picture with volume control",
+        "Custom CSS variable themes and Hex color picker",
+        "Zero tracking cookies, zero backend, zero dependencies"
+      ],
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
     },
-    "offers": {
-      "@type": "Offer",
-      "price": "0",
-      "priceCurrency": "USD"
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Can I use this player for YouTube videos without YouTube elements and branding?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes! YVPlayer is engineered specifically as a distraction-free HTML5 video player wrapper for YouTube videos. It masks all native YouTube UI elements, corporate watermarks, channel titles, subscribe popups, and watch-next recommendation grids, giving your viewers a clean cinema playback experience."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I embed a YouTube video without the YouTube logo, watermark, and suggested videos?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Simply drop a single HTML tag into your website: <div data-yv-video=\"LXb3EKWsInQ\" data-yv-theme=\"red\"></div> with the YVPlayer CSS and JS files. The player automatically initializes, removes YouTube elements, and provides modern frame-accurate thumbnail hover scrubbing."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does YVPlayer support 1080p, 4K, and 60fps YouTube videos?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. YVPlayer supports all YouTube resolutions including 4K, 1440p, 1080p60, 720p, 480p, 360p, and adaptive streaming with manual quality locks."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does YVPlayer require any backend servers or YouTube API keys?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No backend servers or API keys are required. YVPlayer is a 100% client-side, zero-dependency library under the MIT open-source license."
+          }
+        }
+      ]
     }
-  }
+  ]
   </script>
 </head>
 <body>
@@ -126,14 +175,13 @@
   <main class="app-container" id="main-content">
     <!-- Hero Showcase Section -->
     <section class="hero-section">
-      <div class="hero-badge">
+            <div class="hero-badge">
         <span class="badge-dot"></span>
-        <span>Zero Branding · Direct 720p PiP · Storyboard Timeline</span>
+        <span>Zero YouTube Elements · Zero Branding · 1080p Clean Playback</span>
       </div>
-      <h1 class="hero-title">The cinema-grade YouTube player for modern web applications.</h1>
+      <h1 class="hero-title">The custom player for YouTube videos without YouTube elements or branding.</h1>
       <p class="hero-description">
-        Strips YouTube watermarks and suggested videos. Delivers frame-accurate thumbnail scrubbing, 
-        native OS Picture-in-Picture with volume control, and custom CSS variables in a zero-dependency package.
+        Strips YouTube watermarks, logos, channel titles, and suggested video overlays. Delivers clean distraction-free playback, frame-accurate thumbnail scrubbing, native OS Picture-in-Picture with volume control, and custom CSS themes in a zero-dependency package.
       </p>
 
       <!-- Sleek Command Omnibar -->
@@ -262,7 +310,7 @@
     <section class="bento-section">
       <div class="bento-header">
         <span class="bento-eyebrow">ENGINE CAPABILITIES</span>
-        <h2 class="bento-title">Engineered for perfection in production.</h2>
+        <h2 class="bento-title">Engineered to play YouTube videos without YouTube elements.</h2>
       </div>
 
       <div class="bento-grid">
@@ -576,6 +624,76 @@
             <span class="prompt-tip"><i class="ti ti-info-circle"></i> Paste directly into <strong>Claude, CodeX, Cursor, or any coding agent</strong> to build in seconds.</span>
           </div>
         </div>
+      </div>
+    </section>
+
+    <!-- SEO Frequently Asked Questions Section -->
+    <section class="faq-section" id="faq">
+      <div class="bento-header">
+        <span class="bento-eyebrow">FREQUENTLY ASKED QUESTIONS</span>
+        <h2 class="bento-title">Everything about playing YouTube videos without YouTube elements.</h2>
+      </div>
+
+      <div class="faq-grid">
+        <details class="faq-item" open>
+          <summary class="faq-question">
+            <span>Can I use this player for YouTube videos without YouTube elements and branding?</span>
+            <i class="ti ti-chevron-down"></i>
+          </summary>
+          <div class="faq-answer">
+            <p><strong>Yes, absolutely.</strong> YVPlayer is engineered specifically as a distraction-free HTML5 video player wrapper for YouTube videos. It masks all native YouTube UI elements, corporate watermarks, channel titles, subscribe popups, and watch-next recommendation grids, giving your viewers a cinema-grade playback experience with custom CSS controls.</p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary class="faq-question">
+            <span>How do I embed a YouTube video without the YouTube logo, watermark, and suggested videos?</span>
+            <i class="ti ti-chevron-down"></i>
+          </summary>
+          <div class="faq-answer">
+            <p>Simply drop a single HTML tag into your website: <code>&lt;div data-yv-video="LXb3EKWsInQ" data-yv-theme="red"&gt;&lt;/div&gt;</code> and include the lightweight YVPlayer CSS and JS files. The player automatically initializes, removes YouTube elements, and provides modern frame-accurate thumbnail hover scrubbing.</p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary class="faq-question">
+            <span>Does YVPlayer support 1080p, 4K, and 60fps YouTube videos?</span>
+            <i class="ti ti-chevron-down"></i>
+          </summary>
+          <div class="faq-answer">
+            <p>Yes. YVPlayer supports all YouTube resolutions including 4K, 1440p, 1080p60, 720p, 480p, 360p, and adaptive streaming. You can lock in 1080p HD resolution or allow automatic quality switching based on network speed.</p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary class="faq-question">
+            <span>Can I customize the player colors and accent themes to match my brand?</span>
+            <i class="ti ti-chevron-down"></i>
+          </summary>
+          <div class="faq-answer">
+            <p>Yes. YVPlayer provides 6 built-in themes (Classic Red, City Cyan, Fantasy Purple, Forest Emerald, Amber Gold, Minimal Monochrome) and supports custom Hex color variables (<code>--themeAccent</code>, <code>--themeGlow</code>, <code>--themeHoverBg</code>) so the seekbar, glowing badges, volume pills, and hover states match your design system seamlessly.</p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary class="faq-question">
+            <span>Does YVPlayer require any backend servers or YouTube API keys?</span>
+            <i class="ti ti-chevron-down"></i>
+          </summary>
+          <div class="faq-answer">
+            <p>No backend servers or API keys are required. YVPlayer is a 100% client-side, zero-dependency library released under the MIT open-source license. It operates with zero tracking cookies and zero telemetries.</p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary class="faq-question">
+            <span>Does Picture-in-Picture (PiP) work with volume and custom controls?</span>
+            <i class="ti ti-chevron-down"></i>
+          </summary>
+          <div class="faq-answer">
+            <p>Yes! YVPlayer features a dual-engine PiP architecture. On supported Chromium browsers, it uses the Document Picture-in-Picture API to open a native OS floating window containing the full player with volume controls, seekbar, captions, and speed selectors. On other browsers, it falls back to 720p native video PiP or a 4-corner resizable in-page floating dock.</p>
+          </div>
+        </details>
       </div>
     </section>
 
