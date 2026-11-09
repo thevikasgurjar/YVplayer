@@ -436,8 +436,12 @@ var YVPlayer = {
   pauseVideoWithPromise: (x) => {
     return new Promise((resolve, reject) => {
       try {
-        x.pauseVideo()
-        resolve('Video paused');
+        if (x && typeof x.pauseVideo === "function") {
+          x.pauseVideo();
+          resolve('Video paused');
+        } else {
+          resolve('Player not ready');
+        }
       } catch (error) {
         reject('Error pausing video: ' + error);
       }
@@ -585,6 +589,8 @@ var YVPlayer = {
       }
     }
 
+    var pendingPlay = false;
+
     return new Promise((resolve, reject) => {
       var isResolved = false;
       function safeResolve() {
@@ -594,34 +600,8 @@ var YVPlayer = {
         }
       }
       setTimeout(safeResolve, 4000);
-      var isShortsInit = !!(YVPlayer.players[videoTag]["params"]["shorts"] || YVPlayer.players[videoTag]["params"]["isShorts"]);
-      var isNoCookie = YVPlayer.players[videoTag]["params"]["nocookie"] !== false;
-      var ytHost = isNoCookie ? "https://www.youtube-nocookie.com" : "https://www.youtube.com";
-      YVPlayer.players[videoTag]["videoTag"] = new YT.Player(playerTagId, {
-        host: ytHost,
-        videoId: YVPlayer.players[videoTag]["params"]["defaultId"],
-        width: isShortsInit ? '666' : '100%',
-        height: isShortsInit ? '1600' : '100%',
-        playerVars: {
-          controls: 0,
-          mute: 1,
-          autoplay: 1,
-          disablekb: 1,
-          color: "white",
-          fs: 0,
-          playsinline: 1,
-          rel: 0,
-          loop: 0,
-          cc_load_policy: 0,
-          showinfo: 0,
-          iv_load_policy: 3,
-          modestbranding: 1,
-          enablejsapi: 1,
-        },
-        events: {
-          'onReady': () => {
-            if (document.getElementById(videoTag) != null && videoTag) {
-              const initControls = () => {
+
+      const initControls = () => {
                 try { initSettingsEvents(); } catch (e) { }
                 var startOverlay = parent.querySelector(".yvPlayer-container span");
                 if (startOverlay) {
@@ -655,9 +635,22 @@ var YVPlayer = {
                     startOverlay.style.setProperty("pointer-events", "none", "important");
                     var yt = YVPlayer.players[videoTag] ? YVPlayer.players[videoTag]["videoTag"] : null;
                     if (yt) {
-                      if (typeof yt.unMute === "function" && !(playerParams && playerParams.background)) yt.unMute();
-                      if (wasEnded && typeof yt.seekTo === "function") yt.seekTo(0, true);
-                      if (typeof yt.playVideo === "function") yt.playVideo();
+                      if (typeof yt.unMute === "function" && !(playerParams && playerParams.background)) {
+                        try { yt.unMute(); } catch (err) { }
+                      }
+                      if (wasEnded && typeof yt.seekTo === "function") {
+                        try { yt.seekTo(0, true); } catch (err) { }
+                      }
+                      if (typeof yt.playVideo === "function") {
+                        try { yt.playVideo(); } catch (err) { }
+                      } else {
+                        pendingPlay = true;
+                      }
+                    } else {
+                      pendingPlay = true;
+                    }
+                    if (typeof initControlsOnce === "function") {
+                      try { initControlsOnce(); } catch (err) { }
                     }
                   }
                   startOverlay.addEventListener("click", handleThumbnailStart, true);
@@ -666,7 +659,9 @@ var YVPlayer = {
                 var loaderIcon = parent.querySelector(".yvPlayer-container span i");
                 if (loaderIcon) loaderIcon.classList.remove("yvPlayer-loading");
 
-                YVPlayer.players[videoTag]["videoTag"].addEventListener('onStateChange', onPlayerStateChange);
+                if (YVPlayer.players[videoTag] && YVPlayer.players[videoTag]["videoTag"] && typeof YVPlayer.players[videoTag]["videoTag"].addEventListener === "function") {
+                  YVPlayer.players[videoTag]["videoTag"].addEventListener('onStateChange', onPlayerStateChange);
+                }
                 var btnBack = parent.querySelector(".yvPlayer-controls-box main i:nth-of-type(1)");
                 var liveBadgeBtn = parent.querySelector(".yvPlayer-live-badge");
                 if (liveBadgeBtn) {
@@ -2664,39 +2659,130 @@ var YVPlayer = {
                     }, 3000);
                   }
                 });
-              };
+      };
 
-              var isAutoplay = !!(YVPlayer.players[videoTag]["params"] && (YVPlayer.players[videoTag]["params"]["autoplay"] === true || YVPlayer.players[videoTag]["params"]["autoplay"] === "true"));
-              if (isAutoplay) {
-                hasStarted = true;
-                parent.classList.add("is-active");
-                parent.classList.add("is-playing");
-                parent.classList.remove("is-paused");
-                var startOverlay = parent.querySelector(".yvPlayer-container span");
-                if (startOverlay) {
-                  startOverlay.style.setProperty("display", "none", "important");
-                  startOverlay.style.setProperty("pointer-events", "none", "important");
-                }
+      var controlsInitialized = false;
+      function initControlsOnce() {
+        if (controlsInitialized) return;
+        controlsInitialized = true;
+        try {
+          initControls();
+        } catch (e) {
+          console.warn("[yvPlayer] Error initializing controls:", e);
+        }
+        var loaderIcon = parent.querySelector(".yvPlayer-container span i");
+        if (loaderIcon) loaderIcon.classList.remove("yvPlayer-loading");
+        safeResolve();
+      }
+
+      var fallbackTimer = setTimeout(function () {
+        initControlsOnce();
+      }, 1200);
+
+      var isShortsInit = !!(YVPlayer.players[videoTag]["params"]["shorts"] || YVPlayer.players[videoTag]["params"]["isShorts"]);
+      var isLocalOrSandbox = false;
+      try {
+        isLocalOrSandbox = !window.location ||
+          window.location.hostname === "localhost" ||
+          window.location.hostname === "127.0.0.1" ||
+          window.location.origin === "null" ||
+          window.location.protocol === "about:";
+      } catch (e) {
+        isLocalOrSandbox = true;
+      }
+      var isNoCookie = YVPlayer.players[videoTag]["params"]["nocookie"] !== false;
+      var ytHost = (isNoCookie && !isLocalOrSandbox) ? "https://www.youtube-nocookie.com" : "https://www.youtube.com";
+
+      var safeOrigin = undefined;
+      try {
+        if (window.location && window.location.origin && window.location.origin !== "null" && !window.location.origin.startsWith("about:")) {
+          safeOrigin = window.location.origin;
+        }
+      } catch (e) { }
+
+      var isAutoplay = !!(YVPlayer.players[videoTag]["params"] && (YVPlayer.players[videoTag]["params"]["autoplay"] === true || YVPlayer.players[videoTag]["params"]["autoplay"] === "true"));
+
+      var playerVarsObj = {
+        controls: 0,
+        mute: isAutoplay ? 1 : 0,
+        autoplay: isAutoplay ? 1 : 0,
+        disablekb: 1,
+        color: "white",
+        fs: 0,
+        playsinline: 1,
+        rel: 0,
+        loop: 0,
+        cc_load_policy: 0,
+        showinfo: 0,
+        iv_load_policy: 3,
+        modestbranding: 1,
+        enablejsapi: 1,
+      };
+      if (safeOrigin) playerVarsObj.origin = safeOrigin;
+      try {
+        if (window.location && window.location.href && !window.location.href.startsWith("about:")) {
+          playerVarsObj.widget_referrer = window.location.href;
+        }
+      } catch (e) { }
+
+      try {
+        YVPlayer.players[videoTag]["videoTag"] = new YT.Player(playerTagId, {
+          host: ytHost,
+          videoId: YVPlayer.players[videoTag]["params"]["defaultId"],
+          width: isShortsInit ? '666' : '100%',
+          height: isShortsInit ? '1600' : '100%',
+          playerVars: playerVarsObj,
+          events: {
+            'onReady': () => {
+              clearTimeout(fallbackTimer);
+              if (document.getElementById(videoTag) != null && videoTag) {
                 var yt = YVPlayer.players[videoTag] ? YVPlayer.players[videoTag]["videoTag"] : null;
-                if (yt) {
-                  try { if (typeof yt.unMute === "function") yt.unMute(); } catch (e) { }
-                  try { if (typeof yt.playVideo === "function") yt.playVideo(); } catch (e) { }
+                if (pendingPlay) {
+                  if (yt) {
+                    try { if (typeof yt.unMute === "function" && !(playerParams && playerParams.background)) yt.unMute(); } catch (e) { }
+                    try { if (typeof yt.playVideo === "function") yt.playVideo(); } catch (e) { }
+                  }
+                  initControlsOnce();
+                } else if (isAutoplay) {
+                  hasStarted = true;
+                  parent.classList.add("is-active");
+                  parent.classList.add("is-playing");
+                  parent.classList.remove("is-paused");
+                  var startOverlay = parent.querySelector(".yvPlayer-container span");
+                  if (startOverlay) {
+                    startOverlay.style.setProperty("display", "none", "important");
+                    startOverlay.style.setProperty("pointer-events", "none", "important");
+                  }
+                  if (yt) {
+                    try { if (typeof yt.unMute === "function" && !(playerParams && playerParams.background)) yt.unMute(); } catch (e) { }
+                    try { if (typeof yt.playVideo === "function") yt.playVideo(); } catch (e) { }
+                  }
+                  initControlsOnce();
+                } else {
+                  YVPlayer.pauseVideoWithPromise(yt).then(function () {
+                    initControlsOnce();
+                  }).catch(function () {
+                    initControlsOnce();
+                  });
                 }
-                initControls();
-                safeResolve();
-              } else {
-                YVPlayer.pauseVideoWithPromise(YVPlayer.players[videoTag]["videoTag"]).then(function () {
-                  initControls();
-                  safeResolve();
-                }).catch(function () {
-                  initControls();
-                  safeResolve();
-                });
+              }
+            },
+            'onStateChange': onPlayerStateChange,
+            'onError': (err) => {
+              clearTimeout(fallbackTimer);
+              console.warn("[yvPlayer] YouTube error:", err);
+              initControlsOnce();
+              if (err && (err.data === 150 || err.data === 101)) {
+                showHUD("ti ti-alert-triangle", "Embed restricted by owner");
               }
             }
-          },
-        }
-      });
+          }
+        });
+      } catch (err) {
+        clearTimeout(fallbackTimer);
+        console.warn("[yvPlayer] YT.Player init exception:", err);
+        initControlsOnce();
+      }
     });
 
     function backward() {
@@ -4364,7 +4450,7 @@ if (typeof window !== "undefined" && typeof document !== "undefined") {
 
       var theme = el.getAttribute("data-yv-theme") || "default";
       var customColor = el.getAttribute("data-yv-color") || null;
-      var autoplay = el.getAttribute("data-yv-autoplay") !== "false";
+      var autoplay = (el.getAttribute("data-yv-autoplay") === "true") || (el.getAttribute("data-autoplay") === "true");
       var isShorts = (el.getAttribute("data-yv-shorts") === "true") || (el.getAttribute("data-shorts") === "true");
       var isBg = (el.getAttribute("data-yv-background") === "true") || (el.getAttribute("data-background") === "true");
       var isLive = (el.getAttribute("data-yv-live") === "true") || (el.getAttribute("data-live") === "true");
