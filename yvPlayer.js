@@ -4370,42 +4370,46 @@ if (typeof window !== "undefined" && typeof document !== "undefined") {
       var isLive = (el.getAttribute("data-yv-live") === "true") || (el.getAttribute("data-live") === "true");
 
       function startPlayer() {
-        if (window.YT && window.YT.Player) {
+        whenYTReady().then(function () {
           YVPlayer.init(el.id, {
-            defaultId: vid,
+            defaultId: cleanVid || vid,
             theme: theme,
             autoplay: isBg ? true : autoplay,
             shorts: isShorts,
             background: isBg,
             isLive: isLive
+          }).then(function () {
+            if (customColor) YVPlayer.setTheme(el.id, customColor, "Custom");
+          }).catch(function (err) {
+            console.error("YVPlayer auto-init error:", err);
           });
-        } else {
-          if (!document.querySelector('script[src*="youtube.com/iframe_api"]')) {
-            var tag = document.createElement("script");
-            tag.src = "https://www.youtube.com/iframe_api";
-            document.head.appendChild(tag);
-          }
-          var prevReady = window.onYouTubeIframeAPIReady;
-          window.onYouTubeIframeAPIReady = function () {
-            if (typeof prevReady === "function") prevReady();
-            YVPlayer.init(el.id, {
-              defaultId: cleanVid,
-              theme: theme,
-              autoplay: autoplay
-            }).then(function() {
-              if (customColor) YVPlayer.setTheme(el.id, customColor, "Custom");
-            });
-          };
-        }
+        });
       }
 
       startPlayer();
     });
   }
 
+  YVPlayer.autoInit = autoInitYVElements;
+
+  // Run on initial load
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", autoInitYVElements);
   } else {
     autoInitYVElements();
+  }
+
+  // Dynamic CMS injection / Astro / client-side hydration support
+  if (typeof MutationObserver !== "undefined") {
+    var observer = new MutationObserver(function () {
+      autoInitYVElements();
+    });
+    if (document.body) {
+      observer.observe(document.body, { childList: true, subtree: true });
+    } else {
+      document.addEventListener("DOMContentLoaded", function () {
+        if (document.body) observer.observe(document.body, { childList: true, subtree: true });
+      });
+    }
   }
 }
