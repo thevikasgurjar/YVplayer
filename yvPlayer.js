@@ -2205,14 +2205,30 @@ var YVPlayer = {
 
                 function handleHotkeys(e) {
                   if (e.target && (e.target.tagName === "INPUT" || e.target.tagName === "TEXTAREA" || e.target.isContentEditable)) return;
+
+                  var k = e.key;
+                  if (k === "?" || (e.shiftKey && (k === "/" || k === "?"))) {
+                    e.preventDefault();
+                    toggleShortcutsModal();
+                    return;
+                  } else if (k === "Escape") {
+                    toggleShortcutsModal(false);
+                    if (parent.classList.contains("is-pip")) exitInPagePiP();
+                    var openSettings = parent.querySelector(".yvPlayer-settings-menu.is-active");
+                    if (openSettings) openSettings.classList.remove("is-active");
+                    var openSpeed = parent.querySelector(".yvPlayer-speed-panel.is-active");
+                    if (openSpeed) openSpeed.classList.remove("is-active");
+                    return;
+                  } else if (k === " " || k === "Spacebar" || k === "k" || k === "K") {
+                    e.preventDefault();
+                    togglePlayPause();
+                    return;
+                  }
+
                   var yt = YVPlayer.players[videoTag] ? YVPlayer.players[videoTag]["videoTag"] : null;
                   if (!yt) return;
 
-                  var k = e.key;
-                  if (k === " " || k === "Spacebar" || k === "k" || k === "K") {
-                    e.preventDefault();
-                    togglePlayPause();
-                  } else if (k === "j" || k === "J") {
+                  if (k === "j" || k === "J") {
                     e.preventDefault();
                     backward();
                     showHUD("ti ti-rewind-backward-10", "-10s");
@@ -2270,16 +2286,6 @@ var YVPlayer = {
                   } else if (k === "s" || k === "S") {
                     e.preventDefault();
                     if (speedBtn) speedBtn.click();
-                  } else if (k === "?" || (e.shiftKey && (k === "/" || k === "?"))) {
-                    e.preventDefault();
-                    toggleShortcutsModal();
-                  } else if (k === "Escape") {
-                    toggleShortcutsModal(false);
-                    if (parent.classList.contains("is-pip")) exitInPagePiP();
-                    var openSettings = parent.querySelector(".yvPlayer-settings-menu.is-active");
-                    if (openSettings) openSettings.classList.remove("is-active");
-                    var openSpeed = parent.querySelector(".yvPlayer-speed-panel.is-active");
-                    if (openSpeed) openSpeed.classList.remove("is-active");
                   } else if (k === "," || k === "<") {
                     e.preventDefault();
                     stepFrame(false);
