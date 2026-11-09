@@ -51,7 +51,7 @@ var YVPlayer = {
       if (hostEl) hostEl.innerHTML = `
       <div class="yvPlayer ${themeClass} ${liveClass} ${shortsClass} ${bgClass}">
         <div class="yvPlayer-native-pip-notice">Playing in picture-in-picture</div>
-        <button type="button" class="yvPlayer-native-pip-exit-btn">
+        <button type="button" class="yvPlayer-native-pip-exit-btn" aria-label="Exit picture-in-picture">
           <span>Exit picture-in-picture</span>
           <i class="ti ti-app-window"></i>
         </button>
@@ -82,7 +82,7 @@ var YVPlayer = {
     <div class="yvPlayer-chapter-notches"></div>
     <span class="yvPlayer-loaded-track"></span>
     <span class="yvPlayer-hover-track"></span>
-    <input type="range" min="0" max="100" value="0" step="any">
+    <input type="range" min="0" max="100" value="0" step="any" aria-label="Video seek bar">
     <div class="yvPlayer-timeline-preview">
       <div class="yvPlayer-preview-thumb-box">
         <div class="yvPlayer-preview-thumb"></div>
@@ -92,15 +92,15 @@ var YVPlayer = {
   </div>
   <div class="yvPlayer-controls-row">
     <div class="yvPlayer-left-controls">
-      <button type="button" class="yvPlayer-btn-pill yvPlayer-bottom-play" title="Play/Pause">
+      <button type="button" class="yvPlayer-btn-pill yvPlayer-bottom-play" title="Play/Pause" aria-label="Play or pause">
         <i class="ti ti-player-play-filled"></i>
       </button>
       <div class="yvPlayer-volume-group">
-        <button type="button" class="yvPlayer-btn-pill yvPlayer-vol-btn" title="Mute/Unmute">
+        <button type="button" class="yvPlayer-btn-pill yvPlayer-vol-btn" title="Mute/Unmute" aria-label="Mute or unmute">
           <i class="ti ti-volume"></i>
         </button>
         <div class="yvPlayer-vol-slider-wrap">
-          <input type="range" class="yvPlayer-vol-slider" min="0" max="100" value="100" step="1">
+          <input type="range" class="yvPlayer-vol-slider" min="0" max="100" value="100" step="1" aria-label="Volume">
         </div>
       </div>
       <div class="yvPlayer-time-capsule">
@@ -128,21 +128,21 @@ var YVPlayer = {
         </div>
         <div class="yvPlayer-speed-panel">
           <div class="yvPlayer-speed-slider-container">
-            <input type="range" class="yvPlayer-speed-slider" min="0.25" max="3" value="1" step="0.05">
+            <input type="range" class="yvPlayer-speed-slider" min="0.25" max="3" value="1" step="0.05" aria-label="Playback speed">
           </div>
         </div>
       </div>
       <div class="yvPlayer-right-capsule">
-        <button type="button" class="yvPlayer-capsule-btn yvPlayer-cc-btn" title="Subtitles/Captions (c)">
+        <button type="button" class="yvPlayer-capsule-btn yvPlayer-cc-btn" title="Subtitles/Captions (c)" aria-label="Toggle subtitles and captions">
           <i class="ti ti-badge-cc"></i>
         </button>
-        <button type="button" class="yvPlayer-capsule-btn settingsBtn" title="Settings">
+        <button type="button" class="yvPlayer-capsule-btn settingsBtn" title="Settings" aria-label="Open player settings">
           <i class="ti ti-settings"></i>
         </button>
-        <button type="button" class="yvPlayer-capsule-btn pipBtn" title="Picture in Picture (p)">
+        <button type="button" class="yvPlayer-capsule-btn pipBtn" title="Picture in Picture (p)" aria-label="Toggle picture-in-picture">
           <i class="ti ti-picture-in-picture"></i>
         </button>
-        <button type="button" class="yvPlayer-capsule-btn fsBtn" title="Full screen (f)">
+        <button type="button" class="yvPlayer-capsule-btn fsBtn" title="Full screen (f)" aria-label="Toggle fullscreen">
           <i class="ti ti-maximize"></i>
         </button>
       </div>

@@ -5,15 +5,47 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <title>YVPlayer · The Cinema-Grade YouTube Player for Modern Web</title>
+  <meta name="description" content="YVPlayer is a distraction-free, cinema-grade YouTube player with zero branding, storyboard scrubbing, native Picture-in-Picture, custom themes, and rich keyboard shortcuts. Zero dependencies.">
+  <meta name="theme-color" content="#000000">
+  <link rel="canonical" href="https://yvplayertrial.pages.dev/">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="sitemap" type="application/xml" href="sitemap.xml">
+  <link rel="alternate" type="text/markdown" href="llms.txt" title="LLM Agent Context">
 
-  <script src="https://www.youtube.com/iframe_api"></script>
-  <link rel="preload" href="fonts/tabler-icons.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="tabler-icons.min.css">
-  <link rel="stylesheet" href="yvPlayer.css?v=3.7" />
+  <!-- Open Graph / Social -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://yvplayertrial.pages.dev/">
+  <meta property="og:title" content="YVPlayer · Cinema-Grade YouTube Player">
+  <meta property="og:description" content="Distraction-free YouTube player with zero branding, storyboard scrubbing, native PiP, and custom CSS themes. Zero dependencies.">
+  <meta property="og:site_name" content="YVPlayer">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="YVPlayer · Cinema-Grade YouTube Player">
+  <meta name="twitter:description" content="Distraction-free YouTube player with zero branding, storyboard scrubbing, native PiP, and custom CSS themes.">
+
+  <!-- Preconnect for performance -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://www.youtube.com" crossorigin>
+  <link rel="dns-prefetch" href="https://i.ytimg.com">
+
+  <!-- Critical font preload -->
+  <link rel="preload" href="fonts/tabler-icons.woff2" as="font" type="font/woff2" crossorigin>
+
+  <!-- Non-render-blocking icon font: load async -->
+  <link rel="preload" href="tabler-icons.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="tabler-icons.min.css"></noscript>
+
+  <!-- Player CSS (required for layout) -->
+  <link rel="stylesheet" href="yvPlayer.css?v=3.7">
+
+  <!-- Google Fonts: async to avoid render-blocking -->
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet"></noscript>
+
+  <!-- Site CSS -->
   <link rel="stylesheet" href="style.css?v=3.8">
+
+  <!-- Theme flash prevention (must stay sync/inline) -->
   <script>
     (function () {
       try {
@@ -22,8 +54,34 @@
       } catch (e) { }
     })();
   </script>
+
+  <!-- Structured data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "YVPlayer",
+    "applicationCategory": "MultimediaApplication",
+    "operatingSystem": "Web",
+    "url": "https://yvplayertrial.pages.dev/",
+    "description": "Cinema-grade YouTube player with zero branding, storyboard scrubbing, native Picture-in-Picture, and custom CSS themes.",
+    "license": "https://opensource.org/licenses/MIT",
+    "author": {
+      "@type": "Person",
+      "name": "Vikas Kumar"
+    },
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  }
+  </script>
 </head>
 <body>
+  <!-- Skip to main content (accessibility) -->
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
   <!-- Ambient Studio Lighting -->
   <div class="ambient-glow"></div>
 
@@ -53,7 +111,7 @@
       </nav>
 
       <div class="header-right">
-        <button type="button" class="theme-toggle-btn" id="theme-toggle" title="Toggle Light / Dark Mode">
+        <button type="button" class="theme-toggle-btn" id="theme-toggle" title="Toggle Light / Dark Mode" aria-label="Toggle light and dark mode">
           <i class="ti ti-sun"></i>
         </button>
         <button id="open-embed-modal" class="btn-primary-ghost" title="Open Customizer & Embed Snippet (Ctrl+E)">
@@ -65,7 +123,7 @@
     </div>
   </header>
 
-  <main class="app-container">
+  <main class="app-container" id="main-content">
     <!-- Hero Showcase Section -->
     <section class="hero-section">
       <div class="hero-badge">
@@ -155,7 +213,7 @@
           </div>
         </div>
         <div class="toolbar-right">
-          <button type="button" id="stage-customize-btn" class="toolbar-action-btn">
+          <button type="button" id="stage-customize-btn" class="toolbar-action-btn" aria-label="Open full player customizer">
             <i class="ti ti-adjustments-horizontal"></i>
             <span>Full Customizer</span>
           </button>
@@ -706,7 +764,9 @@
     </div>
   </div>
 
-  <script src="yvPlayer.js?v=3.7"></script>
-  <script src="app.js?v=3.7"></script>
+  <!-- YouTube IFrame API loaded async (non-blocking) -->
+  <script src="https://www.youtube.com/iframe_api" async></script>
+  <script src="yvPlayer.js?v=3.7" defer></script>
+  <script src="app.js?v=3.7" defer></script>
 </body>
 </html>

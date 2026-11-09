@@ -1,0 +1,27 @@
+# YVPlayer
+> Cinema-grade, distraction-free HTML5-style YouTube player with zero branding, custom storyboard timeline scrub previews, 720p HD Picture-in-Picture, custom themes, line-by-line captions, and rich keyboard gestures.
+
+YVPlayer is an open-source, zero-dependency media player library engineered for modern web applications. It wraps the YouTube IFrame API to eliminate corporate overlays, annotations, suggested watch-next grids, and watermarks while providing modern UI controls, native OS Picture-in-Picture with volume sliders, frame-accurate thumbnail hover scrubbing, and responsive CSS variables.
+
+## Documentation & Guides
+- [Live Showcase Demo](https://thevikasgurjar.github.io/YVplayer/): Interactive player playground with live theme switcher, omnibar URL loader, presets, and 1-click code exporter.
+- [Full Documentation Portal](https://thevikasgurjar.github.io/YVplayer/docs.html): Complete architecture, integration guides, and live API examples.
+- [API Reference](https://thevikasgurjar.github.io/YVplayer/docs.html#api-options): Configuration parameters, initialization options, methods, and event callbacks.
+- [Picture-in-Picture Architecture](https://thevikasgurjar.github.io/YVplayer/docs.html#pip-architecture): Dual-engine PiP (Document Picture-in-Picture API + 720p native stream fallback).
+- [Theming Engine](https://thevikasgurjar.github.io/YVplayer/docs.html#theme-customizer): CSS variable tokens, 6 preset palettes (Classic Red, City Cyan, Purple, Emerald, Gold, Monochrome), and hex customizers.
+- [Keyboard Hotkeys](https://thevikasgurjar.github.io/YVplayer/docs.html#keyboard-controls): Complete hotkey mappings (Space/K for play/pause, J/L for ±10s seek, M for mute, F for fullscreen, C for captions, P for PiP, S for speed).
+- [Cloudflare Worker Proxy](https://thevikasgurjar.github.io/YVplayer/docs.html#worker-deployment): Serverless edge deployment for stream resolution and proxy caching.
+
+## Integration Examples
+- [Vanilla Drop-In HTML](https://thevikasgurjar.github.io/YVplayer/docs.html#quickstart-dropin): Zero-JS declarative `data-yv-video` container initialization.
+- [React & Next.js](https://thevikasgurjar.github.io/YVplayer/docs.html#react-integration): Production component with clean lifecycle mounting and cleanup.
+- [Vue & Nuxt](https://thevikasgurjar.github.io/YVplayer/docs.html#vue-integration): Vue 3 Composition API wrapper.
+- [Svelte](https://thevikasgurjar.github.io/YVplayer/docs.html#svelte-integration): Reactive Svelte component implementation.
+
+## Source Code & Community
+- [GitHub Repository](https://github.com/thevikasgurjar/YVplayer): Official open-source repository (MIT License).
+- [Issue Tracker](https://github.com/thevikasgurjar/YVplayer/issues): Bug reports, feature suggestions, and browser compatibility notes.
+
+## Optional
+- [Pip Embed Sub-document](https://thevikasgurjar.github.io/YVplayer/pip_embed.html): Dedicated isolated window player container for Document PiP.
+- [Full LLM Context Document](https://thevikasgurjar.github.io/YVplayer/llms-full.txt): Complete concatenated API reference and codebase specification.
