@@ -4,6 +4,14 @@
   --themeHoverBg: rgba(254, 0, 1, 0.22);
   --themeHoverBorder: rgba(254, 0, 1, 0.55);
 }
+
+/* Prevent unwanted scrollbars in embedded iframes and isolated wrappers */
+html:has(.yvPlayer),
+body:has(.yvPlayer) {
+  overflow: hidden !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
 /* NOTE: tabler-icons @import removed — load via <link rel="preload"> in HTML for better performance */
 
 *{
@@ -882,7 +890,9 @@ width: 160px !important;
 height: 90px !important;
 min-width: 160px !important;
 min-height: 90px !important;
-background-repeat: no-repeat !important;
+background-repeat: no-repeat;
+background-position: center center;
+background-size: cover;
 background-color: #000 !important;
 margin: 0 !important;
 padding: 0 !important;
@@ -1398,12 +1408,19 @@ padding: 2px 7px;
   position: fixed !important;
   right: 24px;
   bottom: 24px;
-  width: var(--pip-width, 540px) !important;
+  width: var(--pip-width, 360px) !important;
   min-width: 280px !important;
   max-width: calc(100vw - 32px) !important;
   max-height: calc(100vh - 32px) !important;
   height: auto !important;
   aspect-ratio: 16 / 9 !important;
+  z-index: 9999999 !important;
+  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.88), 0 0 0 1px rgba(255, 255, 255, 0.16) !important;
+  border-radius: 12px !important;
+  overflow: hidden !important;
+  margin: 0 !important;
+  animation: yvPlayerPipSlideIn 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  cursor: grab;
 }
 
 .yvPlayer.is-pip.is-shorts {
@@ -1412,7 +1429,7 @@ padding: 2px 7px;
   max-width: 380px !important;
   aspect-ratio: 9 / 16 !important;
   height: auto !important;
-  z-index: 999999 !important;
+  z-index: 9999999 !important;
   box-shadow: 0 18px 48px rgba(0, 0, 0, 0.88), 0 0 0 1px rgba(255, 255, 255, 0.16) !important;
   border-radius: 12px !important;
   overflow: hidden !important;
@@ -1505,8 +1522,17 @@ padding: 2px 7px;
   font-size: 1.2rem !important;
 }
 
+.yvPlayer.is-pip .yvPlayer-volume-box input[type="range"],
+.yvPlayer.is-pip .yvPlayer-speed-btn,
+.yvPlayer.is-pip .yvPlayer-cc-btn,
+.yvPlayer.is-pip .settingsBtn {
+  display: none !important;
+}
+
 .yvPlayer.is-pip .yvPlayer-controls {
-  padding: 0 12px 10px 12px !important;
+  padding: 0 8px 8px 8px !important;
+  gap: 4px !important;
+  overflow: hidden !important;
 }
 
 .yvPlayer.is-pip .yvPlayer-controls-inner {
@@ -1514,18 +1540,21 @@ padding: 2px 7px;
   align-items: center !important;
   justify-content: space-between !important;
   width: 100% !important;
+  overflow: hidden !important;
 }
 
 .yvPlayer.is-pip .yvPlayer-controls-left {
   display: flex !important;
   align-items: center !important;
-  gap: 8px !important;
+  gap: 6px !important;
+  overflow: hidden !important;
 }
 
 .yvPlayer.is-pip .yvPlayer-right-capsule {
   display: flex !important;
   align-items: center !important;
   gap: 4px !important;
+  flex-shrink: 0 !important;
 }
 
 /* PiP Resizing ONLY from corners - visual corner grips */

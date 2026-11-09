@@ -318,8 +318,8 @@ function generateDrawerCode(tab, id) {
     if (isBg) {
       return `<!-- Background Play (Muted, looping video behind content) -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css" />
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/thevikasgurjar/YVplayer@main/yvPlayer.css" />
-<script src="https://cdn.jsdelivr.net/gh/thevikasgurjar/YVplayer@main/yvPlayer.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/thevikasgurjar/YVplayer@main/yvPlayer.min.css" />
+<script src="https://cdn.jsdelivr.net/gh/thevikasgurjar/YVplayer@main/yvPlayer.min.js"></script>
 
 <!-- Ambient Background Layer (Zero controls, fully automated) -->
 <div 
@@ -332,8 +332,8 @@ function generateDrawerCode(tab, id) {
     if (isShorts) {
       return `<!-- YouTube Shorts (9:16 Vertical Aspect Ratio) -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css" />
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/thevikasgurjar/YVplayer@main/yvPlayer.css" />
-<script src="https://cdn.jsdelivr.net/gh/thevikasgurjar/YVplayer@main/yvPlayer.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/thevikasgurjar/YVplayer@main/yvPlayer.min.css" />
+<script src="https://cdn.jsdelivr.net/gh/thevikasgurjar/YVplayer@main/yvPlayer.min.js"></script>
 
 <div 
   data-yv-video="${cleanId}" 
@@ -345,8 +345,8 @@ function generateDrawerCode(tab, id) {
 
     return `<!-- 1. Include Tabler Icons, YVPlayer CSS & JS -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css" />
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/thevikasgurjar/YVplayer@main/yvPlayer.css" />
-<script src="https://cdn.jsdelivr.net/gh/thevikasgurjar/YVplayer@main/yvPlayer.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/thevikasgurjar/YVplayer@main/yvPlayer.min.css" />
+<script src="https://cdn.jsdelivr.net/gh/thevikasgurjar/YVplayer@main/yvPlayer.min.js"></script>
 
 <!-- 2. Zero-JS Player Element (Drop anywhere) -->
 <div 
@@ -359,9 +359,9 @@ function generateDrawerCode(tab, id) {
   if (tab === "js") {
     if (isBg) {
       return `<!-- Background Play Setup (Zero Controls, Looping Muted) -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/thevikasgurjar/YVplayer@main/yvPlayer.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/thevikasgurjar/YVplayer@main/yvPlayer.min.css" />
 <script src="https://www.youtube.com/iframe_api"></script>
-<script src="https://cdn.jsdelivr.net/gh/thevikasgurjar/YVplayer@main/yvPlayer.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/thevikasgurjar/YVplayer@main/yvPlayer.min.js"></script>
 
 <div id="bg-player" style="position: absolute; inset: 0; width: 100%; height: 100%;"></div>
 
@@ -379,9 +379,9 @@ function generateDrawerCode(tab, id) {
     if (isShorts) {
       return `<!-- YouTube Shorts Setup (9:16 Vertical Player) -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css" />
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/thevikasgurjar/YVplayer@main/yvPlayer.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/thevikasgurjar/YVplayer@main/yvPlayer.min.css" />
 <script src="https://www.youtube.com/iframe_api"></script>
-<script src="https://cdn.jsdelivr.net/gh/thevikasgurjar/YVplayer@main/yvPlayer.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/thevikasgurjar/YVplayer@main/yvPlayer.min.js"></script>
 
 <div id="shorts-player" style="width: 100%; max-width: 400px; aspect-ratio: 9 / 16; margin: 0 auto;"></div>
 
@@ -399,9 +399,9 @@ function generateDrawerCode(tab, id) {
 
     return `<!-- Include Dependencies -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css" />
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/thevikasgurjar/YVplayer@main/yvPlayer.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/thevikasgurjar/YVplayer@main/yvPlayer.min.css" />
 <script src="https://www.youtube.com/iframe_api"></script>
-<script src="https://cdn.jsdelivr.net/gh/thevikasgurjar/YVplayer@main/yvPlayer.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/thevikasgurjar/YVplayer@main/yvPlayer.min.js"></script>
 
 <!-- Player Target -->
 <div id="player" style="width: 100%; max-width: 960px; aspect-ratio: 16 / 9;"></div>
@@ -527,13 +527,13 @@ let selectedCustomHex = "#fe0001";
 function getCdnUrls(provider) {
   if (provider === "local") {
     return {
-      css: "./yvPlayer.css",
-      js: "./yvPlayer.js"
+      css: "./yvPlayer.min.css",
+      js: "./yvPlayer.min.js"
     };
   }
   return {
-    css: "https://cdn.jsdelivr.net/gh/thevikasgurjar/YVplayer@main/yvPlayer.css",
-    js: "https://cdn.jsdelivr.net/gh/thevikasgurjar/YVplayer@main/yvPlayer.js"
+    css: "https://cdn.jsdelivr.net/gh/thevikasgurjar/YVplayer@main/yvPlayer.min.css",
+    js: "https://cdn.jsdelivr.net/gh/thevikasgurjar/YVplayer@main/yvPlayer.min.js"
   };
 }
 
