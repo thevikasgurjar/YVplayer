@@ -1,6 +1,6 @@
 {
   "name": "yvplayer",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "Distraction-free, responsive HTML5-style YouTube video player with zero branding, custom storyboard scrub timeline, Video.js 10 inspired themes, line-by-line captions, floating Picture-in-Picture, open-source stream proxies, and rich keyboard gestures.",
   "main": "yvPlayer.js",
   "style": "yvPlayer.css",
