@@ -616,7 +616,7 @@ function initPromptGenerator(containerSelector) {
     updateShortsUI();
 
     // Source links
-    var cdnBase = "https://cdn.jsdelivr.net/gh/thevikasgurjar/yvplayer@main";
+    var cdnBase = "https://cdn.jsdelivr.net/gh/thevikasgurjar/YVplayer@main";
     var cssUrl = cdn === "jsdelivr" ? cdnBase + "/yvPlayer.css" : "./yvPlayer.css";
     var jsUrl = cdn === "jsdelivr" ? cdnBase + "/yvPlayer.js" : "./yvPlayer.js";
     var iconsUrl = cdn === "jsdelivr"
