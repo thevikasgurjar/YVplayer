@@ -502,7 +502,11 @@
       captionsList = [];
       if (!vid) return;
       fetch("/api/captions?id=" + encodeURIComponent(vid))
-        .then(r => r.json())
+        .then(r => {
+          if (!r.ok) return null;
+          var ct = r.headers.get("content-type") || "";
+          return ct.includes("json") ? r.json() : null;
+        })
         .then(data => {
           if (data && data.success && Array.isArray(data.captions)) {
             captionsList = data.captions;
@@ -940,7 +944,7 @@
 
     window.onYouTubeIframeAPIReady = function() {
       if (player) return;
-      var isNoCookie = urlParams.get("nocookie") !== "false";
+      var isNoCookie = params.get("nocookie") === "true";
       var ytHost = isNoCookie ? "https://www.youtube-nocookie.com" : "https://www.youtube.com";
       player = new YT.Player('pip-player', {
         host: ytHost,

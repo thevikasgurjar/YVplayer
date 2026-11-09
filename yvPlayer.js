@@ -455,9 +455,9 @@ var YVPlayer = {
     var targetQuality = "auto";
     var captionsEnabled = false;
     var captionsList = [];
-    var currentPipMode = "os";
+    var currentPipMode = "document";
     try {
-      currentPipMode = localStorage.getItem("yvPlayer_pipMode") || "os";
+      currentPipMode = localStorage.getItem("yvPlayer_pipMode") || "document";
     } catch (e) { }
 
     var playerParams = (YVPlayer.players[videoTag] && YVPlayer.players[videoTag].params) || {};
@@ -1214,13 +1214,35 @@ var YVPlayer = {
 
                 var activePipWindow = null;
 
+                function getDocPiPContext() {
+                  try {
+                    if (window.top && window.top.documentPictureInPicture && typeof window.top.documentPictureInPicture.requestWindow === "function") {
+                      return window.top.documentPictureInPicture;
+                    }
+                  } catch (e) { }
+                  if (typeof window !== "undefined" && ("documentPictureInPicture" in window) && typeof window.documentPictureInPicture.requestWindow === "function") {
+                    return window.documentPictureInPicture;
+                  }
+                  return null;
+                }
+
+                function hasLocalStreamProxy() {
+                  try {
+                    return (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1") &&
+                      (window.location.port === "8000" || window.location.port === "5500" || window.location.port === "3000");
+                  } catch (e) {
+                    return false;
+                  }
+                }
+
                 async function enterDocumentPiP() {
                   if (activePipWindow) {
                     try { activePipWindow.close(); } catch (e) { }
                     activePipWindow = null;
                     return;
                   }
-                  if (!("documentPictureInPicture" in window)) {
+                  var docPip = getDocPiPContext();
+                  if (!docPip) {
                     enterInPagePiP();
                     return;
                   }
@@ -1288,7 +1310,7 @@ var YVPlayer = {
 
                   var pipWin = null;
                   try {
-                    pipWin = await window.documentPictureInPicture.requestWindow({
+                    pipWin = await docPip.requestWindow({
                       width: pipWidth,
                       height: pipHeight,
                       initialAspectRatio: initialAspect,
@@ -1396,7 +1418,15 @@ var YVPlayer = {
                   if (!isShortsActive && parent.offsetWidth && parent.offsetHeight && parent.offsetHeight > 50) {
                     videoAspect = parent.offsetWidth / parent.offsetHeight;
                   }
-                  var embedUrl = `${window.location.origin}/pip_embed.html?id=${encodeURIComponent(activeId)}&start=${encodeURIComponent(startSec)}&autoplay=1&mute=${isMuted ? 1 : 0}&vol=${volume}&rate=${playbackRate}&aspect=${encodeURIComponent(videoAspect)}${isShortsActive ? "&shorts=1" : ""}${isLiveStream ? "&live=1" : ""}&loop=${playerParams.loop ? 1 : 0}`;
+                  var baseEmbedOrigin = "https://thevikasgurjar.github.io/YVplayer";
+                  try {
+                    if (window.location.origin && window.location.origin.includes("thevikasgurjar.github.io")) {
+                      baseEmbedOrigin = window.location.origin + window.location.pathname.replace(/\/[^/]*$/, "");
+                    } else if ((window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1") && (window.location.port === "8000" || window.location.port === "5500" || window.location.port === "3000")) {
+                      baseEmbedOrigin = window.location.origin;
+                    }
+                  } catch (e) { }
+                  var embedUrl = `${baseEmbedOrigin}/pip_embed.html?id=${encodeURIComponent(activeId)}&start=${encodeURIComponent(startSec)}&autoplay=1&mute=${isMuted ? 1 : 0}&vol=${volume}&rate=${playbackRate}&aspect=${encodeURIComponent(videoAspect)}${isShortsActive ? "&shorts=1" : ""}${isLiveStream ? "&live=1" : ""}&loop=${playerParams.loop ? 1 : 0}&theme=${encodeURIComponent(activeThemeColor || "#fe0001")}`;
 
                   pipWin.document.body.innerHTML = `
         <iframe
@@ -1439,10 +1469,20 @@ var YVPlayer = {
                   };
                   pipWin.addEventListener("message", messageHandler);
                   window.addEventListener("message", messageHandler);
+                  try {
+                    if (window.top && window.top !== window) {
+                      window.top.addEventListener("message", messageHandler);
+                    }
+                  } catch (e) { }
 
                   function onPipClose() {
                     activePipWindow = null;
                     window.removeEventListener("message", messageHandler);
+                    try {
+                      if (window.top && window.top !== window) {
+                        window.top.removeEventListener("message", messageHandler);
+                      }
+                    } catch (e) { }
 
                     if (placeholder) placeholder.style.display = "none";
                     parent.style.display = "";
@@ -1613,7 +1653,7 @@ var YVPlayer = {
                   // Live broadcasts on YouTube use HLS (.m3u8), which desktop Chrome cannot decode in a raw <video> tag.
                   // Route live streams cleanly to Document PiP or In-Page PiP so live streaming never fails!
                   if (isLiveStream) {
-                    if ("documentPictureInPicture" in window) {
+                    if (getDocPiPContext()) {
                       enterDocumentPiP();
                     } else {
                       enterInPagePiP();
@@ -1783,11 +1823,7 @@ var YVPlayer = {
                     videoEl.removeEventListener("pause", onNativePause);
                     parent.classList.remove("is-native-pip");
                     setPipButtonActive(false);
-                    if ("documentPictureInPicture" in window) {
-                      enterDocumentPiP();
-                    } else {
-                      enterInPagePiP();
-                    }
+                    enterInPagePiP();
                     return;
                   }
 
@@ -1914,25 +1950,25 @@ var YVPlayer = {
                     return;
                   }
 
-                  if (currentPipMode === "document") {
-                    if ("documentPictureInPicture" in window) {
-                      enterDocumentPiP();
-                    } else if (document.pictureInPictureEnabled) {
-                      enterNativeVideoPiP();
-                    } else {
-                      enterInPagePiP();
-                    }
-                  } else if (currentPipMode === "inpage") {
+                  var docPip = getDocPiPContext();
+
+                  if (currentPipMode === "inpage") {
                     enterInPagePiP();
+                    return;
+                  }
+
+                  var hasProxy = (playerParams && playerParams.proxyProvider) || hasLocalStreamProxy();
+                  if (currentPipMode === "os" && hasProxy && document.pictureInPictureEnabled) {
+                    enterNativeVideoPiP();
+                    return;
+                  }
+
+                  if (docPip) {
+                    enterDocumentPiP();
+                  } else if (hasProxy && document.pictureInPictureEnabled) {
+                    enterNativeVideoPiP();
                   } else {
-                    // Default "os" Native Video PiP
-                    if (document.pictureInPictureEnabled) {
-                      enterNativeVideoPiP();
-                    } else if ("documentPictureInPicture" in window) {
-                      enterDocumentPiP();
-                    } else {
-                      enterInPagePiP();
-                    }
+                    enterInPagePiP();
                   }
                 }
 
