@@ -1,4 +1,4 @@
-﻿# YVPlayer — Custom Player for YouTube Videos Without YouTube Elements
+# YVPlayer — Custom Player for YouTube Videos Without YouTube Elements
 ## Complete Technical Specification & API Reference
 
 > The cinema-grade, distraction-free HTML5 video player for YouTube videos without YouTube elements, branding, watermarks, or suggested watch-next overlays. Default video: `LXb3EKWsInQ`.
