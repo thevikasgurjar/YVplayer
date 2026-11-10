@@ -2627,11 +2627,12 @@ kbd, .yvPlayer-kbd-hint {
    ============================================================ */
 .yvPlayer.is-background,
 .yvPlayer.is-background *,
-[data-yv-background="true"] .yvPlayer,
-[data-yv-background="true"] .yvPlayer * {
+[data-yv-background="true"],
+[data-yv-background="true"] * {
   pointer-events: none !important;
   user-select: none !important;
   cursor: default !important;
+  outline: none !important;
 }
 
 .yvPlayer.is-background main,
