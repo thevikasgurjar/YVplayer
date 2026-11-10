@@ -1,4 +1,4 @@
-﻿/**
+/**
  * YVPlayer Showcase Application Logic
  * v3.7 · Cinema-Grade YouTube Engine
  */
@@ -520,6 +520,7 @@ const embedMaxWidthSelect = document.getElementById("embed-max-width");
 const embedRadiusSelect = document.getElementById("embed-radius");
 
 let currentEmbedTab = "dropin";
+let currentEmbedMode = "standard";
 let currentThemeMode = "preset";
 let selectedPresetName = "red";
 let selectedCustomHex = "#fe0001";
@@ -543,6 +544,10 @@ function generateEmbedCode() {
   const provider = embedCdnSelect ? embedCdnSelect.value : "jsdelivr";
   const urls = getCdnUrls(provider);
 
+  const isShorts = currentEmbedMode === "shorts";
+  const isBackground = currentEmbedMode === "background";
+  const isLive = currentEmbedMode === "live";
+
   const isAutoplay = optAutoplay ? optAutoplay.checked : true;
   const isStoryboard = optStoryboard ? optStoryboard.checked : true;
   const isPip = optPip ? optPip.checked : true;
@@ -552,25 +557,39 @@ function generateEmbedCode() {
   const isLoop = optLoop ? optLoop.checked : false;
 
   const pipMode = embedPipModeSelect ? embedPipModeSelect.value : "os";
-  const maxWidth = embedMaxWidthSelect ? embedMaxWidthSelect.value : "960px";
+  const maxWidth = embedMaxWidthSelect ? embedMaxWidthSelect.value : (isShorts ? "400px" : "960px");
   const radius = embedRadiusSelect ? embedRadiusSelect.value : "12px";
+  const aspectRatio = isShorts ? "9 / 16" : "16 / 9";
 
-  let themeAttr = "";
-  let themeProp = "";
+  // Build Attributes - ONLY include if selected
+  const attrs = [];
+  attrs.push(`data-yv-video="${cleanId}"`);
 
   if (currentThemeMode === "preset") {
-    themeAttr = ` data-yv-theme="${selectedPresetName}"`;
-    themeProp = `\n      theme: "${selectedPresetName}",`;
+    attrs.push(`data-yv-theme="${selectedPresetName}"`);
   } else if (currentThemeMode === "custom") {
-    themeAttr = ` data-yv-theme="custom" data-yv-color="${selectedCustomHex}"`;
-    themeProp = `\n      theme: "custom",\n      customColor: "${selectedCustomHex}",`;
+    attrs.push(`data-yv-theme="custom" data-yv-color="${selectedCustomHex}"`);
   }
 
-  const autoplayAttr = !isAutoplay ? ' data-yv-autoplay="false"' : '';
-  const storyboardAttr = !isStoryboard ? ' data-yv-storyboard="false"' : '';
-  const pipAttr = !isPip ? ' data-yv-pip="none"' : (pipMode === "inpage" ? ' data-yv-pip="inpage"' : '');
+  if (isShorts) {
+    attrs.push(`data-yv-shorts="true"`);
+  } else if (isBackground) {
+    attrs.push(`data-yv-background="true"`);
+  } else if (isLive) {
+    attrs.push(`data-yv-live="true"`);
+  }
 
-  const styleAttr = `style="width: 100%; max-width: ${maxWidth}; aspect-ratio: 16 / 9; margin: 0 auto; border-radius: ${radius}; overflow: hidden;"`;
+  if (isAutoplay) attrs.push(`data-yv-autoplay="true"`);
+  if (isMuted) attrs.push(`data-yv-muted="true"`);
+  if (isLoop) attrs.push(`data-yv-loop="true"`);
+  if (isStoryboard && !isShorts && !isBackground && !isLive) attrs.push(`data-yv-storyboard="true"`);
+  if (isPip && !isBackground) {
+    attrs.push(pipMode === "inpage" ? `data-yv-pip="inpage"` : (pipMode === "document" ? `data-yv-pip="document"` : `data-yv-pip="true"`));
+  }
+  if (isShortcuts && !isBackground) attrs.push(`data-yv-shortcuts="true"`);
+  if (isSleep && !isBackground && !isLive) attrs.push(`data-yv-sleep="true"`);
+
+  const styleAttr = `style="width: 100%; max-width: ${maxWidth}; aspect-ratio: ${aspectRatio}; margin: 0 auto; border-radius: ${radius}; overflow: hidden;"`;
 
   if (currentEmbedTab === "dropin") {
     if (embedCodeBadge) embedCodeBadge.textContent = "1-Click Drop-In HTML";
@@ -583,10 +602,33 @@ function generateEmbedCode() {
 
 <!-- Player Element (Drop anywhere on your page) -->
 <div 
-  data-yv-video="${cleanId}"${themeAttr}${autoplayAttr}${storyboardAttr}${pipAttr}
+  ${attrs.join(" ")}
   ${styleAttr}
 ></div>`;
   }
+
+  // JS API Config Object Properties - ONLY include selected
+  const jsProps = [];
+  jsProps.push(`defaultId: "${cleanId}"`);
+  if (currentThemeMode === "preset") {
+    jsProps.push(`theme: "${selectedPresetName}"`);
+  } else if (currentThemeMode === "custom") {
+    jsProps.push(`theme: "custom"`);
+    jsProps.push(`customColor: "${selectedCustomHex}"`);
+  }
+  if (isShorts) jsProps.push(`shorts: true`);
+  if (isBackground) jsProps.push(`background: true`);
+  if (isLive) jsProps.push(`isLive: true`);
+  if (isAutoplay) jsProps.push(`autoplay: true`);
+  if (isMuted) jsProps.push(`muted: true`);
+  if (isLoop) jsProps.push(`loop: true`);
+  if (isStoryboard && !isShorts && !isBackground && !isLive) jsProps.push(`storyboard: true`);
+  if (isPip && !isBackground) {
+    jsProps.push(`pip: true`);
+    jsProps.push(`pipMode: "${pipMode}"`);
+  }
+  if (isShortcuts && !isBackground) jsProps.push(`enableHotkeys: true`);
+  if (isSleep && !isBackground && !isLive) jsProps.push(`enableSleepTimer: true`);
 
   if (currentEmbedTab === "js") {
     if (embedCodeBadge) embedCodeBadge.textContent = "JavaScript API";
@@ -604,13 +646,7 @@ function generateEmbedCode() {
 <script>
   window.onYouTubeIframeAPIReady = function() {
     YVPlayer.init("player", {
-      defaultId: "${cleanId}",${themeProp}
-      autoplay: ${isAutoplay},
-      loop: ${isLoop},
-      storyboard: ${isStoryboard},
-      pipMode: "${isPip ? pipMode : 'none'}",
-      enableHotkeys: ${isShortcuts},
-      enableSleepTimer: ${isSleep}
+      ${jsProps.join(",\n      ")}
     }).then(function() {
       console.log("YVPlayer initialized and ready!");
     });
@@ -623,10 +659,7 @@ function generateEmbedCode() {
     return `import React, { useEffect, useRef } from "react";
 
 export function VideoPlayer({ 
-  videoId = "${cleanId}", 
-  theme = "${currentThemeMode === 'preset' ? selectedPresetName : 'default'}",
-  customColor = ${currentThemeMode === 'custom' ? `"${selectedCustomHex}"` : 'undefined'},
-  autoplay = ${isAutoplay} 
+  videoId = "${cleanId}" 
 }) {
   const containerRef = useRef(null);
   const playerIdRef = useRef("yv-" + Math.random().toString(36).substring(2, 9));
@@ -636,16 +669,7 @@ export function VideoPlayer({
     if (typeof window === "undefined" || !window.YVPlayer) return;
 
     window.YVPlayer.init(id, {
-      defaultId: videoId,
-      theme: theme,
-      autoplay: autoplay,
-      loop: ${isLoop},
-      storyboard: ${isStoryboard},
-      pipMode: "${isPip ? pipMode : 'none'}"
-    }).then(() => {
-      if (customColor && window.YVPlayer.setTheme) {
-        window.YVPlayer.setTheme(id, customColor, "Custom");
-      }
+      ${jsProps.join(",\n      ")}
     });
 
     return () => {
@@ -653,7 +677,7 @@ export function VideoPlayer({
         window.YVPlayer.destroy(id);
       }
     };
-  }, [videoId, theme, customColor, autoplay]);
+  }, [videoId]);
 
   return (
     <div
@@ -662,7 +686,7 @@ export function VideoPlayer({
       style={{
         width: "100%",
         maxWidth: "${maxWidth}",
-        aspectRatio: "16 / 9",
+        aspectRatio: "${aspectRatio}",
         margin: "0 auto",
         borderRadius: "${radius}",
         overflow: "hidden"
@@ -753,6 +777,26 @@ if (embedColorHex) {
     }
   });
 }
+
+const embedModePills = document.querySelectorAll(".embed-mode-pill");
+embedModePills.forEach(pill => {
+  pill.addEventListener("click", () => {
+    embedModePills.forEach(p => p.classList.remove("is-active"));
+    pill.classList.add("is-active");
+    currentEmbedMode = pill.getAttribute("data-mode") || "standard";
+    if (currentEmbedMode === "shorts") {
+      if (embedMaxWidthSelect) embedMaxWidthSelect.value = "400px";
+    } else if (currentEmbedMode === "background") {
+      if (optAutoplay) optAutoplay.checked = true;
+      if (optMuted) optMuted.checked = true;
+      if (optLoop) optLoop.checked = true;
+      if (embedMaxWidthSelect) embedMaxWidthSelect.value = "100%";
+    } else if (currentEmbedMode === "standard") {
+      if (embedMaxWidthSelect) embedMaxWidthSelect.value = "960px";
+    }
+    updateEmbedCodeUI();
+  });
+});
 
 [
   embedVideoIdInput, embedCdnSelect,

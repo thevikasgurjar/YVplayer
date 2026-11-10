@@ -1347,6 +1347,41 @@ body {
   cursor: pointer;
 }
 
+.embed-mode-selector {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding-top: 4px;
+}
+
+.embed-mode-pill {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border-subtle);
+  color: #cbd5e1;
+  font-family: inherit;
+  font-size: 0.82rem;
+  font-weight: 600;
+  padding: 7px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.15s ease;
+}
+
+.embed-mode-pill:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #ffffff;
+}
+
+.embed-mode-pill.is-active {
+  background: rgba(254, 0, 1, 0.15);
+  border-color: rgba(254, 0, 1, 0.65);
+  color: #ffffff;
+  box-shadow: 0 0 12px rgba(254, 0, 1, 0.22);
+}
+
 .embed-preset-grid {
   display: flex;
   flex-wrap: wrap;
