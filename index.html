@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -754,6 +754,25 @@
           </div>
         </div>
 
+        <!-- Player Mode Selection -->
+        <div class="embed-config-section">
+          <div class="embed-section-title"><i class="ti ti-device-tv"></i> Player Mode / Video Type</div>
+          <div class="embed-mode-selector" id="embed-mode-selector">
+            <button type="button" class="embed-mode-pill is-active" data-mode="standard">
+              <i class="ti ti-aspect-ratio"></i> Standard (16:9 Cinema)
+            </button>
+            <button type="button" class="embed-mode-pill" data-mode="shorts">
+              <i class="ti ti-device-mobile"></i> YouTube Shorts (9:16)
+            </button>
+            <button type="button" class="embed-mode-pill" data-mode="background">
+              <i class="ti ti-sparkles"></i> Ambient Background
+            </button>
+            <button type="button" class="embed-mode-pill" data-mode="live">
+              <i class="ti ti-broadcast"></i> Live Stream Broadcast
+            </button>
+          </div>
+        </div>
+
         <!-- Theme Customizer Section -->
         <div class="embed-config-section">
           <div class="embed-section-title"><i class="ti ti-palette"></i> Player Theme & Accent Color</div>
@@ -852,6 +871,7 @@
             <label for="embed-max-width">Container Max Width:</label>
             <select id="embed-max-width">
               <option value="960px" selected>960px (Recommended)</option>
+              <option value="400px">400px (Shorts / Mobile)</option>
               <option value="800px">800px</option>
               <option value="1200px">1200px</option>
               <option value="100%">100% (Full Fluid Width)</option>
