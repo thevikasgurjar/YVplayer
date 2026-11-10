@@ -579,6 +579,7 @@ var YVPlayer = {
     }
 
     function toggleShortcutsModal(open) {
+      if (isBackground || (playerParams && playerParams.background) || parent.classList.contains("is-background")) return;
       var shortcutsModal = parent.querySelector(".yvPlayer-shortcuts-modal");
       if (!shortcutsModal) return;
       var show = typeof open === "boolean" ? open : (shortcutsModal.style.display === "none");
@@ -935,13 +936,17 @@ var YVPlayer = {
                   });
                 }
 
-                document.addEventListener("keydown", (e) => {
-                  if (e.target && (e.target.tagName === "INPUT" || e.target.tagName === "TEXTAREA")) return;
-                  if (e.key === "c" || e.key === "C") {
-                    e.preventDefault();
-                    toggleCaptions();
-                  }
-                });
+                if (!isBackground && !(playerParams && playerParams.background) && !parent.classList.contains("is-background")) {
+                  document.addEventListener("keydown", (e) => {
+                    var curP = (YVPlayer.players[videoTag] && YVPlayer.players[videoTag].params) || {};
+                    if (curP.enableHotkeys === false || curP.background || isBackground || (playerParams && playerParams.background) || parent.classList.contains("is-background")) return;
+                    if (e.target && (e.target.tagName === "INPUT" || e.target.tagName === "TEXTAREA" || e.target.isContentEditable)) return;
+                    if (e.key === "c" || e.key === "C") {
+                      e.preventDefault();
+                      toggleCaptions();
+                    }
+                  });
+                }
 
                 var speedBtn = parent.querySelector(".yvPlayer-speed-btn");
                 var speedVal = parent.querySelector(".yvPlayer-speed-val");
@@ -1524,6 +1529,7 @@ var YVPlayer = {
                 }
 
                 function enterInPagePiP() {
+                  if (isBackground || (playerParams && playerParams.background) || parent.classList.contains("is-background")) return;
                   if (document.fullscreenElement) {
                     document.exitFullscreen().catch(() => { });
                   }
@@ -1639,6 +1645,7 @@ var YVPlayer = {
                 }
 
                 async function enterNativeVideoPiP() {
+                  if (isBackground || (playerParams && playerParams.background) || parent.classList.contains("is-background")) return;
                   if (document.pictureInPictureElement) {
                     try { await document.exitPictureInPicture(); } catch (e) { }
                     return;
@@ -1942,6 +1949,7 @@ var YVPlayer = {
                 }
 
                 function togglePiP() {
+                  if (isBackground || (playerParams && playerParams.background) || parent.classList.contains("is-background")) return;
                   if (document.pictureInPictureElement) {
                     try { document.exitPictureInPicture(); } catch (e) { }
                     return;
@@ -2198,15 +2206,19 @@ var YVPlayer = {
                   showHUD(forward ? "ti ti-chevron-right" : "ti ti-chevron-left", forward ? "Frame +1" : "Frame -1");
                 }
 
-                parent.setAttribute("tabindex", "0");
-                parent.addEventListener("click", function () {
-                  try { parent.focus(); } catch (e) { }
-                });
+                if (!isBackground && !(playerParams && playerParams.background) && !parent.classList.contains("is-background")) {
+                  parent.setAttribute("tabindex", "0");
+                  parent.addEventListener("click", function () {
+                    try { parent.focus(); } catch (e) { }
+                  });
+                } else {
+                  parent.removeAttribute("tabindex");
+                }
 
                 function handleHotkeys(e) {
-                  if (e._yvHandled) return;
                   var curP = (YVPlayer.players[videoTag] && YVPlayer.players[videoTag].params) || {};
-                  if (curP.enableHotkeys === false) return;
+                  if (curP.enableHotkeys === false || curP.background || isBackground || (playerParams && playerParams.background) || parent.classList.contains("is-background")) return;
+                  if (e._yvHandled) return;
                   if (e.target && (e.target.tagName === "INPUT" || e.target.tagName === "TEXTAREA" || e.target.isContentEditable)) return;
                   e._yvHandled = true;
 
@@ -2308,8 +2320,10 @@ var YVPlayer = {
                   }
                 }
 
-                document.addEventListener("keydown", handleHotkeys);
-                parent.addEventListener("keydown", handleHotkeys);
+                if (!isBackground && !(playerParams && playerParams.background) && !parent.classList.contains("is-background")) {
+                  document.addEventListener("keydown", handleHotkeys);
+                  parent.addEventListener("keydown", handleHotkeys);
+                }
 
                 // 10. Interactive Chapter Notches Rendering & Tooltip
                 var chaptersList = (YVPlayer.players[videoTag]["params"] && YVPlayer.players[videoTag]["params"]["chapters"]) || [];
@@ -2994,7 +3008,7 @@ var YVPlayer = {
     }
 
     function togglePlayPause() {
-      if (playerParams && playerParams.background) {
+      if (isBackground || (playerParams && playerParams.background) || parent.classList.contains("is-background")) {
         return; // Background mode must never be paused
       }
       if (Date.now() < ignorePlayPauseUntil) {
@@ -3293,6 +3307,7 @@ var YVPlayer = {
     }
 
     function toggleFullscreen() {
+      if (isBackground || (playerParams && playerParams.background) || parent.classList.contains("is-background")) return;
       const videoContainer = parent;
       if (!document.fullscreenElement && document.fullscreenEnabled) {
         if (videoContainer.requestFullscreen) {
