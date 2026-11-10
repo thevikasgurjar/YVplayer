@@ -165,6 +165,7 @@ align-items: center;
 justify-content: center;
 pointer-events: auto !important;
 cursor: pointer !important;
+transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.6s ease;
 }
 .yvPlayer .yvPlayer-container span i{
 display: flex;
@@ -269,11 +270,12 @@ background: rgba(255,255,255,0.1);
   transform: scale(1.15);
   background: rgba(0, 0, 0, 0.9);
 }
-.yvPlayer.is-active:not(.is-ended) .yvPlayer-container span{
-display: none !important;
+.yvPlayer.is-active:not(.is-ended) .yvPlayer-container span,
+.yvPlayer.is-playing .yvPlayer-container span{
 pointer-events: none !important;
 visibility: hidden !important;
 opacity: 0 !important;
+transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.6s ease !important;
 }
 .yvPlayer.is-ended .yvPlayer-container span{
 display: flex !important;
@@ -308,14 +310,16 @@ cursor: pointer;
 }
 
 .yvPlayer.is-paused .yvPlayer-controls-open main,
-.yvPlayer.is-paused.is-active main {
+.yvPlayer.is-ended main {
 transform: translate(-50%,-50%) scale(1) !important;
 opacity: 1 !important;
 pointer-events: auto !important;
 }
 
-.yvPlayer.is-playing main {
-transform: translate(-50%,-50%) scale(0) !important;
+.yvPlayer.is-playing main,
+.yvPlayer:not(.is-paused) main,
+.yvPlayer:not(.yvPlayer-controls-open):not(.is-ended) main {
+transform: translate(-50%,-50%) scale(0.85) !important;
 opacity: 0 !important;
 pointer-events: none !important;
 }
@@ -2621,22 +2625,34 @@ kbd, .yvPlayer-kbd-hint {
    BACKGROUND PLAY ("Muted, looping video behind your content")
    Native Video.js Alternative: Zero Controls, Zero Interference
    ============================================================ */
-.yvPlayer.is-background {
+.yvPlayer.is-background,
+.yvPlayer.is-background *,
+[data-yv-background="true"] .yvPlayer,
+[data-yv-background="true"] .yvPlayer * {
   pointer-events: none !important;
   user-select: none !important;
   cursor: default !important;
 }
 
+.yvPlayer.is-background main,
 .yvPlayer.is-background .yvPlayer-controls-box,
 .yvPlayer.is-background .yvPlayer-hud-pill,
 .yvPlayer.is-background .yvPlayer-captions-box,
 .yvPlayer.is-background .yvPlayer-shortcuts-modal,
 .yvPlayer.is-background .yvPlayer-ripple-zone,
-.yvPlayer.is-background .yvPlayer-container span {
+.yvPlayer.is-background .yvPlayer-container span,
+.yvPlayer.is-background .yvPlayer-loading,
+[data-yv-background="true"] main,
+[data-yv-background="true"] .yvPlayer-controls-box,
+[data-yv-background="true"] .yvPlayer-container span,
+[data-yv-background="true"] .yvPlayer-loading {
   display: none !important;
+  opacity: 0 !important;
   pointer-events: none !important;
+  visibility: hidden !important;
 }
 
-.yvPlayer.is-background .yvPlayer-container iframe {
+.yvPlayer.is-background .yvPlayer-container iframe,
+[data-yv-background="true"] .yvPlayer-container iframe {
   pointer-events: none !important;
 }

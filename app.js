@@ -593,14 +593,11 @@ function generateEmbedCode() {
 
   if (currentEmbedTab === "dropin") {
     if (embedCodeBadge) embedCodeBadge.textContent = "1-Click Drop-In HTML";
-    return `<!-- ============================================================ -->
-<!-- YVPlayer: 1-Click Drop-In Embed (Zero JavaScript Required)    -->
-<!-- ============================================================ -->
+    return `<!-- YVPlayer Embed -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css" />
 <link rel="stylesheet" href="${urls.css}" />
 <script src="${urls.js}"></script>
 
-<!-- Player Element (Drop anywhere on your page) -->
 <div 
   ${attrs.join(" ")}
   ${styleAttr}
@@ -632,23 +629,18 @@ function generateEmbedCode() {
 
   if (currentEmbedTab === "js") {
     if (embedCodeBadge) embedCodeBadge.textContent = "JavaScript API";
-    return `<!-- ============================================================ -->
-<!-- YVPlayer: Programmatic JavaScript API Embed                  -->
-<!-- ============================================================ -->
+    return `<!-- YVPlayer JS API -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css" />
 <link rel="stylesheet" href="${urls.css}" />
 <script src="https://www.youtube.com/iframe_api"></script>
 <script src="${urls.js}"></script>
 
-<!-- Player Container -->
 <div id="player" ${styleAttr}></div>
 
 <script>
   window.onYouTubeIframeAPIReady = function() {
     YVPlayer.init("player", {
       ${jsProps.join(",\n      ")}
-    }).then(function() {
-      console.log("YVPlayer initialized and ready!");
     });
   };
 </script>`;
