@@ -2204,7 +2204,11 @@ var YVPlayer = {
                 });
 
                 function handleHotkeys(e) {
+                  if (e._yvHandled) return;
+                  var curP = (YVPlayer.players[videoTag] && YVPlayer.players[videoTag].params) || {};
+                  if (curP.enableHotkeys === false) return;
                   if (e.target && (e.target.tagName === "INPUT" || e.target.tagName === "TEXTAREA" || e.target.isContentEditable)) return;
+                  e._yvHandled = true;
 
                   var k = e.key;
                   if (k === "?" || (e.shiftKey && (k === "/" || k === "?"))) {
@@ -2529,9 +2533,9 @@ var YVPlayer = {
                     videoId: vid
                   };
                   try {
-                    [1, 2, 3].forEach(n => {
+                    ["0.jpg", "1.jpg", "2.jpg", "3.jpg", "hq1.jpg", "hq2.jpg", "hq3.jpg", "hqdefault.jpg", "maxresdefault.jpg"].forEach(function (n) {
                       var img = new Image();
-                      img.src = "https://img.youtube.com/vi/" + vid + "/" + n + ".jpg";
+                      img.src = "https://img.youtube.com/vi/" + vid + "/" + n;
                     });
                   } catch (e) { }
                   if (previewBox) previewBox.classList.add("has-preview");
@@ -2587,15 +2591,18 @@ var YVPlayer = {
 
                   if (storyboardData.isCdnFallback) {
                     var pct = duration > 0 ? (hoverSecs / duration) : 0.5;
-                    var frameNum = 1;
-                    if (pct < 0.33) {
-                      frameNum = 1;
-                    } else if (pct < 0.66) {
-                      frameNum = 2;
+                    var cdnUrl = "https://img.youtube.com/vi/" + activeId + "/";
+                    if (pct < 0.12) {
+                      cdnUrl += "hqdefault.jpg";
+                    } else if (pct < 0.38) {
+                      cdnUrl += "hq1.jpg";
+                    } else if (pct < 0.65) {
+                      cdnUrl += "hq2.jpg";
+                    } else if (pct < 0.88) {
+                      cdnUrl += "hq3.jpg";
                     } else {
-                      frameNum = 3;
+                      cdnUrl += "maxresdefault.jpg";
                     }
-                    var cdnUrl = "https://img.youtube.com/vi/" + activeId + "/" + frameNum + ".jpg";
                     previewThumb.style.backgroundImage = 'url("' + cdnUrl + '")';
                     previewThumb.style.backgroundPosition = "center center";
                     previewThumb.style.backgroundSize = "cover";
@@ -2674,6 +2681,10 @@ var YVPlayer = {
                 }
 
                 function updatePreview(clientX) {
+                  if (playerParams && (playerParams.storyboard === false || playerParams.storyboard === "false")) {
+                    if (previewEl) previewEl.classList.remove("is-visible");
+                    return;
+                  }
                   var yt = YVPlayer.players[videoTag] ? YVPlayer.players[videoTag]["videoTag"] : null;
                   if (!yt || typeof yt.getDuration !== "function") return;
                   var duration = yt.getDuration();
@@ -4616,24 +4627,48 @@ if (typeof window !== "undefined" && typeof document !== "undefined") {
 
       var theme = el.getAttribute("data-yv-theme") || "default";
       var customColor = el.getAttribute("data-yv-color") || null;
-      var autoplay = (el.getAttribute("data-yv-autoplay") === "true") || (el.getAttribute("data-autoplay") === "true");
       var isShorts = (el.getAttribute("data-yv-shorts") === "true") || (el.getAttribute("data-shorts") === "true");
       var isBg = (el.getAttribute("data-yv-background") === "true") || (el.getAttribute("data-background") === "true");
       var isLive = (el.getAttribute("data-yv-live") === "true") || (el.getAttribute("data-live") === "true");
 
+      var autoplayAttr = el.getAttribute("data-yv-autoplay") || el.getAttribute("data-autoplay");
+      var autoplay = isBg ? true : (autoplayAttr === "true" || autoplayAttr === "1");
+
+      var mutedAttr = el.getAttribute("data-yv-muted") || el.getAttribute("data-muted");
+      var muted = isBg ? true : (mutedAttr === "true" || mutedAttr === "1");
+
+      var loopAttr = el.getAttribute("data-yv-loop") || el.getAttribute("data-loop");
+      var loop = (isBg || isShorts) ? true : (loopAttr === "true" || loopAttr === "1");
+
+      var sbAttr = el.getAttribute("data-yv-storyboard");
+      var storyboard = (sbAttr === "false" || sbAttr === "0" || sbAttr === "none") ? false : true;
+
       var pipAttr = el.getAttribute("data-yv-pip") || el.getAttribute("data-pip");
       var disablePip = (pipAttr === "none" || pipAttr === "false" || pipAttr === "off" || pipAttr === "0");
+      var pipMode = (pipAttr === "inpage" || pipAttr === "document" || pipAttr === "os") ? pipAttr : "os";
+
+      var hotkeysAttr = el.getAttribute("data-yv-shortcuts") || el.getAttribute("data-yv-hotkeys");
+      var enableHotkeys = (hotkeysAttr === "false" || hotkeysAttr === "0") ? false : true;
+
+      var sleepAttr = el.getAttribute("data-yv-sleep");
+      var enableSleepTimer = (sleepAttr === "false" || sleepAttr === "0") ? false : true;
 
       function startPlayer() {
         whenYTReady().then(function () {
           YVPlayer.init(el.id, {
             defaultId: cleanVid || vid,
             theme: theme,
-            autoplay: isBg ? true : autoplay,
+            autoplay: autoplay,
+            muted: muted,
+            loop: loop,
             shorts: isShorts,
             background: isBg,
             isLive: isLive,
-            pip: !disablePip
+            pip: !disablePip,
+            pipMode: pipMode,
+            storyboard: storyboard,
+            enableHotkeys: enableHotkeys,
+            enableSleepTimer: enableSleepTimer
           }).then(function () {
             if (customColor) YVPlayer.setTheme(el.id, customColor, "Custom");
           }).catch(function (err) {

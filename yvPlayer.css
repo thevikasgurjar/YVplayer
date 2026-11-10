@@ -4,14 +4,6 @@
   --themeHoverBg: rgba(254, 0, 1, 0.22);
   --themeHoverBorder: rgba(254, 0, 1, 0.55);
 }
-
-/* Prevent unwanted scrollbars in embedded iframes and isolated wrappers */
-html:has(.yvPlayer),
-body:has(.yvPlayer) {
-  overflow: hidden !important;
-  margin: 0 !important;
-  padding: 0 !important;
-}
 /* NOTE: tabler-icons @import removed — load via <link rel="preload"> in HTML for better performance */
 
 *{
@@ -19,6 +11,11 @@ margin: 0;
 padding: 0;
 box-sizing: border-box;
 
+}
+
+[data-yv-video] {
+  box-sizing: border-box !important;
+  overflow: hidden !important;
 }
 
 .yvPlayer{
@@ -56,6 +53,8 @@ user-select: none !important;
 position: relative; 
 border-radius: var(--playerBR);
 min-width: 270px !important;
+overflow: hidden !important;
+box-sizing: border-box !important;
 }
 .theme-default{
 --playerBg: #000;
